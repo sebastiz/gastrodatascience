@@ -1,0 +1,55 @@
+---
+title: "Importing Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+There are a large number of file types that are able to store data. R is usually able to import most of them but there are some caveats. Below is a summary of methods I use for data imports
+
+It is worth saying that most datasets will come from excel or csv files. It is unusual to gain direct access to the database and these are the normal export types from most data storage systems
+
+###Import csv or text
+
+
+```{r eval=F}
+read.table("mydata.txt",header=T,stringsAsFActors=F) 
+```
+To prevent strings being imported as factors, add the parameter stringsAsFActors=F
+
+
+###Import from excel
+
+```{r eval=F}
+library(XLConnect)
+wk = loadWorkbook("~Mydata.xlsx")
+dfw = readWorksheet(wk, sheet="Sheet3",header=TRUE)
+```
+
+###Import from database
+
+```{r eval=F}
+library(RODBC)
+channel <- odbcConnect("MyDatabase", believeNRows=FALSE)
+Get one of the tables
+tbl_PatientDetails<-sqlFetch(channel, "tblPtDetails")
+```
+
+###Exporting data
+
+
+###Export to excel
+
+```{r eval=F}
+library(XLConnect)
+exc <- loadWorkbook("~Mydata.xls", create = TRUE)
+createSheet(exc,'Input')
+saveWorkbook(exc)
+ForMike<-data.frame(ForMike$PatientID,ForMike$Histo_ResultEntered)
+XLConnect::writeWorksheet(exc,ForMike,sheet = "Input", startRow = 1, startCol = 2)
+```
+
+##Export to csv

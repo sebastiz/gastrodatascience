@@ -1,0 +1,81 @@
+name: "my-website"
+navbar:
+  title: "Gastroenterology Data Science"
+  left:
+    - text: "Data Wrangling"
+      menu:
+        - text: "Data Acquisition"
+        - text: "Data Importing"
+          href: Data_Import.html
+        - text: "---------"
+        - text: "Data Cleaning"
+        - text: "Formatting Dates"
+          href: FormatDates.html
+        - text: "Text find and replace with gsub and stringr"
+          href: Text_Clean.html
+        - text: "---------"
+        - text: "Data Merging"
+        - text: "Endoscopic-Pathological examples"
+          href: Data_merge.html
+        - text: "---------"
+        - text: "Data Accordionisation"
+        - text: "Creating data from data"
+          href: WranglingDataFromDataMutate.html
+        - text: "---------"
+        - text: "Data Grouping"
+        - text: "Grouping by dates"
+          href: GroupByDates.html
+        - text: "---------"
+        - text: "Data Tidying "
+          href: Wrangling_Tidy.html
+    - text: "Data Analysis"
+      menu:       
+        - text: "---------"
+        - text: "Statistics"
+        - text: "Exploratory Data Analysis"
+          href: StatisticsExploratoryDataAnalysis.html
+        - text: "---------"
+        - text: "Numeric Statistics"
+        - text: "Looking for associations- correlations"
+          href: StatisticsCorrelations.html
+        - text: "Looking for differences"
+          href: DataAnalysisStatsDiffMeans.html
+        - text: "Regression-uni and multivariate"
+          href: DataAnalysisEventingsSankey.html
+        - text: "---------"
+        - text: "Categorical Statistics"
+        - text: "---------"
+        - text: "Text Mining"
+        - text: "Natural Language Programming"
+          href: Data_Analysis_Text_NLP.html
+        - text: "---------"
+        - text: "Data Visualisations"
+        - text: "Some basic univariate plots"
+          href: StatisticsBasicDescriptivePlots.html
+        - text: "ggPlots and ggedit"
+          href: DataVisualisationsggplot.html
+        - text: "Patient flow"
+          href: DataAnalysisEventingsSankey.html
+        - text: "Time series analysis"
+          href: DataAnalysisTimeSeries.html
+    - text: "Cornerstone Questions"
+      menu:
+        - text: "Introduction to Cornerstone Questions"
+          href: CornerstonesIntro.html
+        - text: "The preprepared Dataset"
+          href: PrepreparedEndoHistData.html
+        - text: "Surveillance"
+          href: Cornerstone_Surveillance.html
+        - text: "Endoscopic Performance"
+          href: Cornerstone_EndoscopicPerformance.html
+        - text: "Diagnostic and Therapeutic Performance"
+          href: Cornersteon_EndoPath.html
+        - text: "---------"
+        - text: "Management"
+        - text: "Appointments"
+          href: Appointments.html
+        - text: "---------"
+        - text: "Meta"
+        - text: "Code workflow"
+          href: Meta_Workflow.html
+

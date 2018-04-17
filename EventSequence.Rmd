@@ -1,0 +1,22 @@
+---
+title: "Eventings- The importance of event sequences"
+---
+
+##The problem:
+How to get a series of events organised for each of the patients in a list
+
+##The background:
+I drone on about the importance of dates because much of my data analysis is based on the healthcare events that an individual experiences. Tying up all the healthcare events and the sequence in which they have happened for a patient is known as eventing.
+
+There are many functions in R that can simplify the analysis of eventing across many patients. I normally try to understand events as they happen to individuals. I often find dplyr to be the best package to use for this kind of task This requires
+
+1. Isolate the individual (usually by hospital number).  (group_by(Hospital_Number) 
+2. Filter the events you are interested in (all events, or maybe just the endoscopic events for example depending on your intention) filter() from dplyr. 
+3. Further more complex filtration can happen at this point. For example, perhaps you are interested in all patients who underwent a treatment A but only if it happened before treatment B. 
+4. Do this for all patients in your dataframe
+
+##The example:
+Let's say you want to find out the sequence of endoscopies for all patients who have undergone inflammatory bowel disease
+
+
+####Input data

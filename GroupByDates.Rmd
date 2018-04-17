@@ -1,0 +1,55 @@
+---
+title: "Grouping by dates"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### How to group
+
+Its fairly common to need to group data by an aspect of the date. For exmaple, how many patients underwent a colonoscopy this month, or week etc.
+To do this we need a date object as part of the data as usual. As long as we can extract the aspect we want to group by this should be a breeze with dplyr
+
+###The problem
+
+How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type
+
+```{r,eval=F}
+#Create the data
+
+HospNum_Id<-
+Dates<-
+EndoscopyType<-
+  
+df<-as.data.frame(HospNum_Id,Dates,EndoscopyType)
+```
+
+###The resulting data looks like this:
+```{r}
+#library(kable)
+#Create the table here
+
+```
+
+Using lubridate, we can extract the month very simply as follows:
+This can then be incorporated into dplyr
+
+```{r,eval=F}
+#ByMonth<-df %>% select(Dates,EndoscopyType %>% group_by(EndoscopyType,month(Dates)) %>% summarise(n=n())
+```
+
+Breaking this down, we are using select() to get the columns we are interested in, then we use group_by() to group according to the two aspects we are interested in
+We then use summarise to count each of the groups. The output is then as expected.
+
+More refined analyses may require you to get the first event in a sequence for a patient, or the last. THis again can be done with dplyr as follows:
+
+###Get difference between two dates in consecutive rows
+```{r,eval=F}
+DateSurveill<-EndoSubsetOnSurveil %>% arrange(HospNum_Id, VisitDate) %>% group_by(HospNum_Id) %>%
+  mutate(diffDate = difftime(VisitDate, lag(VisitDate,1)))
+```
+
+###Get the first date or the last date in a group
+  

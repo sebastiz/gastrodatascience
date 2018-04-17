@@ -1,0 +1,21 @@
+---
+title: "Workflow"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## How to write R Scripts and the workflow needed
+
+This section explains the principles of a code workflow so that you can template your scripts as much as possible. 
+In general one script should do one thing and have one output rather than many. 
+This will make the script considerably easier to readAs reflected in the construction of this site.
+
+
+```{r}
+
+
+```
+

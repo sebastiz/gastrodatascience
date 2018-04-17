@@ -1,0 +1,19 @@
+---
+title: "Reproducible Research"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The importance of reproducible research in Gastroenterology
+#Maybe have this as part of the principles of data science in Gastroenterology:
+
+From a day to day point of view, reproducibility of research is integral to the principle of audit. To be able to perform exactly the same method of analysis on multiple datasets allows a fair result comparison that is removed from criticism of the difference in methodologies.
+
+This essentially means that the concept of a 
+
+```{r}
+
+```

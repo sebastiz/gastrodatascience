@@ -1,0 +1,133 @@
+---
+title: "Formatting Dates"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Dates are fundamental. Dates come in many formats. One of  my biggest bug bears are dates. As dull as it sounds, formatting dates correctly is a fundamental part of data cleaning in healthcare. This is especially true if your data objects are event-driven (which is to say you collect events that happen at time-points such as the time a patient enters an endoscopy room or the day the endoscopy was done etc.). In addition, the correct and standardised formatting of dates will allow you to merge data from separate data sources and still understand a unified sequence of events. Eventing, as I call it, is fundamental to understanding processes and its inefficiences.
+
+Given it is so important, perhaps the correct formatting of dates is not so boring after all.
+
+#Date formats:
+Dates come in may forms, but in R the main formats are as follows:
+
+ 1.POSIXct or POSIXlt - stores dates and times and can manipulate timezones
+
+ 2.Date - date without times
+
+ 3.Character
+
+ 4.Numeric (the usual way it is stored when imported from Excel and refers to the number of days or seconds from an origin date)
+
+ 5.On top of the above, dates even within the same format can be of different combinations such as the day or the month being first, or an abbreviated year etc.
+ 
+Most of the time when importing, the dates will be in character format.but not always.
+
+###How to convert to date format:
+The finest level of granularity I usually require is day. This means that the as.Date function, part of base R, is usually sufficient Occasionally I need hours which requires a slightly different approach. Below are some examples:
+
+Conversion from text  and numeric to Date or POSIXct
+ 1.Conversion from numeric to Date
+ 2.Conversion from text to POSIXct
+ 3.Conversion from numeric to POSIXct
+ 
+Using libraries for dates
+ 1.lubridate
+ 2.anytime
+ 3.chron
+
+
+```{r }
+#Symbol  Meaning	Example
+#%d	day as a number (0-31)	01-31
+#%a
+#%A	abbreviated weekday  unabbreviated weekday	Mon Monday
+#%m	month (00-12)	00-12
+#%b
+#%B	abbreviated monthunabbreviated month	JanJanuary
+#%y
+#%Y	2-digit year 4-digit year	072007
+
+
+```
+The other thing to remember is the formatting of dates. This usually requires understanding of various format types as follows:
+
+
+
+
+#Conversion of dates
+
+###Text to Date
+
+```{r }
+dates <- c("05/22/80", "07/06/01")
+#Remember to specify the format of the date in the text otherwise it defaults to yyyy-mm-dd
+betterDates <- as.Date(dates, format = "%B %d %Y")
+betterDates
+
+#Or with the date time format
+df <- data.frame(Date = c("10/9/2009 0:00:00", "10/15/2009 0:00:00"))
+newDate<-as.Date(df$Date, "%m/%d/%Y %H:%M:%S")
+
+newDate
+
+```
+
+
+###Numeric to Date (eg from Excel).
+
+This normally requires remembering to specify an origin as the number is usually the number of days from that origin:
+
+```{r }
+dates <- c(30899, 38567)
+NewDates <- as.Date(dates, origin = "1899-12-30")
+```    
+   
+###POSIXct to Date.
+```{r }
+#theDatesinPOSIXct<-c()
+#NewDates<-as.Date(theDatesinPOSIXct)
+```
+
+###Date to character
+```{r }
+# convert dates to character data
+#chrDate <- as.character(someDate)
+```
+
+###Extracting parts of a date
+
+Often dates come as the date with time in hours, mins and seconds. Other times you just want the month of a date, or the year. This is where the 'lubridate' package
+can be so useful as follows. Note, lubridate doesnt take text but can take anything else such as: POSIXct, POSIXlt, Date, Period, chron, yearmon, yearqtr, zoo, zooreg, timeDate, xts, its, ti, jul, timeSeries, and fts objects
+
+```{r }
+library(lubridate)
+some_date <- c("01/02/1979", "03/04/1980")
+month(as.POSIXlt(some_date, format="%d/%m/%Y"))
+
+#The same thing can be done with: day, month , year, hour, minute, second and many others. See https://rpubs.com/davoodastaraky/lubridate
+```
+
+    
+### What to do with mixed dates
+If you are using many data sources, the dates can be very painful to standardise. In reality most will not have H:M:S associated with the date so I would standardise all
+the dates to %d_%m_%Y. Note I don't use "/" as the forward slash can be treated oddly in text extraction and particularly regular expressions.
+
+A particularly interesting package is 'anytime'. This claims to be able to take any date and convert it into a date format. This returns a POSIXct object (or a date object if 
+anyDate is used instead of anytime). This can be seen here: https://cran.r-project.org/web/packages/anytime/anytime.pdf
+
+###Time Series objects
+
+Time series analysis is worth exploring particularly if you have very numerical data. This type of analysis is often used for the assessment of financial data.
+The time series object is xts and essentially organises your data with the date as the label of each row. 
+
+The limiting factor I have found is the ability to group the time series according to a non numerical variable For example if I want to split my data up
+according to type of endoscopic procedure performed I cannot use intrinsic time series objects to do this. It is however possible as seen on the page: Grouping by dates:
+```{r }
+#Put example of a time-series object in here:
+```
+

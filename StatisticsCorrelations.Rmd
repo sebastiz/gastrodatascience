@@ -1,0 +1,110 @@
+---
+title: "Correlation"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                       warning=FALSE, message=FALSE)
+```
+
+##Introduction
+
+Correlations are used when you are interested in the relationship between two (unsually numerical) variables. The 'relationship' is defined as how the variables vary together ie the degree of covariance.
+
+The three types of correlation you will use in basic statistics are
+
+ 1: **Pearson's**- for normally distributed numeric data.
+ 
+ 2: **Spearman's**- for ordinal data. Non-parametric.
+ 
+ 3: **Kendall's** correlations -non parametric numeric data.
+ 
+
+ 
+ For this page the input is going to be the amount of sedation given and the time spent doing the endoscopy
+```{r Stats_Correlations_DataInput}
+ Midazolam<-sample(1:10, 100, replace=TRUE)
+ Fentanyl<-sample(1:100, 100, replace=TRUE)
+ Age<-sample(1:100, 100, replace=TRUE)
+ TimeSpentDoingEndoscopy<-sample(1:50, 100, replace=TRUE)
+ EndoCr<-data.frame(Midazolam,Fentanyl,Age,TimeSpentDoingEndoscopy,stringsAsFactors=F)
+```
+
+<br><br><br><br><br>
+
+##The correlation functions.
+
+ The basic function to do correlation is as follows
+```{r,eval=FALSE}
+cor(x, y, method = c("pearson", "kendall", "spearman"))
+cor.test(x, y, method=c("pearson", "kendall", "spearman"))
+```
+
+An example is as follows:
+
+```{r Stats_BasicDescriptive_Kendall}
+cor.test(EndoCr$Midazolam, EndoCr$Fentanyl,  method = "kendall", use = "complete.obs")
+```
+
+For Spearman's rank correlation, the samples have to be ranked first. cor.test does this for you:
+
+```{r Stats_BasicDescriptive_Spearman}
+mySpearman<-cor.test(x=EndoCr$Midazolam, y=EndoCr$Fentanyl, method = 'spearman')
+mySpearman
+```
+
+To access the results from cor.test use the variables as you would a data frame. Therefore to get the p-value do:
+
+```{r Stats_BasicDescriptive_pVal}
+mySpearman$p.value
+```
+
+<br><br><br><br><br>
+
+##Visualisation of correlations:
+
+There are many ways to visualise correlations. One useful way is a correlogram using the package 'corrplot'. The data needs to be converted into a matrix which can be done with the function cor
+
+```{r Stats_BasicDescriptive_Corrplot}
+library(corrplot)
+EndoMatrix<-cor(EndoCr)
+corrplot(EndoMatrix, method="number")
+```
+
+Another method is as follows using scattergram which compares all numeric data with all numeric data
+```{r Stats_BasicDescriptive_PairsPlot}
+pairs(EndoCr)
+```
+
+
+A final nice way is to use the PerformanceAnalytics package which gives scatter, bar and numerical output:
+
+```{r Stats_BasicDescriptive_PerformanceAnalyticsPlot}
+library("PerformanceAnalytics")
+chart.Correlation(EndoCr, histogram=TRUE, pch=19)
+```
+
+Then of course we can start to do some interesting things. If we are able to generate correlations of all the numeric columns with each other, we can create a heirarchy of correlations as follows:
+
+```{r Stats_BasicDescriptive_CorrelationHeirarchy}
+cc<-cor(EndoCr,
+use="pairwise",
+method="pearson")
+
+cc
+
+```
+
+And from this create a dendogram (albeit a not very complicated one)
+```{r Stats_BasicDescriptive_CorrelationDendrogram}
+
+hc <- hclust(dist(cc), method="average")
+dn<-as.dendrogram(hc)
+plot(dn, horiz = TRUE)
+```
+
+
+ Further information can be found here: <http://www.sthda.com/english/wiki/visualize-correlation-matrix-using-correlogram#visualization-methods>

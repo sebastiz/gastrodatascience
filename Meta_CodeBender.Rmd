@@ -1,0 +1,19 @@
+---
+title: "Code Overview"
+author: "Seb"
+date: "19 July 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Understanding your code
+
+One of the most frustrating things when writing code is not understanding anything you have written when you come back to it after a pause.
+It is crucial to comment code to help your future self, as well as others, to read the code. Your future self would also benefit from an overview of the code, particularly
+to find how you have subset the data. For this purpose I use codeBender
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+

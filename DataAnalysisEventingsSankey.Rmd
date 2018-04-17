@@ -1,0 +1,159 @@
+---
+title: "Eventings- Data viz of patient flow with Sankey diagrams or Circos plots"
+---
+
+
+####The problem:
+
+How do I visualise the flow of patients through a service? For example how do I see what order of therapies patients have received when they undergo Barrett's endotherapy for early malignancies or dysplasia?
+
+####The background:
+
+It is important to understand the sequence of events for any patients. In the above example, an ideal sequence should be that a patient undergoes endoscopic mucosal resection (EMR) prior to radiofrequency ablation and that no further EMR's are required. If this is not the sequence they we need to know why and determine if it is for example a problem with lesion recognition for a particular endoscopist.
+
+Sankey plots are ideal for this. One of the most famous uses of a Sankey plot is a rather sad but effective visualisation of Napoleonic troop movements in his disasterous 1812 campaign to conquer Russia. There are of course numerous other examples.
+
+The power of the plot comes from the fact that the flow of time of events is usually the X axis, categories that (in my case) patients move into is the y axis and the volume of movement is represented by the weight of the line.
+
+This makes it perfect to understand patient flow through a defined sequence of events and effectively summarises the concept of patient 'flow'. An example of its use is given here:
+
+####The example:
+
+The problem: How do I determine the order of therapies for patients who have undergone endotherapy for Barrett's related early malignancies or dysplasia?
+
+####Input data
+    ```{r}
+
+    #Generate some sample data:
+
+proc<-sample(c("EMR","RFA","Biopsies"), 100, replace = TRUE)
+#Sample dates
+dat<-sample(seq(as.Date('2013/01/01'), as.Date('2017/05/01'), by="day"), 100)
+#Generate 20 hospital numbers in no particular order:
+HospNum_Id<-sample(c("P433224","P633443","K522332","G244224","S553322","D0739033","U873352","P223333","Y763634","I927282","P223311","P029834","U22415","U234252","S141141","O349253","T622722","J322909","F630230","T432452"), 100, replace = TRUE)
+df<-data.frame(proc,dat,HospNum_Id)
+    ```
+
+
+####Data Preparation
+Now we prepare the data and convert it into a spredsheet format using data.table which can order the sequence of events per patient
+
+
+```{r}
+    library(data.table)
+    library(dplyr)
+    library(googleVis)
+    Sankey<-dcast(setDT(df)[, if(any(proc=="EMR"|proc=="RFA")) .SD, HospNum_Id], HospNum_Id~rowid(HospNum_Id), value.var ="proc")
+```
+
+We need to rename columns and get rid of the first column which was only originally used to get the events patient specific. It won't be useful in the next steps so lets ditch it. So the data is in the current form:
+
+```{r, echo=F}
+PtFlow<-Sankey%>%select(2:10)
+PtFlow<-data.frame(PtFlow,stringsAsFactors=F)
+names(PtFlow)<-c("ord1","ord2","ord3","ord4","ord5","ord6","ord7","ord8","ord9")
+
+orders <- PtFlow %>%
+  select(ord1, ord2, ord3, ord4, ord5,ord6,ord7,ord8,ord9)
+orders.plot <- data.frame(from= character(0), to= character(0), n = numeric(0))
+```   
+
+
+So the data is in the current form
+
+```{r, echo=F}
+    library(xtable)
+    
+     knitr::kable(orders)
+
+``` 
+
+
+
+So that creates the basic 'spreadsheet' for the creation of the Sankey on a per patient basis.
+
+Now we have to summarise the number of 'movements' from one state to another for each patient and then for all the patients. The loop below basically looks at each row and then groups by the combination of subsequent events 
+ie how many events were EMR->EMR, how many were Biopsies->EMR etc with each permutation of EMR, Biopsies and RFA. 
+This is stored in ord.cache and then added cumulatively to orders.plot.
+
+####Summarise the Data
+
+```{r}
+for (i in 2:ncol(orders)) {
+  ord.cache <- orders %>%
+    group_by(orders[ , i-1], orders[ , i]) %>%
+    summarise(n=n()) %>%
+  ungroup()
+  colnames(ord.cache)[1:2] <- c('from', 'to') 
+  
+  # adding tags
+  ord.cache$from <- paste(ord.cache$from, '(', i-1, ')', sep='')
+  ord.cache$to <- paste(ord.cache$to, '(', i, ')', sep='') 
+  orders.plot <- rbind(orders.plot, ord.cache) 
+}
+    
+```    
+
+
+####Plot the data:
+
+```{r}
+orders.plot<-data.frame(orders.plot)
+orders.plot<-orders.plot[grepl("[A-Z]",orders.plot$from)&grepl("[A-Z]",orders.plot$to), ]
+orders.plot<-orders.plot[!grepl("NA",orders.plot$from)&!grepl("NA",orders.plot$to), ]
+```   
+   
+   
+Now it gets plotted with the googleVis package:
+   
+```{r}   
+# plot(gvisSankey(orders.plot, from='from', to='to', weight='n',
+#                 options=list(height=900, width=1800)))
+#![optional caption text](figures/Data_viz_Sankey.png)
+```
+
+####The result:
+The resulting Sankey is as follows (yours may be different as the data is randomly generated):
+
+
+
+#Circos Plots
+
+Another way to visualise flow is to circularise the data. This is different to a Sankey plot as a) it's circular and b) the summarisation is a higher level so that rather than telling you how many patients underwent an eventA->eventB at a particular time point 1, it will tell you how many occurred over all the time points:
+
+The data generation is as above
+
+The data has to be cleaned slightly differently as follows:
+
+```{r} 
+    #Create data
+# name=c(3,10,10,3,6,7,8,3,6,1,2,2,6,10,2,3,3,10,4,5,9,10)
+# feature=paste("feature ", c(1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5) , sep="")
+# dat <- data.frame(name,feature)
+# dat <- with(dat, table(name, feature))
+#     
+#     proc<-sample(c("EMR","RFA","Biopsies"), 100, replace = TRUE)
+# #Sample dates
+# dat<-sample(seq(as.Date('2013/01/01'), as.Date('2017/05/01'), by="day"), 100)
+# #Generate 20 hospital numbers in no particular order:
+# HospNum_Id<-sample(c("P433224","P633443","K522332","G244224","S553322","D0739033","U873352","P223333","Y763634","I927282","P223311","P029834","U22415","U234252","S141141","O349253","T622722","J322909","F630230","T432452"), 100, replace = TRUE)
+# df<-data.frame(proc,dat,HospNum_Id,stringsAsFactors=F)
+#     Sankey<-dcast(setDT(df)[, if(any(proc=="EMR"|proc=="RFA")) .SD, HospNum_Id], HospNum_Id~rowid(HospNum_Id), value.var ="proc")
+# PtFlow<-Sankey%>%select(2:10)
+# PtFlow<-data.frame(PtFlow,stringsAsFactors=F)
+# names(PtFlow)<-c("ord1","ord2","ord3","ord4","ord5","ord6","ord7","ord8","ord9")
+# 
+# orders <- PtFlow %>%
+#   select(ord1, ord2, ord3, ord4, ord5,ord6,ord7,ord8,ord9)
+# orders.plot <- data.frame(from= character(0), to= character(0), n = numeric(0))
+#     
+# Charge the circlize library
+#library(circlize)
+# this won't plot at the moment
+# Make the circular plot- I won't generate this in the code as the figure is below
+#rr<-chordDiagram(as.data.frame(dat), transparency = 0.5)
+#![optional caption text](figures/EventSequence_circlizePlot.png)
+```
+
+
+    

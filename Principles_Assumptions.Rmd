@@ -1,0 +1,24 @@
+---
+title: "Data Preparation Assumptions"
+output: html_document
+---
+
+###Assumption 1 (Mandatory): 
+A fundamental assumption is that all patient related data at the departmental level can be viewed as pertaining to a clinical episode recorded as a single timepoint (usually as the day of the episode. A single patient is related to patient timed episodes in a one to many relationship (one patient can have many endoscopies).
+
+###Assumption 2 (Mandatory):
+All patients have a unique identifier. At the departmental level this is likely to be a Trust specific hospital number.
+
+###Assumption 3 (Optional): 
+A patient episode should have an outcome. In the case of an endoscopy for example, the outcome may be the histopathological diagnosis, or if no biopsies were taken, then the endoscopic diagnosis. The origin of the outcome is not important: it can be a derivative of the dataset itself or can be from a distinct dataset merged into the current one depending on the analysis. What is important is that the outcome relates to the patient episode: if biopsy result is the outcome it should be biopsies taken at the recorded endoscopy. In other words the outcome should be that which is related to the same timepoint as the event.
+
+###Assumption 4 (Optional): 
+A patient episode should have a reason. The indication for the patient episode should be recorded for the same time point as the episode. This is very commonly found in report text of both an endoscopy and histopathology reports. This is optional as other analyses can still be carried out without this being available.
+
+###Assumption 5 (Optional): 
+A patient episode should have recordable variables. Examples of this for endoscopic data may be who performed the procedure, the length of time a procedure took and other variables derived from an endoscopy report. A histopathology report may contain information about the number of biopsies taken, their location and size as well as diagnoses among other aspects.
+
+###Assumption 6 (Optional): 
+The data is semi-structured. Structured data is easier to analyse but because it is more cumbersome to input and often lacks flexibility most endoscopic and histopathology data remains semi-structured. This means that although the text extraction techniques outlined here are the same, the boundaries for extracting each section may differ. For example in our trust a pathology report may contain the subsections ‘Macroscopic specimen’ and ‘Diagnosis’ whereas these sections may have alternative labels in another hospital’s report.
+
+Semi-structured data requires specific language processing techniques depending on what is being extracted. For our purposes the extractible data is likely to be either diagnoses or aspects of the test being performed. The diagnostic data is traditionally the most difficult to extract  but this is often because the object to be extracted is from a large set eg for the purposes of coding for financial remuneration. Because the target set is much smaller for endoscopic-pathological diagnoses language extraction can be more focused whilst being more flexible to accommodate edge cases such as misspellings, plurals 
