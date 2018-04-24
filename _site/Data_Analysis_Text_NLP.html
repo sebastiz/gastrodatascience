@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Natural Language Programming</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Natural Language Programming</h1>
+
+</div>
+
+
+<div id="more-advanced-text-analysis-using-natural-language-processing" class="section level3">
+<h3>More advanced text analysis using Natural Language Processing</h3>
+<p>One more advanced way to analyse text is by using natural language processing. Various packages exist for this but one of the most useful, because it shares the philosophy of tidy data, is tidytext. This uses many of the features of dplyr which is so heavily used on this site and also allows for the use of piping in the form of %&gt;%</p>
+<p>Natural language processing deals with three main areas for text</p>
+<ol style="list-style-type: decimal">
+<li>Topic modelling- ie which topics are important in a model</li>
+<li>Dimensionality reduction - simplifying a text to examine its salient features</li>
+<li>Text clustering- an unsupervised grouping of documents according to mutual similarity</li>
+<li>Text classification - a supervised technique to classify text.</li>
+</ol>
+<p>The approaches fall under the wider umbrella of machine learning. A good summary of r techniques for text mining is <a href="http://data-analytics.net/cep/Schedule_files/Textmining%20%20Clustering,%20Topic%20Modeling,%20and%20Classification.htm">here</a> The figure demonstrates the algorithms we can use for each of the analytical areas:</p>
+<p><br><br></p>
+<div class="figure">
+<img src="figures/DataAnalysis_Text_NLP.png" />
+
+</div>
+<p><br><br></p>
+<p>For example, lets say we have a lot of pathology reports and we want to get all the reports that contain a reference to candida. We can do the following:</p>
+<p>We are going to use the <a href="http://gastrodatascience.com/PrepreparedEndoHistData.html">pre-prepared dataset</a> for this:</p>
+<pre class="r"><code>#To get the prepared endoscopy reports we are going to use the pre-prepared dataset here:
+EndoHistoMerge&lt;-source(&#39;EndoPathMerged_ExternalCode.R&#39;)
+EndoHistoMerge&lt;-as.data.frame(EndoHistoMerge)
+names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMerge),fixed=T)</code></pre>
+</div>
+<div id="an-example-of-pre-processing-using-nlp--simple-tokenisation" class="section level3">
+<h3>An example of pre-processing using NLP- simple tokenisation</h3>
+<p>As we can see from the summary diagram, there are a few steps before we start processing the data. This is called pre-processing and is basically a form of data cleaning. An example of one part of the pre-processing, called tokenisation is shown below using the tidytext package:</p>
+<pre class="r"><code>library(tidytext)
+library(ggplot2)
+mytidy&lt;-head(EndoHistoMerge,100)%&gt;%
+unnest_tokens(word, Diagnoses) %&gt;%
+anti_join(stop_words)%&gt;%
+count(word, sort = TRUE) %&gt;%
+  filter(n &gt; 30) %&gt;%
+  mutate(word = reorder(word, n)) %&gt;%
+  ggplot(aes(word, n)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip()
+
+mytidy</code></pre>
+<p><img src="Figs/tidytext-1.png" width="1152" /></p>
+<p><br><br> This takes the EndoHistoMerge dataset, splits out the words (a process called tokenisation and which can also be done for sentences, n-grams and paragraphs) so that one word is on one row and also removes stop_words such as “and”, “the” etc. The format of the dataframe is now in tidy format around the words from the pathology report. This is great as ggplot loves tidy formatted data so we can pipe straight into a graph.</p>
+<p>An alternative way to pre-process text is to use the tm package as follows:</p>
+<pre class="r"><code>library(tm)
+mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
+jeopCorpus &lt;- Corpus(VectorSource(mywords))
+  #jeopCorpus &lt;- tm_map(jeopCorpus, PlainTextDocument)
+  jeopCorpus &lt;- tm_map(jeopCorpus, content_transformer(removeWords), stopwords(&quot;english&quot;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, removePunctuation)
+  jeopCorpus &lt;- tm_map(jeopCorpus, stripWhitespace)
+  jeopCorpus &lt;- tm_map(jeopCorpus, removeWords, stopwords(&#39;english&#39;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, stemDocument)
+  
+  
+  #wordcloud(jeopCorpus, max.words = 100, random.order = FALSE)
+  
+  #Get the frequency table of terms being used over all the reports (ie counts x2 if mentioned twice in the report)
+  dtm &lt;- TermDocumentMatrix(jeopCorpus)
+  m &lt;- as.matrix(dtm)
+  v &lt;- sort(rowSums(m),decreasing=TRUE)
+  d &lt;- data.frame(word = names(v),freq=v)</code></pre>
+<p><br><br></p>
+</div>
+<div id="using-nlp-to-determine-commonly-used-phrases---n-gram-tokenisation" class="section level3">
+<h3>Using NLP to determine commonly used phrases - n-gram tokenisation</h3>
+<p>One particularly interesting use of NLP is to determine the commonly used phrases in a report. I find this useful to study how doctors might express their findings but particularly how negative findings (ie the lack of a diagnosis) are expressed. This is particularly important as we may want to exclude ‘negative’ findings so that they don’t confuse word searches and cause over-estimates in our analysis:</p>
+<p>We again start with the EndoMerge dataset, but this time we are going to tokenize according to n-grams. Note how we don’t exclude stop words here because we are interested in sentences that have no and neither etc. The top 10 are shown here. So now we can sift through them and in our algorithm for negative detection we can see what the most common negatives are: <br><br></p>
+<pre class="r"><code>library(tidytext)
+library(tidyr)
+
+
+ngramEndoHistoMerge&lt;-EndoHistoMerge%&gt;%
+  unnest_tokens(trigram, Diagnoses, token = &quot;ngrams&quot;, n = 3) %&gt;%
+  separate(trigram, c(&quot;word1&quot;, &quot;word2&quot;, &quot;word3&quot;), sep = &quot; &quot;) %&gt;%
+  count(word1, word2, word3, sort = TRUE)
+ #kable(head(ngramEndoHistoMerge,10))</code></pre>
+<p><br><br></p>
+<p>So now of course we can graph it because that’s what we love to do:</p>
+<pre class="r"><code>triigrams_united &lt;- ngramEndoHistoMerge %&gt;%
+  unite(trigram, word1, word2,word3, sep = &quot; &quot;)
+
+ggplot(head(triigrams_united,20), aes(trigram, n)) +
+  geom_histogram(stat=&quot;identity&quot;,show.legend = FALSE) +
+  theme(axis.text.x=element_text(angle = -90, hjust = 0))</code></pre>
+<p><img src="Figs/trigrams-1.png" width="1152" /></p>
+<p><br><br></p>
+</div>
+<div id="clustering-algorithms-using-nlp" class="section level3">
+<h3>Clustering algorithms using NLP</h3>
+<p>In fact text mining can get pretty interesting very quickly. Let’s say we can’t to be able to cluster endoscopy reports based on their content. Maybe we think that they will cluster according to endoscopist, or maybe we are interested to see if everyone reports the same type of disease similarly or differently.</p>
+<p>To to this we need to take the document term matrix we created above and make it into a formal matrix as follows:</p>
+<pre class="r"><code>mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
+jeopCorpus &lt;- Corpus(VectorSource(mywords))
+  #jeopCorpus &lt;- tm_map(jeopCorpus, PlainTextDocument)
+  jeopCorpus &lt;- tm_map(jeopCorpus, content_transformer(removeWords), stopwords(&quot;english&quot;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, removePunctuation)
+  jeopCorpus &lt;- tm_map(jeopCorpus, stripWhitespace)
+  jeopCorpus &lt;- tm_map(jeopCorpus, removeWords, stopwords(&#39;english&#39;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, stemDocument)
+  
+  
+  #wordcloud(jeopCorpus, max.words = 100, random.order = FALSE)
+  
+  #Get the frequency table of terms being used over all the reports (ie counts x2 if mentioned twice in the report)
+  dtm &lt;- TermDocumentMatrix(jeopCorpus)
+  m &lt;- as.matrix(dtm)
+  v &lt;- sort(rowSums(m),decreasing=TRUE)
+  d &lt;- data.frame(word = names(v),freq=v)
+
+distMatrix &lt;- dist(m, method=&quot;euclidean&quot;)
+
+
+groups &lt;- hclust(distMatrix,method=&quot;ward.D&quot;)
+{plot(groups, cex=0.5, hang=-1)
+rect.hclust(groups, k=15)}</code></pre>
+<p><img src="Figs/cluster-1.png" width="1152" /></p>
+<p><br><br></p>
+<p>So now we can see how specific terms are related to each other. ANother way of clustering that is very popular is k-means clustering We can do this using the cluster package. A simple example of what the algorithm is all about can be found <a href="https://eight2late.wordpress.com/2015/07/22/a-gentle-introduction-to-cluster-analysis-using-r/">here:</a></p>
+<pre class="r"><code>kfit &lt;- kmeans(d,1)
+#plot – need library cluster
+library(cluster)
+clusplot(m, kfit$cluster, color=T, shade=T, labels=2, lines=0)</code></pre>
+<p>but you will notice that it doesn’t tell you anything about the clusters, just that there are two clusters and certain endoscopy reports fall within these clusters. <br><br></p>
+</div>
+<div id="topic-modelling" class="section level3">
+<h3>Topic modelling</h3>
+<p>The difference between topic modelling and text clustering is subtle. In clustering you are deciding how to group documents based on how similar they are. This is based on the weighting of the words which itself relies on tf-idf (term frequency-inverse document frequency) . In topic modelling you are representing a document as a function of the topics in it so that topic modelling returns a list of topics within a document whereas clustering returns groups that documents belong to. You can use topic modelling to do clustering as well.</p>
+<p><br><br></p>
+<p>Topic modelling is often done with Latent Dirichelet Allocation (LDA). To quote another <a href="http://tidytextmining.com/topicmodeling.html#latent-dirichlet-allocation">source</a>, “LDA is a mathematical method for estimating both of these at the same time: finding the mixture of words that is associated with each topic, while also determining the mixture of topics that describes each document”</p>
+<p>We can use it to solve the following issue: How can I decide who wrote the following reports, or How can I decide what the combined method of reporting is for a certain illness and what is the variation in reporting?</p>
+<p>We will use the <a href="https://cran.r-project.org/web/packages/topicmodels/index.html">topicmodels</a> package to run the LDA() function. This takes a document term matrix as its input.</p>
+<p><br></p>
+<pre class="r"><code>library(topicmodels)
+#Create the document term matrix
+mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
+jeopCorpus &lt;- Corpus(VectorSource(mywords))
+  #jeopCorpus &lt;- tm_map(jeopCorpus, PlainTextDocument)
+  jeopCorpus &lt;- tm_map(jeopCorpus, content_transformer(removeWords), stopwords(&quot;english&quot;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, removePunctuation)
+  jeopCorpus &lt;- tm_map(jeopCorpus, stripWhitespace)
+  jeopCorpus &lt;- tm_map(jeopCorpus, removeWords, stopwords(&#39;english&#39;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, stemDocument)
+  
+  
+  #wordcloud(jeopCorpus, max.words = 100, random.order = FALSE)
+  
+  #Get the frequency table of terms being used over all the reports (ie counts x2 if mentioned twice in the report)
+  dtm &lt;- t(TermDocumentMatrix(jeopCorpus))
+  m &lt;- as.matrix(dtm)
+  v &lt;- sort(rowSums(m),decreasing=TRUE)
+  d &lt;- data.frame(word = names(v),freq=v)
+ap_lda &lt;- LDA(dtm, k = 2, control = list(seed = 1234))</code></pre>
+<p>This then allows us to determine which topics are more or less likely to have particular words. It shows the probabilities in each document so you can see how they are similar or dissimilar</p>
+<pre class="r"><code>library(tidytext)
+head(ap_topics&lt;-tidy(ap_lda, matrix = &quot;beta&quot;),10)</code></pre>
+<p><br></p>
+<p>but because we love to visualise things, we will plot this out</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+
+ap_top_terms &lt;- ap_topics %&gt;%
+  group_by(topic) %&gt;%
+  top_n(10, beta) %&gt;%
+  ungroup() %&gt;%
+  arrange(topic, -beta)
+
+ap_top_terms %&gt;%
+  mutate(term = reorder(term, beta)) %&gt;%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = &quot;free&quot;) +
+  coord_flip()</code></pre>
+<p><br></p>
+<p>Of course we have to remember this is heavily generated data but the LDA function has defined two document types and the graph above shows how they have been characterised.</p>
+<p>Another method is to look at what the greatest differences are between topics. The <a href="http://gastrodatascience.com/WranglingDataFromDataMutate.html#using_ifelse()_with_mutate_for_conditional_accordionisation">mutate</a> column is logged to make the result symmetrical</p>
+<pre class="r"><code>library(tidyr)
+
+beta_spread &lt;- ap_topics %&gt;%
+  mutate(topic = paste0(&quot;topic&quot;, topic)) %&gt;%
+  spread(topic, beta) %&gt;%
+  filter(topic1 &gt; .001 | topic2 &gt; .001) %&gt;%
+  mutate(log_ratio = log2(topic2 / topic1))
+
+beta_spread %&gt;%
+   mutate(term = reorder(term, log_ratio)) %&gt;%
+    filter(topic1 &gt; .01 | topic2 &gt; .01) %&gt;%
+  ggplot(aes(term, log_ratio)) +
+  geom_col(show.legend = FALSE)  +
+  coord_flip()</code></pre>
+<p>I will also discuss the other important aspects of text mining namely text classification…..when I get round to it…</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

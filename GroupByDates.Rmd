@@ -16,7 +16,7 @@ To do this we need a date object as part of the data as usual. As long as we can
 
 How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type
 
-```{r,eval=F}
+```{r,eval=FALSE}
 #Create the data
 
 HospNum_Id<-
@@ -36,7 +36,7 @@ df<-as.data.frame(HospNum_Id,Dates,EndoscopyType)
 Using lubridate, we can extract the month very simply as follows:
 This can then be incorporated into dplyr
 
-```{r,eval=F}
+```{r,eval=FALSE}
 #ByMonth<-df %>% select(Dates,EndoscopyType %>% group_by(EndoscopyType,month(Dates)) %>% summarise(n=n())
 ```
 
@@ -46,7 +46,7 @@ We then use summarise to count each of the groups. The output is then as expecte
 More refined analyses may require you to get the first event in a sequence for a patient, or the last. THis again can be done with dplyr as follows:
 
 ###Get difference between two dates in consecutive rows
-```{r,eval=F}
+```{r,eval=FALSE}
 DateSurveill<-EndoSubsetOnSurveil %>% arrange(HospNum_Id, VisitDate) %>% group_by(HospNum_Id) %>%
   mutate(diffDate = difftime(VisitDate, lag(VisitDate,1)))
 ```

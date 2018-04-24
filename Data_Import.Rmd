@@ -15,7 +15,7 @@ It is worth saying that most datasets will come from excel or csv files. It is u
 ###Import csv or text
 
 
-```{r eval=F}
+```{r eval=FALSE}
 read.table("mydata.txt",header=T,stringsAsFActors=F) 
 ```
 To prevent strings being imported as factors, add the parameter stringsAsFActors=F
@@ -23,7 +23,7 @@ To prevent strings being imported as factors, add the parameter stringsAsFActors
 
 ###Import from excel
 
-```{r eval=F}
+```{r eval=FALSE}
 library(XLConnect)
 wk = loadWorkbook("~Mydata.xlsx")
 dfw = readWorksheet(wk, sheet="Sheet3",header=TRUE)
@@ -31,7 +31,7 @@ dfw = readWorksheet(wk, sheet="Sheet3",header=TRUE)
 
 ###Import from database
 
-```{r eval=F}
+```{r eval=FALSE}
 library(RODBC)
 channel <- odbcConnect("MyDatabase", believeNRows=FALSE)
 Get one of the tables
@@ -43,7 +43,7 @@ tbl_PatientDetails<-sqlFetch(channel, "tblPtDetails")
 
 ###Export to excel
 
-```{r eval=F}
+```{r eval=FALSE}
 library(XLConnect)
 exc <- loadWorkbook("~Mydata.xls", create = TRUE)
 createSheet(exc,'Input')

@@ -48,7 +48,7 @@ Now we prepare the data and convert it into a spredsheet format using data.table
 
 We need to rename columns and get rid of the first column which was only originally used to get the events patient specific. It won't be useful in the next steps so lets ditch it. So the data is in the current form:
 
-```{r, echo=F}
+```{r, echo=FALSE}
 PtFlow<-Sankey%>%select(2:10)
 PtFlow<-data.frame(PtFlow,stringsAsFactors=F)
 names(PtFlow)<-c("ord1","ord2","ord3","ord4","ord5","ord6","ord7","ord8","ord9")
@@ -61,7 +61,7 @@ orders.plot <- data.frame(from= character(0), to= character(0), n = numeric(0))
 
 So the data is in the current form
 
-```{r, echo=F}
+```{r, echo=FALSE}
     library(xtable)
     
      knitr::kable(orders)

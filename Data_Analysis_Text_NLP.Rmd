@@ -200,7 +200,7 @@ We will use the [topicmodels](https://cran.r-project.org/web/packages/topicmodel
 
 <br>
 
-```{r,eval=F}
+```{r,eval=FALSE}
 
 library(topicmodels)
 #Create the document term matrix
@@ -227,7 +227,7 @@ ap_lda <- LDA(dtm, k = 2, control = list(seed = 1234))
 
 This then allows us to determine which topics are more or less likely to have particular words. It shows the probabilities in each document so you can see how they are similar or dissimilar
 
-```{r,eval=F}
+```{r,eval=FALSE}
 library(tidytext)
 head(ap_topics<-tidy(ap_lda, matrix = "beta"),10)
 ```
@@ -236,7 +236,7 @@ head(ap_topics<-tidy(ap_lda, matrix = "beta"),10)
 
 but because we love to visualise things, we will plot this out
 
-```{r,eval=F}
+```{r,eval=FALSE}
 library(ggplot2)
 library(dplyr)
 
@@ -261,7 +261,7 @@ Of course we have to remember this is heavily generated data but the LDA functio
 Another method is to look at what the greatest differences are between topics. The [mutate](http://gastrodatascience.com/WranglingDataFromDataMutate.html#using_ifelse()_with_mutate_for_conditional_accordionisation) column is logged to make the result symmetrical
 
 
-```{r,eval=F}
+```{r,eval=FALSE}
 library(tidyr)
 
 beta_spread <- ap_topics %>%
