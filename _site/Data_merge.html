@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -30,10 +30,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -361,17 +363,17 @@ names(pathdf)&lt;-c(&quot;Report&quot;,&quot;Date&quot;,&quot;HospNum&quot;)</co
 <pre class="r"><code>themerge&lt;-merge(Endodf,pathdf,by=c(&quot;Date&quot;,&quot;HospNum&quot;))
 themerge</code></pre>
 <pre><code>##          Date HospNum             Report.x             Report.y
-## 1  1992-04-20 H432243 HUBZLWJJBFYTYDQGNOKG DTZXFKRTTADYWFSKKNYT
-## 2  1993-06-29 Y980037 RZQPRBQZVZCPEJRVOJJE SXFFZOOGGBIZHTVEEKQO
-## 3  1993-11-10 W787634 IYZAYCZPZTPEBHNMIHHA VRLLHRVQANALJAEKCEXU
-## 4  1993-12-22 H432243 UERNLPDFCUSDPBIMTMOV KTTRNTBERJAROOEHXIWT
-## 5  1994-02-26 Y980037 ODCQVFUTAUXDLGOWEPUC AYDOKVVKFATKLATVJIRD
-## 6  1995-07-15 E432243 EAQGGNLVQRUMPYZZIAXZ OTJEIEMOGBJPTUEKOKTG
-## 7  1995-12-28 Y980037 JCCGRJWKWROCEWFXXRGW TSMUCWVUIOJYOZDWQVZU
-## 8  1996-08-30 Y980037 JIOLQXRMQYMICZBOWUWV DEGYRJFLRQVIVNFVOCKB
-## 9  1998-03-03 W787634 YWOXWDYSTEJTSSNNEWZS VGMUKZNDPUATSVOUITOW
-## 10 1998-04-17 W787634 JEQCAEVALKLBQCYYAZCN BWDMIGSSJLQEENUKSIOQ
-## 11 1999-08-21 U874287 NXOIZFQCTCWVMQXYGRYM BMRPOHMXUTFFNUGPPYRU</code></pre>
+## 1  1992-04-20 H432243 HNEXOHDIVEBSPYCGQEOA EINXUHJMQKCTNOZUHNUP
+## 2  1993-06-29 Y980037 PFSZNHQRXBGBCYYGDTAK MQBRJHOOLAVKOEZCKFLR
+## 3  1993-11-10 W787634 DWSUSHSOGIEKQPGALSQB BSRIRLTXTRDCLAWJXWMN
+## 4  1993-12-22 H432243 RKVZYCPRWBGJCSAJJJIP LSGEJZXXKSHSZGBBGGDG
+## 5  1994-02-26 Y980037 EOAQVRJMQYEMEHYHGDMC FKWLJSOLHJFUCCHAPLFL
+## 6  1995-07-15 E432243 YZULUUQTWWOAUYEYFKKI SCDXLZPQOJXVMUHMSAME
+## 7  1995-12-28 Y980037 TEYQDYTHHPTJFKWKAUYG SNDBADOPVVJBHHAXZQUY
+## 8  1996-08-30 Y980037 QBZTYKMCCYURDRPFEIOQ QUEASOLBRAXUGULQJTHO
+## 9  1998-03-03 W787634 GOPFEYIUJZRECWOURFFB KBZINBCTRPZFEWEFOOLW
+## 10 1998-04-17 W787634 GEDWLFRNCIBMXLWVZMER KZVADUGHSAFSWXGHHYPI
+## 11 1999-08-21 U874287 BXRSWNMZWBAVAHWWGWVA MZLXJMTIECSUXFINUVIA</code></pre>
 <p>But note, the result set only includes 11 records. That is because we are merging according to where the records, both Hospital Number and date, are the same. So lets loosen that up a little and lets allow the merge to match if the date is up to 4 days out (to allow delays in transit from the endoscopy unit to the pathology department, samples stored in fridges over bank holidays etc..). To do this we are going to create use data.table</p>
 <pre class="r"><code>library(data.table)
 pathdt&lt;-data.table(pathRep,pathDate,pathHospitalNum)

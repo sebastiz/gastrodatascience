@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -30,10 +30,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -324,8 +326,13 @@ $(document).ready(function () {
 <p><br><br></p>
 <p>And once we understand the flow, we can start to develop a framework to measure the flow through the system.</p>
 <p>You need, of course, to be able to access and download the data you are interested in. For example, I can access gastroenterology data for all appointments within any timeframe. I then specify the service I am interested in, in gastroenterology by specifying the service I am interested in (ie physiology, or outpatients in hepatology etc). My data looks like this:</p>
-<pre class="r"><code>library(lubridate)
-#Lets generate some hospital numbers
+<pre class="r"><code>library(lubridate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<pre class="r"><code>#Lets generate some hospital numbers
 HospNumId&lt;-sample(paste(sample(letters[1:4]),sample(seq(1000000, 9999999),size=1000),sep=&quot;&quot;))
 #Lets generate some appointment dates which also have time 
 ApptDate&lt;-sample(seq(as.Date(&#39;2013/02/01&#39;), as.Date(&#39;2013/03/01&#39;), by=&quot;day&quot;),replace=T, 1000)
@@ -362,27 +369,27 @@ kable(summAT)</code></pre>
 <tbody>
 <tr class="odd">
 <td>Cancelled By Patient</td>
-<td align="right">99</td>
-<td align="right">76</td>
-<td align="right">105</td>
+<td align="right">94</td>
+<td align="right">84</td>
+<td align="right">81</td>
 </tr>
 <tr class="even">
 <td>Cancelled by Provider</td>
-<td align="right">81</td>
-<td align="right">97</td>
 <td align="right">76</td>
+<td align="right">96</td>
+<td align="right">75</td>
 </tr>
 <tr class="odd">
 <td>DNA</td>
-<td align="right">76</td>
-<td align="right">75</td>
-<td align="right">88</td>
+<td align="right">97</td>
+<td align="right">81</td>
+<td align="right">83</td>
 </tr>
 <tr class="even">
 <td>Patient seen</td>
-<td align="right">79</td>
-<td align="right">75</td>
-<td align="right">73</td>
+<td align="right">81</td>
+<td align="right">85</td>
+<td align="right">67</td>
 </tr>
 </tbody>
 </table>

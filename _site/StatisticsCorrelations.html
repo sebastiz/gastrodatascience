@@ -23,8 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -33,10 +33,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -436,11 +438,11 @@ cor.test(x, y, method=c(&quot;pearson&quot;, &quot;kendall&quot;, &quot;spearman
 ##  Kendall&#39;s rank correlation tau
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## z = 1.1669, p-value = 0.2433
+## z = -1.216, p-value = 0.224
 ## alternative hypothesis: true tau is not equal to 0
 ## sample estimates:
-##        tau 
-## 0.08326683</code></pre>
+##         tau 
+## -0.08710413</code></pre>
 <p>For Spearman’s rank correlation, the samples have to be ranked first. cor.test does this for you:</p>
 <pre class="r"><code>mySpearman&lt;-cor.test(x=EndoCr$Midazolam, y=EndoCr$Fentanyl, method = &#39;spearman&#39;)
 mySpearman</code></pre>
@@ -448,14 +450,14 @@ mySpearman</code></pre>
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## S = 148110, p-value = 0.2706
+## S = 188180, p-value = 0.2003
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##       rho 
-## 0.1112229</code></pre>
+##        rho 
+## -0.1291641</code></pre>
 <p>To access the results from cor.test use the variables as you would a data frame. Therefore to get the p-value do:</p>
 <pre class="r"><code>mySpearman$p.value</code></pre>
-<pre><code>## [1] 0.2706062</code></pre>
+<pre><code>## [1] 0.2002731</code></pre>
 <p><br><br><br><br><br></p>
 </div>
 <div id="visualisation-of-correlations" class="section level2">
@@ -478,16 +480,16 @@ use=&quot;pairwise&quot;,
 method=&quot;pearson&quot;)
 
 cc</code></pre>
-<pre><code>##                           Midazolam    Fentanyl          Age
-## Midazolam                1.00000000  0.11256767  0.060908753
-## Fentanyl                 0.11256767  1.00000000 -0.100506143
-## Age                      0.06090875 -0.10050614  1.000000000
-## TimeSpentDoingEndoscopy -0.03053808 -0.06217847  0.008333252
+<pre><code>##                           Midazolam    Fentanyl         Age
+## Midazolam                1.00000000 -0.11567898 -0.09301633
+## Fentanyl                -0.11567898  1.00000000  0.14399482
+## Age                     -0.09301633  0.14399482  1.00000000
+## TimeSpentDoingEndoscopy  0.14031632  0.02359842  0.01373177
 ##                         TimeSpentDoingEndoscopy
-## Midazolam                          -0.030538077
-## Fentanyl                           -0.062178468
-## Age                                 0.008333252
-## TimeSpentDoingEndoscopy             1.000000000</code></pre>
+## Midazolam                            0.14031632
+## Fentanyl                             0.02359842
+## Age                                  0.01373177
+## TimeSpentDoingEndoscopy              1.00000000</code></pre>
 <p>And from this create a dendogram (albeit a not very complicated one)</p>
 <pre class="r"><code>hc &lt;- hclust(dist(cc), method=&quot;average&quot;)
 dn&lt;-as.dendrogram(hc)
