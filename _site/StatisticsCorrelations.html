@@ -438,11 +438,11 @@ cor.test(x, y, method=c(&quot;pearson&quot;, &quot;kendall&quot;, &quot;spearman
 ##  Kendall&#39;s rank correlation tau
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## z = -1.216, p-value = 0.224
+## z = 1.4725, p-value = 0.1409
 ## alternative hypothesis: true tau is not equal to 0
 ## sample estimates:
-##         tau 
-## -0.08710413</code></pre>
+##       tau 
+## 0.1050812</code></pre>
 <p>For Spearman’s rank correlation, the samples have to be ranked first. cor.test does this for you:</p>
 <pre class="r"><code>mySpearman&lt;-cor.test(x=EndoCr$Midazolam, y=EndoCr$Fentanyl, method = &#39;spearman&#39;)
 mySpearman</code></pre>
@@ -450,14 +450,14 @@ mySpearman</code></pre>
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## S = 188180, p-value = 0.2003
+## S = 140790, p-value = 0.1232
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##        rho 
-## -0.1291641</code></pre>
+##       rho 
+## 0.1551736</code></pre>
 <p>To access the results from cor.test use the variables as you would a data frame. Therefore to get the p-value do:</p>
 <pre class="r"><code>mySpearman$p.value</code></pre>
-<pre><code>## [1] 0.2002731</code></pre>
+<pre><code>## [1] 0.1231757</code></pre>
 <p><br><br><br><br><br></p>
 </div>
 <div id="visualisation-of-correlations" class="section level2">
@@ -480,15 +480,15 @@ use=&quot;pairwise&quot;,
 method=&quot;pearson&quot;)
 
 cc</code></pre>
-<pre><code>##                           Midazolam    Fentanyl         Age
-## Midazolam                1.00000000 -0.11567898 -0.09301633
-## Fentanyl                -0.11567898  1.00000000  0.14399482
-## Age                     -0.09301633  0.14399482  1.00000000
-## TimeSpentDoingEndoscopy  0.14031632  0.02359842  0.01373177
+<pre><code>##                          Midazolam    Fentanyl         Age
+## Midazolam                1.0000000  0.14520079  0.14751495
+## Fentanyl                 0.1452008  1.00000000 -0.03858176
+## Age                      0.1475149 -0.03858176  1.00000000
+## TimeSpentDoingEndoscopy -0.1237296 -0.04703707  0.10292008
 ##                         TimeSpentDoingEndoscopy
-## Midazolam                            0.14031632
-## Fentanyl                             0.02359842
-## Age                                  0.01373177
+## Midazolam                           -0.12372960
+## Fentanyl                            -0.04703707
+## Age                                  0.10292008
 ## TimeSpentDoingEndoscopy              1.00000000</code></pre>
 <p>And from this create a dendogram (albeit a not very complicated one)</p>
 <pre class="r"><code>hc &lt;- hclust(dist(cc), method=&quot;average&quot;)
