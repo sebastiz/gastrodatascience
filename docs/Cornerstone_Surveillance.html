@@ -297,6 +297,18 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="LinkageResources.html">Data Linkage Resources</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -423,7 +435,15 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-20
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+1
 </td>
 </tr>
 </tbody>
@@ -455,7 +475,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-163
+189
 </td>
 </tr>
 <tr>
@@ -463,7 +483,7 @@ Number
 2014
 </td>
 <td style="text-align:right;">
-270
+233
 </td>
 </tr>
 <tr>
@@ -471,7 +491,7 @@ Number
 2015
 </td>
 <td style="text-align:right;">
-191
+235
 </td>
 </tr>
 <tr>
@@ -479,7 +499,7 @@ Number
 2016
 </td>
 <td style="text-align:right;">
-256
+239
 </td>
 </tr>
 <tr>
@@ -487,7 +507,7 @@ Number
 2017
 </td>
 <td style="text-align:right;">
-80
+77
 </td>
 </tr>
 </tbody>
@@ -535,17 +555,17 @@ Myxts&lt;-xts(WeeklyBarretts$freq, order.by=WeeklyBarretts$MonthYear,frequency=1
 autoplot(forecast(auto.arima(Myxts)))</code></pre>
 <p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot-1.png" width="672" /></p>
 <pre class="r"><code>forecast(auto.arima(Myxts))</code></pre>
-<pre><code>##    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-## 53       18.46154 7.447556 29.47552 1.617106 35.30597
-## 54       18.46154 7.447556 29.47552 1.617106 35.30597
-## 55       18.46154 7.447556 29.47552 1.617106 35.30597
-## 56       18.46154 7.447556 29.47552 1.617106 35.30597
-## 57       18.46154 7.447556 29.47552 1.617106 35.30597
-## 58       18.46154 7.447556 29.47552 1.617106 35.30597
-## 59       18.46154 7.447556 29.47552 1.617106 35.30597
-## 60       18.46154 7.447556 29.47552 1.617106 35.30597
-## 61       18.46154 7.447556 29.47552 1.617106 35.30597
-## 62       18.46154 7.447556 29.47552 1.617106 35.30597</code></pre>
+<pre><code>##    Point Forecast     Lo 80    Hi 80    Lo 95    Hi 95
+## 53       21.64278 12.919837 30.36572 8.302189 34.98337
+## 54       19.42302 10.457998 28.38805 5.712199 33.13385
+## 55       18.89645  9.917990 27.87490 5.165082 32.62781
+## 56       18.77153  9.792317 27.75074 5.039010 32.50405
+## 57       18.74190  9.762642 27.72115 5.009312 32.47448
+## 58       18.73487  9.755609 27.71412 5.002278 32.46745
+## 59       18.73320  9.753942 27.71245 5.000610 32.46579
+## 60       18.73280  9.753546 27.71206 5.000215 32.46539
+## 61       18.73271  9.753452 27.71196 5.000121 32.46530
+## 62       18.73269  9.753430 27.71194 5.000099 32.46527</code></pre>
 <p><br></p>
 <p>And if we want to see what’s going to happen over the next 24 months…</p>
 <p><br></p>
