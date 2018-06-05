@@ -359,7 +359,7 @@ ScoreDocumented&lt;-nrow(EndoHistoMerge[!is.na(EndoHistoMerge$BarrM),])
 #So the proportion where the score is documented is:
   DocumentationScoreProp&lt;-(ScoreDocumented/BarrettsDocumented)*100
 DocumentationScoreProp</code></pre>
-<pre><code>## [1] 64.85277</code></pre>
+<pre><code>## [1] 65.07482</code></pre>
 <pre class="r"><code>#Lets do the same with the number with a hiatus hernia:
 HHDocumented&lt;-nrow(EndoHistoMerge[grepl(&quot;[Hh]iatus&quot;,EndoHistoMerge$Diagnosis),])
 DocumentationHHProp&lt;-(HHDocumented/BarrettsDocumented)*100</code></pre>
@@ -437,7 +437,7 @@ Prop
 [Hh]iatus
 </td>
 <td style="text-align:right;">
-54.90035
+54.79574
 </td>
 </tr>
 <tr>
@@ -445,7 +445,7 @@ Prop
 [Uu]lcer
 </td>
 <td style="text-align:right;">
-39.58241
+40.37681
 </td>
 </tr>
 <tr>
@@ -461,7 +461,7 @@ Prop
 [Ss]trictu
 </td>
 <td style="text-align:right;">
-54.95096
+54.83380
 </td>
 </tr>
 <tr>
@@ -469,7 +469,7 @@ Prop
 [Cc]andid
 </td>
 <td style="text-align:right;">
-55.36855
+55.47450
 </td>
 </tr>
 </tbody>
