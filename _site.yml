@@ -78,6 +78,10 @@ navbar:
     - text: Meta
     - text: Code workflow
       href: Meta_Workflow.html
+  - text: Data Analysis
+    menu:
+    - text: Data Linkage Resources
+      href: LinkageResources.html
 output_dir: docs
 output:
   html_document:

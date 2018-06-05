@@ -1,0 +1,17 @@
+---
+title: "Data Linkage- Available resources"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Gastroenterology has a huge number of datasets at trust level as well as nationally and internationally. There is a increasing impetus to link these datasets to power more conclusive studies. Inherent in this are a number of problems of data linkage, the two most significant of which are
+
+<br>
+1. Unifying the data standards and data types between individual fields- a simple example being are measurements being in the same units, is the data in numeric or text format etc.)
+
+2. Patient confidentiality- resulting in anonymisation of individual datasets such that the linkage of datasets, if it relies on merging by hospital number for example, may nto be possible.
+
