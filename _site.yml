@@ -78,7 +78,7 @@ navbar:
     - text: Meta
     - text: Code workflow
       href: Meta_Workflow.html
-  - text: Data Analysis
+  - text: Data Sets
     menu:
     - text: Data Linkage Resources
       href: LinkageResources.html
