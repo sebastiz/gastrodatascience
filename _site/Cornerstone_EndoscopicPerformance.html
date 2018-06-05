@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Endoscopic Performance</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Endoscopic Performance</h1>
+
+</div>
+
+
+<div id="principles-of-measuring-endoscopic-performance" class="section level2">
+<h2>Principles of measuring endoscopic performance</h2>
+<p>Much day to day auditing is based around performance of doctors. We struggle to do this in many different areas but procedures, and in particular endoscopy, has led the way in many respects in terms of how to monitor performance and reduce variability in terms what we provide to patients.</p>
+<p>Performance has many definitions but in endoscopy we measure it in the following ways, depending on what is being performed.</p>
+<div id="endoscopy-specific" class="section level5">
+<h5><strong>Endoscopy specific</strong></h5>
+<ol style="list-style-type: decimal">
+<li>Patient discomfort scores</li>
+<li>Amount of sedation given</li>
+<li>Time taken to perform the examination</li>
+<li>Documentation of descriptors eg the length of Barrett’s segment or the presence of a hiatus hernia in various conditions</li>
+</ol>
+</div>
+<div id="endoscopy-with-pathology" class="section level5">
+<h5><strong>Endoscopy with pathology</strong></h5>
+<ol style="list-style-type: decimal">
+<li>Percentage of colonoscopies where an adenoma was detected</li>
+<li>Dysplasia detection rate in Barrett’s oesophagus at gastroscopy or inflammatory bowel disease colonoscopies.</li>
+<li></li>
+</ol>
+<p>Let’s see if we can determine some endoscopic performance metrics.</p>
+<p>We are interested in the following: 1. The amount of sedation used on average by endoscopist as well as overall 2. The documentation of hiatus hernia and length of a Barrett’s segment where Barrett’s is seen</p>
+<p>We will use the following <a href="http://gastrodatascience.com/PrepreparedEndoHistData.html">dataset</a> which is similar to the one used on the Surveillance page but with some changes</p>
+<pre class="r"><code>#To get the prepared endoscopy reports we are going to use the pre-prepared dataset here:
+EndoHistoMerge&lt;-source(&#39;EndoPathMerged_ExternalCode.R&#39;)
+EndoHistoMerge&lt;-as.data.frame(EndoHistoMerge)
+names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMerge),fixed=T)</code></pre>
+</div>
+</div>
+<div id="assessing-performance-by-assessment-of-endoscopic-documentation" class="section level2">
+<h2>Assessing performance by assessment of endoscopic documentation:</h2>
+<p><br></p>
+<div id="assess-documentation-single-term-lookup" class="section level3">
+<h3>Assess documentation single term lookup</h3>
+<p>Now the data is ready we really want to see if the endoscopist is writing down certain things in the report that they should be such as the presence of a hiatus hernia, and the C and M score if the patient has Barrett’s oesophagus. Here we will subset the patients who have Barrett’s and a C and M score and calculate a proportion of the reports that mention Barrett’s where this score is documented:</p>
+<p>We will use <a href="http://gastrodatascience.com/Text_Clean.html">grepl</a> and regular expressions in order to do this</p>
+<pre class="r"><code>#This gives us the total number of reports where it is documented:
+BarrettsDocumented&lt;-nrow(EndoHistoMerge[grepl(&quot;Barrett&quot;,EndoHistoMerge$Diagnosis),])
+
+#Now we need to look at the number of reports where the Score is documented
+ScoreDocumented&lt;-nrow(EndoHistoMerge[!is.na(EndoHistoMerge$BarrM),])
+
+#So the proportion where the score is documented is:
+  DocumentationScoreProp&lt;-(ScoreDocumented/BarrettsDocumented)*100
+DocumentationScoreProp</code></pre>
+<pre><code>## [1] 64.85277</code></pre>
+<pre class="r"><code>#Lets do the same with the number with a hiatus hernia:
+HHDocumented&lt;-nrow(EndoHistoMerge[grepl(&quot;[Hh]iatus&quot;,EndoHistoMerge$Diagnosis),])
+DocumentationHHProp&lt;-(HHDocumented/BarrettsDocumented)*100</code></pre>
+<p>Probably the best way to visualise this is with a barchart</p>
+<pre class="r"><code>n = c(DocumentationScoreProp,DocumentationHHProp)
+s = c(&quot;Prague score&quot;, &quot;Hiatus hernia&quot;)
+EndoPerformanceResult&lt;-data.frame(s,n)
+barplot(EndoPerformanceResult$n,names.arg=c(&quot;Prague score&quot;, &quot;Hiatus hernia&quot;),
+        xlab = &quot;Documentation&quot;, ylab = &quot;% of endoscopies where Barrett&#39;s found&quot;,
+        cex.lab = 1.5,cex.axis=2.0,cex.main = 2.0,cex.names=2.0,main = &quot;Barrett&#39;s Endoscopic Documentation&quot;)</code></pre>
+<p><img src="Cornerstone_EndoscopicPerformance_files/figure-html/Corenerstone_EndoscopicPerformance_PragueBarchart-1.png" width="672" /></p>
+<p><br><br></p>
+</div>
+<div id="assess-documentation-by-looking-up-from-a-list" class="section level3">
+<h3>Assess documentation by looking up from a list</h3>
+<p>What if you have a longer list of things you need to assess thanjust the Prague score and the presence of a Hiatus hernia. Perhap you are trying to also trying to assess the presence of oesophagitis and ulcers and strictures and the presence of candidiasis as well as another 15 things. This would be better done by looking up the terms from a list rather than looking for each term individually. We will have to write a function for this. We start by defining what the list consists of:</p>
+<pre class="r"><code>myNotableWords&lt;-c(&quot;[Hh]iatus&quot;,&quot;[Uu]lcer&quot;,&quot;[Ss]core&quot;,&quot;[Ss]trictu&quot;,&quot;[Cc]andid&quot;)</code></pre>
+<p><br><br></p>
+<p>This function starts by creating a <a href="http://gastrodatascience.com/Text_Clean.html">DocumentTermMatrix</a> and getting rid of all the useless stuff like punctuation, word variations, stopwords and then stems all the words Once a corpus has been created from the text, we then use a function within the function called <strong>ReportLookup</strong> which pastes together the row names of the matrix with the number of times the term that the row refers to exists in the corpus. This dataframe then gets created into another dataframe called <strong>foo</strong> where the frequency of the terms is seperated out from the term itself. Finally a Proportion of reports that the term is present in is calculated by simply dividing the term frequency by the number of reports there are. We will use the endoscopy report column to run the function here:</p>
+<pre class="r"><code>library(dplyr)
+library(directlabels)
+library(splitstackshape)
+library(tm)
+library(SnowballC)
+
+#theframe is the dataframe, y is the columnn of interest written in inverted commas and PropThreshold is the Proportion of reports Threshold for the graph
+ListLookup&lt;-function(theframe,y,myNotableWords){
+  
+  jeopCorpus &lt;- Corpus(VectorSource(theframe[,y]))
+  #jeopCorpus &lt;- tm_map(jeopCorpus, PlainTextDocument)
+  jeopCorpus &lt;- tm_map(jeopCorpus, content_transformer(removeWords), stopwords(&quot;english&quot;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, removePunctuation)
+  jeopCorpus &lt;- tm_map(jeopCorpus, stripWhitespace)
+  jeopCorpus &lt;- tm_map(jeopCorpus, removeWords, stopwords(&#39;english&#39;))
+  jeopCorpus &lt;- tm_map(jeopCorpus, stemDocument)
+  
+  
+  #wordcloud(jeopCorpus, max.words = 100, random.order = FALSE)
+  
+  #Get the frequency table of terms being used over all the reports (ie counts x2 if mentioned twice in the report)
+  dtm &lt;- TermDocumentMatrix(jeopCorpus)
+  m &lt;- as.matrix(dtm)
+  v &lt;- sort(rowSums(m),decreasing=TRUE)
+  d &lt;- data.frame(word = names(v),freq=v)
+
+    d$word&lt;-as.character(d$word)
+
+    d$Prop&lt;-(d$freq/nrow(theframe))*100
+    
+    #group all the words containing stems as per myNotableWords
+    d&lt;-sapply(myNotableWords, function(x) sum(d$Prop[grepl(x, d$word)]))
+    
+    d&lt;-data.frame(X2 = names(d), Prop = as.vector(d))
+  }</code></pre>
+<p><br><br></p>
+<p>Now we can run the function on our dataset and it will return the proportions of the report that each term is mentioned in</p>
+<p><br><br></p>
+<pre class="r"><code>library(knitr)
+myTermsProp&lt;-ListLookup(EndoHistoMerge,&quot;Diagnosis&quot;,myNotableWords)
+kable(myTermsProp)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+X2
+</th>
+<th style="text-align:right;">
+Prop
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+[Hh]iatus
+</td>
+<td style="text-align:right;">
+54.90035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+[Uu]lcer
+</td>
+<td style="text-align:right;">
+39.58241
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+[Ss]core
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+[Ss]trictu
+</td>
+<td style="text-align:right;">
+54.95096
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+[Cc]andid
+</td>
+<td style="text-align:right;">
+55.36855
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+<p>So then it’s just a short skip to the fuller barchart:</p>
+<p><br><br></p>
+<pre class="r"><code>  library(ggplot2)
+  ggplot(myTermsProp,aes(y=Prop,x=X2))+
+    geom_bar(stat=&quot;identity&quot;)+
+    theme(axis.text.x=element_text(angle=-90,hjust=0,vjust=0)) + 
+    xlab(&quot;Term&quot;) + 
+    ylab(&quot;Proportion of reports&quot;)+
+    theme(axis.text=element_text(size=20)) +
+    labs(title=&quot;Proportion of Reports Containing Terms&quot;) +  
+    theme(axis.title=element_text(size=18))+
+    theme(legend.title=element_blank())+
+    theme(legend.position = &quot;none&quot;)+
+    theme(plot.title = element_text(size=18,lineheight=.8, face=&quot;bold&quot;))</code></pre>
+<p><img src="Cornerstone_EndoscopicPerformance_files/figure-html/Corenerstone_EndoscopicPerformance_ListLookUpggplot-1.png" width="672" /></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

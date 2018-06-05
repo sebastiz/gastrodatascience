@@ -3,53 +3,163 @@ title: "Grouping by dates"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                       warning=FALSE, message=FALSE)
+library(knitr)
+library(kableExtra)
 ```
 
 ### How to group
 
-Its fairly common to need to group data by an aspect of the date. For exmaple, how many patients underwent a colonoscopy this month, or week etc.
+Its fairly common to need to group data by an aspect of the date. For example, how many patients underwent a colonoscopy this month, or week etc.
 To do this we need a date object as part of the data as usual. As long as we can extract the aspect we want to group by this should be a breeze with dplyr
 
 ###The problem
 
-How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type
+How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type. We will use some data that is already created. If you want to know how it was created you can check out this [page.....](http://gastrodatascience.com/PrepreparedEndoHistData.html)
 
-```{r,eval=FALSE}
+```{r Group_ByDates_InputData}
 #Create the data
 
-HospNum_Id<-
-Dates<-
-EndoscopyType<-
-  
-df<-as.data.frame(HospNum_Id,Dates,EndoscopyType)
+EndoHistoMerge<-source('EndoPathMerged_ExternalCode.R')
+EndoHistoMerge<-data.frame(EndoHistoMerge)
+#Neaten up the names
+names(EndoHistoMerge)<-gsub("value.","",names(EndoHistoMerge),fixed=T)
+#Lets just select the columns relevant to this page
+GroupDatesExample<-EndoHistoMerge%>%select(EndoHospNumId,Date.x)
+
 ```
 
+```{r Group_ByDates_TableGroup}
 ###The resulting data looks like this:
-```{r}
-#library(kable)
-#Create the table here
-
+kable(head(GroupDatesExample,5))
 ```
 
-Using lubridate, we can extract the month very simply as follows:
+Using [lubridate](https://cran.r-project.org/web/packages/lubridate/lubridate.pdf), we can extract the month very simply as follows:
 This can then be incorporated into dplyr
 
-```{r,eval=FALSE}
-#ByMonth<-df %>% select(Dates,EndoscopyType %>% group_by(EndoscopyType,month(Dates)) %>% summarise(n=n())
+```{r Group_ByDates_lubridateUsage}
+
+library(lubridate)
+
+kable(GroupDatesExample %>% group_by(month=month(Date.x)) %>% summarise(Number=n()))%>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
 ```
 
-Breaking this down, we are using select() to get the columns we are interested in, then we use group_by() to group according to the two aspects we are interested in
+Breaking this down, we are using select() to get the columns we are interested in, then we use group_by() to group according to the two aspects we are interested in.
 We then use summarise to count each of the groups. The output is then as expected.
 
-More refined analyses may require you to get the first event in a sequence for a patient, or the last. THis again can be done with dplyr as follows:
 
+###Simple numbers per year
+
+What if you simply want to plot out the number of procedures done by year. You don't have to use lubrudate to do this, you can do this is base RThat needs you to extract the year from the date and then summarise as follows:
+
+```{r Group_ByDates_NumberByYear}
+Tots<-GroupDatesExample %>%
+  mutate(year = format(Date.x, "%Y")) %>%
+  group_by(year)%>%
+  summarise(n = n())
+
+kable(Tots)
+``` 
+
+
+
+
+
+ <br><br><br><br><br>
+ 
 ###Get difference between two dates in consecutive rows
-```{r,eval=FALSE}
-DateSurveill<-EndoSubsetOnSurveil %>% arrange(HospNum_Id, VisitDate) %>% group_by(HospNum_Id) %>%
-  mutate(diffDate = difftime(VisitDate, lag(VisitDate,1)))
+
+ Often you need to know the time between consecutive tests for a patient. This is done using the difftime() function. Not we use the following functions a lot in the [surveillance page](http://gastrodatascience.com/Cornerstone_Surveillance.html) so these are worth understanding:
+ 
+
+```{r Group_ByDates_difftime}
+DateBetween<-GroupDatesExample %>% arrange(EndoHospNumId, Date.x) %>% group_by(EndoHospNumId) %>%
+  mutate(diffDate = difftime(Date.x, lag(Date.x,1),units="weeks"))
+
+kable(head(DateBetween,10))
 ```
 
+ <br><br><br><br><br>
+ 
 ###Get the first date or the last date in a group
   
+  It may also be that you just need to know the first or last date in the tests for a patient, again using dplyr and the slice() function:
+
+```{r, eval=FALSE}
+#To get the first
+GroupDatesExample %>% arrange(Date.x) %>% group_by(EndoHospNumId) %>% slice(1)
+```
+
+```{r, eval=FALSE}
+#To get the last
+GroupDatesExample %>% arrange(Date.x) %>% group_by(EndoHospNumId) %>% slice(n())
+```
+
+```{r Group_ByDates_GetFirstAndLastTable}
+#To get the first and the last
+kable(head(GroupDatesExample %>% arrange(Date.x) %>% group_by(EndoHospNumId) %>% slice(c(1,n())),10))
+```
+
+
+ <br><br><br><br><br>
+ 
+ 
+###Selecting rows by date position based on a conditional
+
+There are many occasions when simply grouping by dates is not sufficient for what you need. Perhaps you want to order the number of investigations that a patient has had by date so that you are ordering the dates once the grouping by hospital number has already been done, or perhaps you need to know the time difference between one test and another for a particular patient
+
+As always, dplyr has a solution for this: 
+Let's use a new data set just to make things more interesting:
+
+```{r Group_ByDates_ConditionalDataInput}
+#Generate some sample data:
+
+proc<-sample(c("EMR","RFA","Biopsies"), 100, replace = TRUE)
+#Sample dates
+dat<-sample(seq(as.Date('2013/01/01'), as.Date('2017/05/01'), by="day"), 100)
+#Generate 20 hospital numbers in no particular order:
+HospNum_Id<-sample(c("P433224","P633443","K522332","G244224","S553322","D0739033","U873352","P223333","Y763634","I927282","P223311","P029834","U22415","U234252","S141141","O349253","T622722","J322909","F630230","T432452"), 100, replace = TRUE)
+df<-data.frame(proc,dat,HospNum_Id)
+```
+
+So now we group the data according to patient number:
+
+```{r Group_ByDates_GroupByPatientNumber}
+
+Upstage<-df %>%
+  group_by(HospNum_Id) %>%
+  arrange(HospNum_Id,dat)
+#Only show the first 25 samples
+kable(head(Upstage,25))
+```
+
+But actually we want only those patients who have had and EMR followed by RFA. lead() means the leading row ie the row that leads to the next row (which should contain RFA in the proc column).
+
+```{r Group_ByDates_EMR_Then_RFA}
+Upstage<-df %>%
+group_by(HospNum_Id)%>%
+mutate(ind = proc=="RFA" & lead(proc)=="EMR") %>%
+arrange(HospNum_Id,dat)
+
+#Only show the first 25 samples
+kable(head(Upstage,25))
+```
+
+
+But that simply gives those values where consecutive rows show EMR and then RFA but we want it for patients so we have to do something a little more complex.
+We use the fact that the mutate column is boolean (so gives us a TRUE or FALSE return value) and we ask to return only those hospital numbers where all those values where this is true (and we also sort it).
+
+
+```{r Group_ByDates_EMRThenRFAFinal}
+Upstage<-df %>%
+  group_by(HospNum_Id)%>%
+ mutate(ind = proc=="EMR" & lead(proc)=="RFA") %>%
+   slice(sort(c(which(ind),which(ind)+1)))%>%
+  arrange(HospNum_Id,dat)
+kable(Upstage)
+
+``` 
+

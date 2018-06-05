@@ -55,7 +55,6 @@ As we can see from the summary diagram, there are a few steps before we start pr
 
 ```{r tidytext}
 library(tidytext)
-library(ggplot2)
 mytidy<-head(EndoHistoMerge,100)%>%
 unnest_tokens(word, Diagnoses) %>%
 anti_join(stop_words)%>%
@@ -75,7 +74,6 @@ This takes the EndoHistoMerge dataset, splits out the words (a process called to
 
 An alternative way to pre-process text is to use the tm package as follows:
 ```{r textPreprocessing_With_R}
-library(tm)
 mywords<-head(EndoHistoMerge$Diagnoses,100)
 jeopCorpus <- Corpus(VectorSource(mywords))
   #jeopCorpus <- tm_map(jeopCorpus, PlainTextDocument)
@@ -106,15 +104,11 @@ We again start with the EndoMerge dataset, but this time we are going to tokeniz
 
 
 ```{r ngrams}
-library(tidytext)
-library(tidyr)
-
-
 ngramEndoHistoMerge<-EndoHistoMerge%>%
   unnest_tokens(trigram, Diagnoses, token = "ngrams", n = 3) %>%
   separate(trigram, c("word1", "word2", "word3"), sep = " ") %>%
   count(word1, word2, word3, sort = TRUE)
- #kable(head(ngramEndoHistoMerge,10))
+# kable(head(ngramEndoHistoMerge,10))
 ```
 
 <br><br>
@@ -176,8 +170,8 @@ rect.hclust(groups, k=15)}
 
 So now we can see how specific terms are related to each other. ANother way of clustering that is very popular is k-means clustering We can do this using the cluster package. A simple example of what the algorithm is all about can be found [here:](https://eight2late.wordpress.com/2015/07/22/a-gentle-introduction-to-cluster-analysis-using-r/)
 
-```{r kmeans cluster,eval=FALSE}
-kfit <- kmeans(d,1)
+```{r kmeanscluster, eval=F}
+kfit <- kmeans(d, 5, nstart=100)
 #plot – need library cluster
 library(cluster)
 clusplot(m, kfit$cluster, color=T, shade=T, labels=2, lines=0)
@@ -200,9 +194,9 @@ We will use the [topicmodels](https://cran.r-project.org/web/packages/topicmodel
 
 <br>
 
-```{r,eval=FALSE}
+```{r,eval=F}
 
-library(topicmodels)
+#library(topicmodels)- should be included although server can't install
 #Create the document term matrix
 mywords<-head(EndoHistoMerge$Diagnoses,100)
 jeopCorpus <- Corpus(VectorSource(mywords))
@@ -227,7 +221,7 @@ ap_lda <- LDA(dtm, k = 2, control = list(seed = 1234))
 
 This then allows us to determine which topics are more or less likely to have particular words. It shows the probabilities in each document so you can see how they are similar or dissimilar
 
-```{r,eval=FALSE}
+```{r,eval=F}
 library(tidytext)
 head(ap_topics<-tidy(ap_lda, matrix = "beta"),10)
 ```
@@ -236,7 +230,7 @@ head(ap_topics<-tidy(ap_lda, matrix = "beta"),10)
 
 but because we love to visualise things, we will plot this out
 
-```{r,eval=FALSE}
+```{r,eval=F}
 library(ggplot2)
 library(dplyr)
 
@@ -261,7 +255,7 @@ Of course we have to remember this is heavily generated data but the LDA functio
 Another method is to look at what the greatest differences are between topics. The [mutate](http://gastrodatascience.com/WranglingDataFromDataMutate.html#using_ifelse()_with_mutate_for_conditional_accordionisation) column is logged to make the result symmetrical
 
 
-```{r,eval=FALSE}
+```{r,eval=F}
 library(tidyr)
 
 beta_spread <- ap_topics %>%
@@ -279,7 +273,3 @@ beta_spread %>%
 
 ```
 I will also discuss the other important aspects of text mining namely text classification.....when I get round to it...
-
-
-
-

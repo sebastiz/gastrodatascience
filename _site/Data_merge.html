@@ -314,27 +314,30 @@ $(document).ready(function () {
 </div>
 
 
+<div id="principles-of-data-merging" class="section level2">
+<h2>Principles of data merging:</h2>
 <p>It is unusual to have all data you want to analyse within one dataset. As a result being able to merge data from different datasets is crucial. Merging isn’t as straightforward as you may think. The principles are as follows</p>
 <ol style="list-style-type: decimal">
-<li>Choose columns to merge on where the resulting merge will result in a unique row. For example let’s say you have two datasets, an endoscopy and a pathology dataset. Both datasets will contain the Hospital number of the patient the report is written for. However, one patient may have many pathology reports, or perhaps many endoscopies but only one where any pathology was taken. You’re job is to figure out which pathology report should be associated with which endoscopy report</li>
+<li><strong>When merging different datasets, choose columns to merge on where the resulting merge will result in a unique row</strong>. For example let’s say you have two datasets, an endoscopy and a pathology dataset. Both datasets will contain the Hospital number of the patient the report is written for. However, one patient may have many pathology reports, or perhaps many endoscopies but only one where any pathology was taken. You’re job is to figure out which pathology report should be associated with which endoscopy report <br><br><br><br><br> <img src="figures/Merge1.png" /></li>
 </ol>
+<p><br><br><br><br><br></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Merge all vs merging some</strong> When merging you should also be careful to understand what you are including in the merge. Lets say you have a pathology dataset with 10 records but an endoscopy dataset with 100 records. Do you want to merge so you include only the data which have matched records, or do you want to include all endoscopy regardless of whether a matched pathology record is present as well?</li>
+</ol>
+<p><br><br><br><br><br></p>
 <div class="figure">
-<img src="figures/Merge1.png" />
+<img src="figures/Merge2.png" />
 
 </div>
 <ol start="2" style="list-style-type: decimal">
-<li>Merging can also happen when you have two subsets from the same dataset and you need to add them together. This is different to classic merging as above and is usually done with the base R functions cbind and rbind</li>
+<li><strong>Merge records from the same dataset</strong> Merging can also happen when you have two subsets from the same dataset and you need to add them together. This is different to classic merging as above and is usually done with the base R functions <strong>cbind</strong> and <strong>rbind</strong>. I won’t discuss these as these are basic functions and only written here to illustrate an alternative form of merging that is available.</li>
 </ol>
+<p><br><br><br><br><br></p>
 <div class="figure">
 <img src="figures/Merge3.png" />
 
 </div>
-<ol start="3" style="list-style-type: decimal">
-<li>When merging you should also be careful to understand what you are including in the merge. Lets say you have a pathology dataset with 10 records but an endoscopy dataset with 100 records. Do you want to merge so you include only the data which have matched records, or do you want to include all endoscopy regardless of whether a matched pathology record is present as well?</li>
-</ol>
-<div class="figure">
-<img src="figures/Merge2.png" />
-
+<p><br><br><br><br><br></p>
 </div>
 <div id="situation-1--merging-different-datasets" class="section level2">
 <h2>Situation 1- merging different datasets</h2>
@@ -361,19 +364,186 @@ Endodf&lt;-data.frame(EndoRep,EndoDate,EndoHospitalNum)</code></pre>
 names(pathdf)&lt;-c(&quot;Report&quot;,&quot;Date&quot;,&quot;HospNum&quot;)</code></pre>
 <p>Now we are ready to merge:</p>
 <pre class="r"><code>themerge&lt;-merge(Endodf,pathdf,by=c(&quot;Date&quot;,&quot;HospNum&quot;))
-themerge</code></pre>
-<pre><code>##          Date HospNum             Report.x             Report.y
-## 1  1992-04-20 H432243 QOANQQBOBEBXXYLAVYJI TUQUYYLIJMTYPUDELPFX
-## 2  1993-06-29 Y980037 GHWDLUZWWABHRWBGUWXT WBOAWDVVOEASJXFSODGU
-## 3  1993-11-10 W787634 SREIRANJGQFTOLYCHHSD WPWCOKBXGCOSLUMXRXYR
-## 4  1993-12-22 H432243 LDPWQBRONGOGIKVXQXTQ OBHRQYTMCUGPLFKHTMXX
-## 5  1994-02-26 Y980037 BHKVHLELVFSBZXDDPDKF EDZTAZBYFGHHVTTFVPCZ
-## 6  1995-07-15 E432243 FDGLZTEKHDWNCYWOPXYV DOCEPDGIOILAJSDEZVHG
-## 7  1995-12-28 Y980037 TOWSONIFWIQKPCCZNGYX WCFSMBLFSQFSWWTLEEOI
-## 8  1996-08-30 Y980037 GZEQFNDNFBBWFVTZUXVO EBAQQLOCBIMAHMEVCQIB
-## 9  1998-03-03 W787634 HICKOXMGGTJJGTBXYMLU KVNXVUKKJTHWMKJFPJMC
-## 10 1998-04-17 W787634 ORUQCGOMVPOYCNFHJOBZ VKQRFYKNYDFOYIFIIHMC
-## 11 1999-08-21 U874287 YKKXHUIDWVKZODLOFXGS SJNRMANDQOHXOGULPFKH</code></pre>
+kable(themerge)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+HospNum
+</th>
+<th style="text-align:left;">
+Report.x
+</th>
+<th style="text-align:left;">
+Report.y
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1992-04-20
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+QUHXQIPJZJGEJLOVZLDP
+</td>
+<td style="text-align:left;">
+LLWYIPHFIBISDZOCJJQC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1993-06-29
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+VWBWCXMMBUKODZBDJJNQ
+</td>
+<td style="text-align:left;">
+AKTMBOJUKCQURNORJRYX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1993-11-10
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+NHFTLIHQLFUHQTVRSFXY
+</td>
+<td style="text-align:left;">
+BULREGKVVKKQXQITONOW
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1993-12-22
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+DKYRZYDVMHSPNYESUKSN
+</td>
+<td style="text-align:left;">
+KADOPSOKZKSWNJQCRUFG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1994-02-26
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+JFOSEHBUVYURSFPSWPZJ
+</td>
+<td style="text-align:left;">
+RDPNNFUKZBOBKMITBGRA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1995-07-15
+</td>
+<td style="text-align:left;">
+E432243
+</td>
+<td style="text-align:left;">
+PUDWFVHAZLUJTMYWXBME
+</td>
+<td style="text-align:left;">
+ZGNJQACYEAPFSWRJLTYI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1995-12-28
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+RRMIIMYAONUOJUPCCEDE
+</td>
+<td style="text-align:left;">
+FTSTJAQVDSNYTDTIXBLQ
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1996-08-30
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+BLIQCIQGCTXRFUROTVEA
+</td>
+<td style="text-align:left;">
+EFXRLLPEDLGSZMPAJGDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1998-03-03
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+YOWPPZPKYEFDVPNFUTFP
+</td>
+<td style="text-align:left;">
+CHYHKIIBSGGZMGKOWTLP
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1998-04-17
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+MRQXKKXTFATONNAWZXSL
+</td>
+<td style="text-align:left;">
+ZMQFBTUTFYBAFKFODFVX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1999-08-21
+</td>
+<td style="text-align:left;">
+U874287
+</td>
+<td style="text-align:left;">
+IUFWJGKOLMEEHFKPYPWB
+</td>
+<td style="text-align:left;">
+SAYPAXRFJXBNBXXVLVCM
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br><br><br></p>
+</div>
+</div>
+<div id="situation-2--merging-different-datasets-but-merging-all-instead-of-some" class="section level2">
+<h2>Situation 2- merging different datasets but merging all instead of some:</h2>
 <p>But note, the result set only includes 11 records. That is because we are merging according to where the records, both Hospital Number and date, are the same. So lets loosen that up a little and lets allow the merge to match if the date is up to 4 days out (to allow delays in transit from the endoscopy unit to the pathology department, samples stored in fridges over bank holidays etc..). To do this we are going to create use data.table</p>
 <pre class="r"><code>library(data.table)
 pathdt&lt;-data.table(pathRep,pathDate,pathHospitalNum)
@@ -383,8 +553,313 @@ Endodt&lt;-data.table(EndoRep,EndoDate,EndoHospitalNum)
 setkey(Endodt, EndoHospitalNum, EndoDate)
 
 #run the join
-themerge2&lt;-Endodt[pathdt,roll=&quot;nearest&quot;]</code></pre>
-<p>There is of course an alternative way to do this using a package called fuzzyjoin and dplyr</p>
+themerge2&lt;-Endodt[pathdt,roll=&quot;nearest&quot;]
+kable(head(themerge2,25))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoRep
+</th>
+<th style="text-align:left;">
+EndoDate
+</th>
+<th style="text-align:left;">
+EndoHospitalNum
+</th>
+<th style="text-align:left;">
+pathRep
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PUDWFVHAZLUJTMYWXBME
+</td>
+<td style="text-align:left;">
+1995-07-15
+</td>
+<td style="text-align:left;">
+E432243
+</td>
+<td style="text-align:left;">
+ZGNJQACYEAPFSWRJLTYI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NHONAJDQXLTJQVQUGBDH
+</td>
+<td style="text-align:left;">
+1997-03-08
+</td>
+<td style="text-align:left;">
+E432243
+</td>
+<td style="text-align:left;">
+ZKPIHVXRSYXELVCLLCJH
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LYOIEUGDSEEGMDRUDAAS
+</td>
+<td style="text-align:left;">
+1992-07-20
+</td>
+<td style="text-align:left;">
+G424284
+</td>
+<td style="text-align:left;">
+FDPKGBISLZHVIEPMYDBU
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+XQGJCOOATUTMTUQNIRNM
+</td>
+<td style="text-align:left;">
+1992-01-26
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+QVXUTUCFXDZBJEAPDLBG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+QUHXQIPJZJGEJLOVZLDP
+</td>
+<td style="text-align:left;">
+1992-04-20
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+LLWYIPHFIBISDZOCJJQC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HIIXKFNQBAXRWGICMTSN
+</td>
+<td style="text-align:left;">
+1992-08-06
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+VFCDGBMXPJAKPVMLAYMM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DKYRZYDVMHSPNYESUKSN
+</td>
+<td style="text-align:left;">
+1993-12-22
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+KADOPSOKZKSWNJQCRUFG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RKQXAPWYEEKQMSAOPSQI
+</td>
+<td style="text-align:left;">
+1994-05-16
+</td>
+<td style="text-align:left;">
+T662272
+</td>
+<td style="text-align:left;">
+EPNBPELBJSNCGHSTKHEF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LQSHKKIKLNVSVWMNHVHH
+</td>
+<td style="text-align:left;">
+1993-04-04
+</td>
+<td style="text-align:left;">
+U874287
+</td>
+<td style="text-align:left;">
+JMCNQRCKUOLKRIQYSTTV
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IUFWJGKOLMEEHFKPYPWB
+</td>
+<td style="text-align:left;">
+1999-08-21
+</td>
+<td style="text-align:left;">
+U874287
+</td>
+<td style="text-align:left;">
+SAYPAXRFJXBNBXXVLVCM
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AUWVNXDVAXXWNEDICXQQ
+</td>
+<td style="text-align:left;">
+1991-03-23
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+MZHSDWOHOYNWWGDVWBVG
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NHFTLIHQLFUHQTVRSFXY
+</td>
+<td style="text-align:left;">
+1993-11-10
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+BULREGKVVKKQXQITONOW
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CCNMSRSXWTTATQVWHQXV
+</td>
+<td style="text-align:left;">
+1996-06-02
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+BYYEOVQXJSEWQBDBFBWO
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+YOWPPZPKYEFDVPNFUTFP
+</td>
+<td style="text-align:left;">
+1998-03-03
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+CHYHKIIBSGGZMGKOWTLP
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MRQXKKXTFATONNAWZXSL
+</td>
+<td style="text-align:left;">
+1998-04-17
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+ZMQFBTUTFYBAFKFODFVX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VWBWCXMMBUKODZBDJJNQ
+</td>
+<td style="text-align:left;">
+1993-06-29
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+AKTMBOJUKCQURNORJRYX
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ASKPSRUMJANMCJDRBBAP
+</td>
+<td style="text-align:left;">
+1994-01-11
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+TBHZJRBQDNWAQHMQKWMB
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JFOSEHBUVYURSFPSWPZJ
+</td>
+<td style="text-align:left;">
+1994-02-26
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+RDPNNFUKZBOBKMITBGRA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RRMIIMYAONUOJUPCCEDE
+</td>
+<td style="text-align:left;">
+1995-12-28
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+FTSTJAQVDSNYTDTIXBLQ
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLIQCIQGCTXRFUROTVEA
+</td>
+<td style="text-align:left;">
+1996-08-30
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+EFXRLLPEDLGSZMPAJGDF
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br><br><br></p>
+</div>
+<div id="joining-when-the-join-is-fuzzy" class="section level2">
+<h2>Joining when the join is fuzzy</h2>
+<p>There is of course an alternative way to do this using a package called fuzzyjoin and dplyr. Fuzzyjoin allows you to be less exact about the parameters of the join. It really is a very useful package</p>
 <pre class="r"><code>library(fuzzyjoin)
 library(dplyr)
 #Rename the columns so can do the join
@@ -392,8 +867,175 @@ names(Endodf)&lt;-c(&quot;EndoRep&quot;,&quot;Date&quot;,&quot;EndoHospitalNum&q
 names(pathdf)&lt;-c(&quot;pathRep&quot;,&quot;Date&quot;,&quot;pathHospitalNum&quot;)
 themerge3 &lt;- 
   fuzzyjoin::difference_full_join(Endodf, pathdf, by = &#39;Date&#39;, max_dist = 2, distance_col = &#39;Days&#39;) %&gt;%
-  filter(EndoHospitalNum == pathHospitalNum) </code></pre>
-</div>
+  filter(EndoHospitalNum == pathHospitalNum) 
+kable(head(themerge3))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoRep
+</th>
+<th style="text-align:left;">
+Date.x
+</th>
+<th style="text-align:left;">
+EndoHospitalNum
+</th>
+<th style="text-align:left;">
+pathRep
+</th>
+<th style="text-align:left;">
+Date.y
+</th>
+<th style="text-align:left;">
+pathHospitalNum
+</th>
+<th style="text-align:left;">
+Days
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+DKYRZYDVMHSPNYESUKSN
+</td>
+<td style="text-align:left;">
+1993-12-22
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+KADOPSOKZKSWNJQCRUFG
+</td>
+<td style="text-align:left;">
+1993-12-22
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+0 days
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RKQXAPWYEEKQMSAOPSQI
+</td>
+<td style="text-align:left;">
+1994-05-14
+</td>
+<td style="text-align:left;">
+T662272
+</td>
+<td style="text-align:left;">
+EPNBPELBJSNCGHSTKHEF
+</td>
+<td style="text-align:left;">
+1994-05-16
+</td>
+<td style="text-align:left;">
+T662272
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LYOIEUGDSEEGMDRUDAAS
+</td>
+<td style="text-align:left;">
+1992-07-19
+</td>
+<td style="text-align:left;">
+G424284
+</td>
+<td style="text-align:left;">
+FDPKGBISLZHVIEPMYDBU
+</td>
+<td style="text-align:left;">
+1992-07-20
+</td>
+<td style="text-align:left;">
+G424284
+</td>
+<td style="text-align:left;">
+1 days
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CCNMSRSXWTTATQVWHQXV
+</td>
+<td style="text-align:left;">
+1996-06-01
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+BYYEOVQXJSEWQBDBFBWO
+</td>
+<td style="text-align:left;">
+1996-06-02
+</td>
+<td style="text-align:left;">
+W787634
+</td>
+<td style="text-align:left;">
+1 days
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+QUHXQIPJZJGEJLOVZLDP
+</td>
+<td style="text-align:left;">
+1992-04-20
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+LLWYIPHFIBISDZOCJJQC
+</td>
+<td style="text-align:left;">
+1992-04-20
+</td>
+<td style="text-align:left;">
+H432243
+</td>
+<td style="text-align:left;">
+0 days
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BLIQCIQGCTXRFUROTVEA
+</td>
+<td style="text-align:left;">
+1996-08-30
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+EFXRLLPEDLGSZMPAJGDF
+</td>
+<td style="text-align:left;">
+1996-08-30
+</td>
+<td style="text-align:left;">
+Y980037
+</td>
+<td style="text-align:left;">
+0 days
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 

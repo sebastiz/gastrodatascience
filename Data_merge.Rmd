@@ -3,32 +3,51 @@ title: "Merging data"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
+                       warning=FALSE, message=FALSE)
+library(knitr)
+library(kableExtra)
 ```
+
+##Principles of data merging:
 
 It is unusual to have all data you want to analyse within one dataset. As a result being able to merge data from different datasets is crucial. Merging isn't as straightforward as you may think. The principles are as follows
 
- 1. Choose columns to merge on where the resulting merge will result in a unique row. For example let's say you have two datasets, an endoscopy and a pathology dataset. Both datasets will contain the Hospital number of the patient the report is written for. However, one patient may have many pathology reports, or perhaps many endoscopies but only one where any pathology was taken. You're job is to figure out which pathology report should be associated with which endoscopy report
- 
+ 1. **When merging different datasets, choose columns to merge on where the resulting merge will result in a unique row**. For example let's say you have two datasets, an endoscopy and a pathology dataset. Both datasets will contain the Hospital number of the patient the report is written for. However, one patient may have many pathology reports, or perhaps many endoscopies but only one where any pathology was taken. You're job is to figure out which pathology report should be associated with which endoscopy report
+  <br><br><br><br><br>
  ![](figures/Merge1.png)
  
- 2. Merging can also happen when you have two subsets from the same dataset and you need to add them together. This is different to classic merging as above and is usually done with the base R functions cbind and rbind
+ <br><br><br><br><br>
+ 
+
+
+ 3. **Merge all vs merging some** When merging you should also be careful to understand what you are including in the merge. Lets say you have a pathology dataset with 10 records but an endoscopy dataset with 100 records. Do you want to merge so you include only the data which have matched records, or do you want to include all endoscopy regardless of whether a matched pathology record is present as well?
+   
+   
+ <br><br><br><br><br>
+  
+![](figures/Merge2.png)
+   
+   
+ 2. **Merge records from the same dataset** Merging can also happen when you have two subsets from the same dataset and you need to add them together. This is different to classic merging as above and is usually done with the base R functions **cbind** and **rbind**. I won't discuss these as these are basic functions and only written here to illustrate an alternative form of merging that is available.
+  
+ <br><br><br><br><br>
 
 ![](figures/Merge3.png)
 
- 3. When merging you should also be careful to understand what you are including in the merge. Lets say you have a pathology dataset with 10 records but an endoscopy dataset with 100 records. Do you want to merge so you include only the data which have matched records, or do you want to include all endoscopy regardless of whether a matched pathology record is present as well?
 
-![](figures/Merge2.png)
+ <br><br><br><br><br>
 
 ##Situation 1- merging different datasets
+
 
 ####I want to merge a pathology dataset with an endoscopy dataset so that the endoscopy has the correct associated pathology for that dataset
 
 Firstly lets create the dataset. You will notice that the dates are slightly different between Endoscopy and path reports for some patients. This is real life where the date received for the pathology numbers can be slightly different to the date of the endoscopy.
 
 
-```{r}
+```{r Data_merge_Dataset}
 #Creating the datasets
 
 #Random letters to fill out a pathology report
@@ -49,23 +68,28 @@ Endodf<-data.frame(EndoRep,EndoDate,EndoHospitalNum)
 
 A simple way of merging for this ultrasimplified dataset is just to use the function merge() in base R. We will choose the columns date and Hospital number to do this:
 Before we do this we have to name the columns to merge the same so R can recognise them
-```{r}
+```{r Data_merge_rename}
 names(Endodf)<-c("Report","Date","HospNum")
 names(pathdf)<-c("Report","Date","HospNum")
 ```
 
 Now we are ready to merge:
 
-```{r}
+```{r Data_merge_mergeFunction}
 themerge<-merge(Endodf,pathdf,by=c("Date","HospNum"))
-themerge
+kable(themerge)
 ```
+
+ <br><br><br><br><br>
+ 
+##Situation 2- merging different datasets but merging all instead of some:
+
 
 But note, the result set only includes 11 records. That is because we are merging according to where the records, both Hospital Number and date, are the same. So lets loosen that up a little and lets allow the merge to match if the date is up to 4 days out (to allow delays in transit from the endoscopy unit to the pathology department, samples stored in fridges over bank holidays etc..).
 To do this we are going to create use data.table
 
 
-```{r}
+```{r Data_merge_dataTable}
 library(data.table)
 pathdt<-data.table(pathRep,pathDate,pathHospitalNum)
 setkey(pathdt, pathHospitalNum, pathDate)
@@ -75,11 +99,16 @@ setkey(Endodt, EndoHospitalNum, EndoDate)
 
 #run the join
 themerge2<-Endodt[pathdt,roll="nearest"]
+kable(head(themerge2,25))
 ```
 
-There is of course an alternative way to do this using a package called fuzzyjoin and dplyr
+ <br><br><br><br><br>
+ 
+##Joining when the join is fuzzy
 
-```{r}
+There is of course an alternative way to do this using a package called fuzzyjoin and dplyr. Fuzzyjoin allows you to be less exact about the parameters of the join. It really is a very useful package
+
+```{r Data_merge_Fuzzy}
 library(fuzzyjoin)
 library(dplyr)
 #Rename the columns so can do the join
@@ -88,4 +117,5 @@ names(pathdf)<-c("pathRep","Date","pathHospitalNum")
 themerge3 <- 
   fuzzyjoin::difference_full_join(Endodf, pathdf, by = 'Date', max_dist = 2, distance_col = 'Days') %>%
   filter(EndoHospitalNum == pathHospitalNum) 
+kable(head(themerge3))
 ```

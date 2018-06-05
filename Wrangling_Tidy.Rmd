@@ -1,0 +1,80 @@
+---
+title: "Tidying data"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+Data is best presented in a tidy format. This is the optimal way to organise data for later processing.
+
+**What is Tidy Data?**
+
+A dataset is said to be tidy if it satisfies the following conditions
+1.observations are in rows
+2.variables are in columns
+3.contained in a single dataset
+
+An example of messy data is as follows:
+
+
+```{r Tidyr_messyData}
+library(knitr)
+library(kableExtra)
+df<-data.frame(c(5,6),c(4,1))
+names(df)<-c("male","female")
+kable(df)
+```
+
+The optimal way to reorganise the dataset above is with reshape2, a package which works well with dplyr (because it was made by the same people).
+
+This time we will use a bigger dataset as follows:
+
+```{r Tidyr_reshape}
+
+pew <- read.delim(
+  file = "http://stat405.had.co.nz/data/pew.txt",
+  header = TRUE,
+  stringsAsFactors = FALSE,
+  check.names = F
+)
+```
+
+The dataset now has to be melted. To do this you need to specify the dataset (data=pew) the id column (which is the one you are organising the data around, in this case it is "religion"), the variable name you are collecting all the columns together under ("income") and the value name which is what each number represents
+
+```{r Tidyr_reshape_melt}
+library(reshape2)
+pew_tidy <- melt(
+  data = pew,
+  id = "religion",
+  variable.name = "income",
+  value.name = "frequency"
+)
+kable(head(pew_tidy,25))
+```
+
+If the data is even messier such that it has more columns in it that are not part of the variable you are trying to create a length of, then you can still use it. Consider the following dataset:
+
+```{r Tidyr_reshape2}
+
+billboards <- read.csv(
+  file = "http://stat405.had.co.nz/data/billboard.csv",
+  stringsAsFactors = FALSE
+)
+names(billboards) <- gsub("\\.", "_", names(billboards))
+
+```
+
+It has columns in it like 'track' and 'artist_inverted'. We can get around this by saying the data has to revolve around several columns as so:
+
+```{r Tidyr_reshapeAroundMultipleColumns}
+billboards_tidy <- melt(billboards, 
+  id = 1:7,
+  variable.name = "week",
+  value.name = "rank",
+  na.rm = TRUE
+)
+
+```
+
+Once the data is tidy, you can use a wealth of different packages on it. Most importantly ggplot loves tidy data.

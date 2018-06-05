@@ -1,0 +1,45 @@
+---
+title: "More detailed Grouping"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+library(dplyr)
+library(knitr)
+```
+
+
+
+
+##Introduction to advanced date groupin
+
+
+What about finding the difference between dates for two tests for a single patient. We use the same process, but this time the mutate column uses difftime to get the difference between the current row within a group and the previous column (using lag(). If you want the difference between the current and the next row then use lead())
+```{r MoreDateGrouping_RowComparison}
+Upstage<-df %>% arrange(HospNum_Id, dat) %>% group_by(HospNum_Id) %>%
+  mutate(diffDate = difftime(dat, lag(dat,1),units = "days"))
+kable(head(Upstage,25))
+  
+``` 
+
+What if you simply want to plot out the number of procedures done by year. That needs you to extract the year from the date and then summarise as follows:
+
+```{r MoreDateGrouping_NumProcPlot}
+Tots<-df %>%
+  mutate(year = format(dat, "%Y")) %>%
+  group_by(year)%>%
+  summarise(n = n())
+
+kable(Tots)
+``` 
+
+of course you can mix in other things into dplyr, and this could have been done using the in-built r function table()
+
+```{r MoreDateGrouping_NumberProcTable}
+Tots<-df %>%
+  mutate(year = format(dat, "%Y"))
+  mytable<-table(Tots$year)
+  mytable
+``` 

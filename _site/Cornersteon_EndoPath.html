@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Diagnostic yields</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Diagnostic yields</h1>
+
+</div>
+
+
+<div id="principles-of-diagnostic-yields" class="section level2">
+<h2>Principles of Diagnostic Yields</h2>
+<p>Now that we have examined how to get examples of Endoscopic performance by analysis of documentation, we can perform the more interesting task of determining endoscopic performance by determining the pathology taken at endoscopy. This means we have to merge two datasets and then extract pathology based on the endoscopy results.</p>
+<p>We will determine the dysplasia detection rate in our sample of Barrett’s endoscopies and we will do this per endoscopist so we can get an overview of who is the best at detecting dysplasia in Barrett’s oesopahgus. Note this is very similar to the concept of an adenoma detection rate in colonoscopy.</p>
+<p>We start by defining our datasets. We have done this before as part of the Surveillance page so I’m not going to repeat it here. We can just start using it.</p>
+<p>This is what the merged dataset looks like (truncated for ease of viewing):</p>
+<pre class="r"><code>EndoHistoMerge&lt;-source(&#39;EndoPathMerged_ExternalCode.R&#39;)
+EndoHistoMerge&lt;-data.frame(EndoHistoMerge)
+#Neaten up the names
+names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMerge),fixed=T)
+kable(head(EndoHistoMerge,5))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoHospNumId
+</th>
+<th style="text-align:left;">
+EndoReports
+</th>
+<th style="text-align:left;">
+Date.x
+</th>
+<th style="text-align:left;">
+Endoscopist
+</th>
+<th style="text-align:right;">
+Midazolam
+</th>
+<th style="text-align:right;">
+Fentanyl
+</th>
+<th style="text-align:left;">
+Indication
+</th>
+<th style="text-align:left;">
+Diagnosis
+</th>
+<th style="text-align:right;">
+BarrC
+</th>
+<th style="text-align:right;">
+BarrM
+</th>
+<th style="text-align:left;">
+Histop_dfHospNumId
+</th>
+<th style="text-align:left;">
+HistoReport
+</th>
+<th style="text-align:left;">
+Date.y
+</th>
+<th style="text-align:left;">
+Macro
+</th>
+<th style="text-align:left;">
+Diagnoses
+</th>
+<th style="text-align:left;">
+Days
+</th>
+<th style="text-align:left;">
+visible
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-01-15 Endoscopist: Dr Elmo Fudd Midazolam: 1mg Fentanyl: 125mcg Indication: Other- Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:left;">
+2013-01-15
+</td>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+Other-
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date received: 2013-01-13 Macrosopic description: 6 specimens collected the largest measuring 2 x 4 x 4 mm and the smallest 2 x 2 x 3 mm Diagnoses Numerous Candida spores and hyphae are present admixed with ulcer slough..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..No granulomas or viral inclusions are seen..Neither dysplasia nor malignancy is seen..There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..No Helicobacter are seen..The appearances are those of Candida oesophagitis..High grade dysplasia is present throughout this sample
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+6 specimens collected the largest measuring 2 x 4 x 4 mm and the smallest 2 x 2 x 3 mm
+</td>
+<td style="text-align:left;">
+Numerous Candida spores and hyphae are present admixed with ulcer slough..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..No granulomas or viral inclusions are seen..Neither dysplasia nor malignancy is seen..There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..No Helicobacter are seen..The appearances are those of Candida oesophagitis..High grade dysplasia is present throughout this sample
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-01-15 Endoscopist: Dr Elmo Fudd Midazolam: 1mg Fentanyl: 125mcg Indication: Other- Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:left;">
+2013-01-15
+</td>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+Other-
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date received: 2013-01-14 Macrosopic description: 1 specimens collected the largest measuring 1 x 5 x 1 mm and the smallest 4 x 2 x 1 mm Diagnoses This is a dysplastic sample.The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..High grade dysplasia is present throughout this sample.There is no dysplasia or malignancy..Basal hyperplasia is prominent.The appearances are those of Candida oesophagitis..Neither dysplasia nor malignancy is seen.
+</td>
+<td style="text-align:left;">
+2013-01-14
+</td>
+<td style="text-align:left;">
+1 specimens collected the largest measuring 1 x 5 x 1 mm and the smallest 4 x 2 x 1 mm
+</td>
+<td style="text-align:left;">
+This is a dysplastic sample.The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..High grade dysplasia is present throughout this sample.There is no dysplasia or malignancy..Basal hyperplasia is prominent.The appearances are those of Candida oesophagitis..Neither dysplasia nor malignancy is seen.
+</td>
+<td style="text-align:left;">
+1 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-01-15 Endoscopist: Dr Elmo Fudd Midazolam: 1mg Fentanyl: 125mcg Indication: Other- Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:left;">
+2013-01-15
+</td>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+Other-
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date received: 2013-01-13 Macrosopic description: 9 specimens collected the largest measuring 2 x 1 x 5 mm and the smallest 4 x 3 x 1 mm Diagnoses The appearances are those of Candida oesophagitis..There is reactive basal cell hyperplasia and mild inflammatory epithelial atypia..There is low grade dysplasia.There is no intercellular oedema in the surface epithelium..Intestinal metaplasia is present.. PAS staining shows occasional spores, consistent with candida..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..There is no dysplasia or malignancy.
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+9 specimens collected the largest measuring 2 x 1 x 5 mm and the smallest 4 x 3 x 1 mm
+</td>
+<td style="text-align:left;">
+The appearances are those of Candida oesophagitis..There is reactive basal cell hyperplasia and mild inflammatory epithelial atypia..There is low grade dysplasia.There is no intercellular oedema in the surface epithelium..Intestinal metaplasia is present.. PAS staining shows occasional spores, consistent with candida..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..There is no dysplasia or malignancy.
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-01-15 Endoscopist: Dr Elmo Fudd Midazolam: 1mg Fentanyl: 125mcg Indication: Other- Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:left;">
+2013-01-15
+</td>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+Other-
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. Barrett’s oesophagus length: C1M9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+Date received: 2013-01-13 Macrosopic description: 2 specimens collected the largest measuring 5 x 4 x 3 mm and the smallest 1 x 2 x 5 mm Diagnoses There is no dysplasia or malignancy..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Intestinal metaplasia is present.. There is no dysplasia and no invasive carcinoma..The appearances are those of Candida oesophagitis.. PAS staining shows occasional spores, consistent with candida..Numerous Candida spores and hyphae are present admixed with ulcer slough..There is low grade dysplasia.Neither dysplasia nor malignancy is seen..There is no significant increase in intraepithelial eosinophils.
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+2 specimens collected the largest measuring 5 x 4 x 3 mm and the smallest 1 x 2 x 5 mm
+</td>
+<td style="text-align:left;">
+There is no dysplasia or malignancy..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Intestinal metaplasia is present.. There is no dysplasia and no invasive carcinoma..The appearances are those of Candida oesophagitis.. PAS staining shows occasional spores, consistent with candida..Numerous Candida spores and hyphae are present admixed with ulcer slough..There is low grade dysplasia.Neither dysplasia nor malignancy is seen..There is no significant increase in intraepithelial eosinophils.
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Y763634
+</td>
+<td style="text-align:left;">
+Date of Procedure 2015-04-22 Endoscopist: Dr Joseph Conrad Midazolam: 2mg Fentanyl: 50mcg Indication: Therapeutic- Dilatation Diagnosis: Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Ulcer- Oesophageal. .Post chemo-radiotherapy stricture .Barretts oesophagus. .Esophageal candidiasis .Oesophagitis. Barrett’s oesophagus length: C0M9
+</td>
+<td style="text-align:left;">
+2015-04-22
+</td>
+<td style="text-align:left;">
+Joseph Conrad
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:left;">
+Therapeutic- Dilatation
+</td>
+<td style="text-align:left;">
+Diagnosis: Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Ulcer- Oesophageal. .Post chemo-radiotherapy stricture .Barretts oesophagus. .Esophageal candidiasis .Oesophagitis. Barrett’s oesophagus length: C0M9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+Y763634
+</td>
+<td style="text-align:left;">
+Date received: 2015-04-23 Macrosopic description: 8 specimens collected the largest measuring 2 x 1 x 4 mm and the smallest 1 x 5 x 5 mm Diagnoses There is some ulceration.. No herpetic viral inclusions are seen..This is a dysplastic sample. PAS staining shows occasional spores, consistent with candida.
+</td>
+<td style="text-align:left;">
+2015-04-23
+</td>
+<td style="text-align:left;">
+8 specimens collected the largest measuring 2 x 1 x 4 mm and the smallest 1 x 5 x 5 mm
+</td>
+<td style="text-align:left;">
+There is some ulceration.. No herpetic viral inclusions are seen..This is a dysplastic sample. PAS staining shows occasional spores, consistent with candida.
+</td>
+<td style="text-align:left;">
+1 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="breakdown-of-analytical-method-for-yield" class="section level1">
+<h1>Breakdown of analytical method for yield</h1>
+<p>So the task now involves extracting the presence of dysplasia in those patients where Barrett’s was detected at endoscopy and then grouping them by endoscopist</p>
+<p>So to spell out where each element of this comes from:</p>
+<p><strong>1. Detect rows that mention Barrett’s in the endoscopy report.</strong></p>
+<p><strong>2. Also detect rows that mention dysplasia in the pathology report.</strong></p>
+<p><strong>3. Group by endoscopist.</strong></p>
+<p><strong>4. Then get the total number of reports that mention Barrett’s in the endoscopy report whether dyplasia is metioned or not, and group by endoscopist.</strong></p>
+<p><strong>5. Calculate proportion by endoscopist then visualise it.</strong></p>
+<p><br><br></p>
+<div id="detect-rows-that-mention-term-of-interest-in-the-endoscopy-report." class="section level3">
+<h3><strong>1 &amp; 2. Detect rows that mention term of interest in the endoscopy report.</strong></h3>
+<p>This is done using <a href="http://gastrodatascience.com/Text_Clean.html">grepl.</a> We will do a combined grepl so we can get the subset we are interested in and that mention dysplasia in the pathology report.</p>
+<pre class="r"><code>DysplasticBarretts&lt;-EndoHistoMerge[grepl(&quot;[Bb]arrett&quot;,EndoHistoMerge$EndoReports)&amp;grepl(&quot;[Dd]ysplasi&quot;,EndoHistoMerge$HistoReport),]</code></pre>
+<p>So you will note that there are several reports where it is mentioned that there is no dysplasia so we have to get rid of these. This is tricky but for the purposes of this site we will use the brute force technique</p>
+<pre class="r"><code>DysplasticBarretts&lt;-DysplasticBarretts[!grepl(&quot;[Nn]either dysplasia&quot;,DysplasticBarretts$Diagnoses)&amp;!grepl(&quot;[Nn]o [Dd]ysplasia&quot;,DysplasticBarretts$Diagnoses),]</code></pre>
+<p><br><br></p>
+</div>
+<div id="group-by-endoscopist" class="section level3">
+<h3><strong>3. Group by endoscopist</strong></h3>
+<p>There are two ways of doing this. The first way is to use dplyr as follows:</p>
+<pre class="r"><code>EndoscopistDDRBarretts&lt;-DysplasticBarretts%&gt;%group_by(Endoscopist)%&gt;%summarise(n=n())
+
+kable(EndoscopistDDRBarretts)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Endoscopist
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bilbo Baggins
+</td>
+<td style="text-align:right;">
+92
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bugs Bunny
+</td>
+<td style="text-align:right;">
+94
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Charles Dickens
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chubby Checker
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Davy Jones
+</td>
+<td style="text-align:right;">
+95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+87
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elvis Presley
+</td>
+<td style="text-align:right;">
+82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Florence Nightingale
+</td>
+<td style="text-align:right;">
+118
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frank Sinatra
+</td>
+<td style="text-align:right;">
+104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jimminey Cricket
+</td>
+<td style="text-align:right;">
+99
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jonny Begood
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joseph Conrad
+</td>
+<td style="text-align:right;">
+96
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+King Richard III
+</td>
+<td style="text-align:right;">
+95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rara Rasputin
+</td>
+<td style="text-align:right;">
+109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sal Addin
+</td>
+<td style="text-align:right;">
+104
+</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively we can just use the table function which has a neater input but gives a messier output:</p>
+<pre class="r"><code>DDRtable&lt;-table(EndoscopistDDRBarretts)
+kable(DDRtable)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+82
+</th>
+<th style="text-align:right;">
+87
+</th>
+<th style="text-align:right;">
+92
+</th>
+<th style="text-align:right;">
+94
+</th>
+<th style="text-align:right;">
+95
+</th>
+<th style="text-align:right;">
+96
+</th>
+<th style="text-align:right;">
+99
+</th>
+<th style="text-align:right;">
+100
+</th>
+<th style="text-align:right;">
+104
+</th>
+<th style="text-align:right;">
+109
+</th>
+<th style="text-align:right;">
+110
+</th>
+<th style="text-align:right;">
+118
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bilbo Baggins
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bugs Bunny
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Charles Dickens
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chubby Checker
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Davy Jones
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elmo Fudd
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elvis Presley
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Florence Nightingale
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frank Sinatra
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jimminey Cricket
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jonny Begood
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joseph Conrad
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+King Richard III
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rara Rasputin
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sal Addin
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+</div>
+<div id="get-the-total-number-of-specific-endoscopies-by-endoscopist" class="section level3">
+<h3><strong>4. Get the total number of specific endoscopies by endoscopist:</strong></h3>
+<p>So now we know who is picking up dysplasia we can express this as a proportion of all the Barrett’s endoscopy they have done as follows:</p>
+<pre class="r"><code>AllBarretts&lt;-EndoHistoMerge[grepl(&quot;[Bb]arrett&quot;,EndoHistoMerge$EndoReports),]
+Endoscopist_All_Barretts&lt;-AllBarretts%&gt;%group_by(Endoscopist)%&gt;%summarise(n=n())</code></pre>
+<p><br><br></p>
+</div>
+<div id="ddr-by-endoscopist" class="section level3">
+<h3><strong>5. DDR by endoscopist:</strong></h3>
+<p>Now we just calulate the proportions to get the DDR. We have to bind Endoscopist_All_Barretts and EndoscopistDDRBarretts to calculate this. We merge by endoscopist</p>
+<pre class="r"><code>#For a bit of variety we are going to do the merge using dplyr join functions instead of base R merge functions:
+DDRTable&lt;-full_join(Endoscopist_All_Barretts, EndoscopistDDRBarretts, by = &quot;Endoscopist&quot;)</code></pre>
+<p>And finally the proportions:</p>
+<pre class="r"><code>DDRTable$Prop&lt;-(DDRTable$n.y/DDRTable$n.x)*100
+DDRTable&lt;-data.frame(DDRTable)
+#Lets get rid of NA values by replacing with &quot;0&quot;
+DDRTable$Prop[is.na(DDRTable$Prop)] &lt;- 0
+
+#Lets plot it out
+barplot(DDRTable$Prop,names.arg=DDRTable$Endoscopist, ylab = &quot;% dysplasia&quot;,
+        cex.lab = 1.5,cex.axis=1.0,cex.main = 1.0,cex.names=1.0,main = &quot;Barrett&#39;s Endoscopic Dysplasia detection proportion&quot;,las=2)</code></pre>
+<p><img src="Cornersteon_EndoPath_files/figure-html/Cornerstone_EndoPath_DDR_Proportions-1.png" width="672" /></p>
+<p>….Looks like some people need more training…</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

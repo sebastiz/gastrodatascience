@@ -22,6 +22,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -316,35 +317,1577 @@ $(document).ready(function () {
 
 <div id="how-to-group" class="section level3">
 <h3>How to group</h3>
-<p>Its fairly common to need to group data by an aspect of the date. For exmaple, how many patients underwent a colonoscopy this month, or week etc. To do this we need a date object as part of the data as usual. As long as we can extract the aspect we want to group by this should be a breeze with dplyr</p>
+<p>Its fairly common to need to group data by an aspect of the date. For example, how many patients underwent a colonoscopy this month, or week etc. To do this we need a date object as part of the data as usual. As long as we can extract the aspect we want to group by this should be a breeze with dplyr</p>
 </div>
 <div id="the-problem" class="section level3">
 <h3>The problem</h3>
-<p>How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type</p>
+<p>How do I find out how many endoscopies were done by month for the past calendar year, by endoscopy type. We will use some data that is already created. If you want to know how it was created you can check out this <a href="http://gastrodatascience.com/PrepreparedEndoHistData.html">page…..</a></p>
 <pre class="r"><code>#Create the data
 
-HospNum_Id&lt;-
-Dates&lt;-
-EndoscopyType&lt;-
-  
-df&lt;-as.data.frame(HospNum_Id,Dates,EndoscopyType)</code></pre>
+EndoHistoMerge&lt;-source(&#39;EndoPathMerged_ExternalCode.R&#39;)
+EndoHistoMerge&lt;-data.frame(EndoHistoMerge)
+#Neaten up the names
+names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMerge),fixed=T)
+#Lets just select the columns relevant to this page
+GroupDatesExample&lt;-EndoHistoMerge%&gt;%select(EndoHospNumId,Date.x)</code></pre>
+<pre class="r"><code>###The resulting data looks like this:
+kable(head(GroupDatesExample,5))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoHospNumId
+</th>
+<th style="text-align:left;">
+Date.x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+P223311
+</td>
+<td style="text-align:left;">
+2014-10-31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P223311
+</td>
+<td style="text-align:left;">
+2014-10-31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S553322
+</td>
+<td style="text-align:left;">
+2016-11-15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S553322
+</td>
+<td style="text-align:left;">
+2016-10-27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S553322
+</td>
+<td style="text-align:left;">
+2016-10-27
+</td>
+</tr>
+</tbody>
+</table>
+<p>Using <a href="https://cran.r-project.org/web/packages/lubridate/lubridate.pdf">lubridate</a>, we can extract the month very simply as follows: This can then be incorporated into dplyr</p>
+<pre class="r"><code>library(lubridate)
+
+kable(GroupDatesExample %&gt;% group_by(month=month(Date.x)) %&gt;% summarise(Number=n()))%&gt;%
+  kable_styling(bootstrap_options = &quot;striped&quot;, full_width = F)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+month
+</th>
+<th style="text-align:right;">
+Number
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1390
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1340
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1406
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1212
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1138
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1270
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1041
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1332
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+1422
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1214
+</td>
+</tr>
+</tbody>
+</table>
+<p>Breaking this down, we are using select() to get the columns we are interested in, then we use group_by() to group according to the two aspects we are interested in. We then use summarise to count each of the groups. The output is then as expected.</p>
 </div>
-<div id="the-resulting-data-looks-like-this" class="section level3">
-<h3>The resulting data looks like this:</h3>
-<pre class="r"><code>#library(kable)
-#Create the table here</code></pre>
-<p>Using lubridate, we can extract the month very simply as follows: This can then be incorporated into dplyr</p>
-<pre class="r"><code>#ByMonth&lt;-df %&gt;% select(Dates,EndoscopyType %&gt;% group_by(EndoscopyType,month(Dates)) %&gt;% summarise(n=n())</code></pre>
-<p>Breaking this down, we are using select() to get the columns we are interested in, then we use group_by() to group according to the two aspects we are interested in We then use summarise to count each of the groups. The output is then as expected.</p>
-<p>More refined analyses may require you to get the first event in a sequence for a patient, or the last. THis again can be done with dplyr as follows:</p>
+<div id="simple-numbers-per-year" class="section level3">
+<h3>Simple numbers per year</h3>
+<p>What if you simply want to plot out the number of procedures done by year. You don’t have to use lubrudate to do this, you can do this is base RThat needs you to extract the year from the date and then summarise as follows:</p>
+<pre class="r"><code>Tots&lt;-GroupDatesExample %&gt;%
+  mutate(year = format(Date.x, &quot;%Y&quot;)) %&gt;%
+  group_by(year)%&gt;%
+  summarise(n = n())
+
+kable(Tots)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2013
+</td>
+<td style="text-align:right;">
+3754
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2014
+</td>
+<td style="text-align:right;">
+3530
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2015
+</td>
+<td style="text-align:right;">
+3486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016
+</td>
+<td style="text-align:right;">
+3624
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017
+</td>
+<td style="text-align:right;">
+1228
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br><br><br></p>
 </div>
 <div id="get-difference-between-two-dates-in-consecutive-rows" class="section level3">
 <h3>Get difference between two dates in consecutive rows</h3>
-<pre class="r"><code>DateSurveill&lt;-EndoSubsetOnSurveil %&gt;% arrange(HospNum_Id, VisitDate) %&gt;% group_by(HospNum_Id) %&gt;%
-  mutate(diffDate = difftime(VisitDate, lag(VisitDate,1)))</code></pre>
+<p>Often you need to know the time between consecutive tests for a patient. This is done using the difftime() function. Not we use the following functions a lot in the <a href="http://gastrodatascience.com/Cornerstone_Surveillance.html">surveillance page</a> so these are worth understanding:</p>
+<pre class="r"><code>DateBetween&lt;-GroupDatesExample %&gt;% arrange(EndoHospNumId, Date.x) %&gt;% group_by(EndoHospNumId) %&gt;%
+  mutate(diffDate = difftime(Date.x, lag(Date.x,1),units=&quot;weeks&quot;))
+
+kable(head(DateBetween,10))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoHospNumId
+</th>
+<th style="text-align:left;">
+Date.x
+</th>
+<th style="text-align:left;">
+diffDate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-02
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-09
+</td>
+<td style="text-align:left;">
+1.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-09
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-09
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-12
+</td>
+<td style="text-align:left;">
+0.4285714 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-12
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+0.1428571 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-13
+</td>
+<td style="text-align:left;">
+0.0000000 weeks
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br><br><br></p>
 </div>
 <div id="get-the-first-date-or-the-last-date-in-a-group" class="section level3">
 <h3>Get the first date or the last date in a group</h3>
+<p>It may also be that you just need to know the first or last date in the tests for a patient, again using dplyr and the slice() function:</p>
+<pre class="r"><code>#To get the first
+GroupDatesExample %&gt;% arrange(Date.x) %&gt;% group_by(EndoHospNumId) %&gt;% slice(1)</code></pre>
+<pre class="r"><code>#To get the last
+GroupDatesExample %&gt;% arrange(Date.x) %&gt;% group_by(EndoHospNumId) %&gt;% slice(n())</code></pre>
+<pre class="r"><code>#To get the first and the last
+kable(head(GroupDatesExample %&gt;% arrange(Date.x) %&gt;% group_by(EndoHospNumId) %&gt;% slice(c(1,n())),10))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+EndoHospNumId
+</th>
+<th style="text-align:left;">
+Date.x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2013-01-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+2017-05-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+2013-01-03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+2017-04-25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+2013-01-04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+2017-04-20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+2013-01-06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+2017-04-30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+2013-01-04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+2017-04-28
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br><br><br><br></p>
+</div>
+<div id="selecting-rows-by-date-position-based-on-a-conditional" class="section level3">
+<h3>Selecting rows by date position based on a conditional</h3>
+<p>There are many occasions when simply grouping by dates is not sufficient for what you need. Perhaps you want to order the number of investigations that a patient has had by date so that you are ordering the dates once the grouping by hospital number has already been done, or perhaps you need to know the time difference between one test and another for a particular patient</p>
+<p>As always, dplyr has a solution for this: Let’s use a new data set just to make things more interesting:</p>
+<pre class="r"><code>#Generate some sample data:
+
+proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;), 100, replace = TRUE)
+#Sample dates
+dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
+#Generate 20 hospital numbers in no particular order:
+HospNum_Id&lt;-sample(c(&quot;P433224&quot;,&quot;P633443&quot;,&quot;K522332&quot;,&quot;G244224&quot;,&quot;S553322&quot;,&quot;D0739033&quot;,&quot;U873352&quot;,&quot;P223333&quot;,&quot;Y763634&quot;,&quot;I927282&quot;,&quot;P223311&quot;,&quot;P029834&quot;,&quot;U22415&quot;,&quot;U234252&quot;,&quot;S141141&quot;,&quot;O349253&quot;,&quot;T622722&quot;,&quot;J322909&quot;,&quot;F630230&quot;,&quot;T432452&quot;), 100, replace = TRUE)
+df&lt;-data.frame(proc,dat,HospNum_Id)</code></pre>
+<p>So now we group the data according to patient number:</p>
+<pre class="r"><code>Upstage&lt;-df %&gt;%
+  group_by(HospNum_Id) %&gt;%
+  arrange(HospNum_Id,dat)
+#Only show the first 25 samples
+kable(head(Upstage,25))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+proc
+</th>
+<th style="text-align:left;">
+dat
+</th>
+<th style="text-align:left;">
+HospNum_Id
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-08-31
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-01-13
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-06-15
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-04-06
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-09-27
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-03-29
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-19
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-09-02
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2017-04-05
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-05-05
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-06-11
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-07
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-01-29
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-11-07
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-18
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-05-26
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-07-07
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-11-11
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-05-22
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-04-01
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-04-18
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-02-05
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-08-10
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-05-13
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+</tr>
+</tbody>
+</table>
+<p>But actually we want only those patients who have had and EMR followed by RFA. lead() means the leading row ie the row that leads to the next row (which should contain RFA in the proc column).</p>
+<pre class="r"><code>Upstage&lt;-df %&gt;%
+group_by(HospNum_Id)%&gt;%
+mutate(ind = proc==&quot;RFA&quot; &amp; lead(proc)==&quot;EMR&quot;) %&gt;%
+arrange(HospNum_Id,dat)
+
+#Only show the first 25 samples
+kable(head(Upstage,25))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+proc
+</th>
+<th style="text-align:left;">
+dat
+</th>
+<th style="text-align:left;">
+HospNum_Id
+</th>
+<th style="text-align:left;">
+ind
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-08-31
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-01-13
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-06-15
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-04-06
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-09-27
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-03-29
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-19
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-09-02
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2017-04-05
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-05-05
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-06-11
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-07
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-01-29
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-11-07
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-18
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-05-26
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-07-07
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-11-11
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-05-22
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-04-01
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-04-18
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-02-05
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2015-08-10
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-05-13
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>But that simply gives those values where consecutive rows show EMR and then RFA but we want it for patients so we have to do something a little more complex. We use the fact that the mutate column is boolean (so gives us a TRUE or FALSE return value) and we ask to return only those hospital numbers where all those values where this is true (and we also sort it).</p>
+<pre class="r"><code>Upstage&lt;-df %&gt;%
+  group_by(HospNum_Id)%&gt;%
+ mutate(ind = proc==&quot;EMR&quot; &amp; lead(proc)==&quot;RFA&quot;) %&gt;%
+   slice(sort(c(which(ind),which(ind)+1)))%&gt;%
+  arrange(HospNum_Id,dat)
+kable(Upstage)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+proc
+</th>
+<th style="text-align:left;">
+dat
+</th>
+<th style="text-align:left;">
+HospNum_Id
+</th>
+<th style="text-align:left;">
+ind
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2017-04-05
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-06-11
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-07
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-01-29
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-06-18
+</td>
+<td style="text-align:left;">
+G244224
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-05-26
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-11-11
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-05-22
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-02-05
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2014-05-27
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2015-04-05
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-03-14
+</td>
+<td style="text-align:left;">
+P223311
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-06-05
+</td>
+<td style="text-align:left;">
+P223311
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-03-26
+</td>
+<td style="text-align:left;">
+P223333
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-12-13
+</td>
+<td style="text-align:left;">
+P223333
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2015-09-22
+</td>
+<td style="text-align:left;">
+P633443
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2017-02-05
+</td>
+<td style="text-align:left;">
+P633443
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-11-25
+</td>
+<td style="text-align:left;">
+S141141
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2015-12-02
+</td>
+<td style="text-align:left;">
+S141141
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-04-21
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-05-02
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2016-09-29
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2016-10-03
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-07-11
+</td>
+<td style="text-align:left;">
+Y763634
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-05-09
+</td>
+<td style="text-align:left;">
+Y763634
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 

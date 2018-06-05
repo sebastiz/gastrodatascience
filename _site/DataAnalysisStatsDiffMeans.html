@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Looking for differences in the data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Looking for differences in the data</h1>
+
+</div>
+
+
+<p>Statistics is always tricky especially for the non statistician. I find it easier to follow a flowchart to decide on the correct statistical test. Thie relies on understanding some semantics:</p>
+<p><strong>Group</strong>=sample ie the population that has been measured. If you have measured from two groups or populations then these are two samples eg between patients from one hospital and another hospital</p>
+<p><strong>Observations</strong>= the actual measurement eg the height of that patient.</p>
+<p><strong>Matching</strong> = Dependent= whether the population is matched eg repeated measures from the same subject ()</p>
+<p><strong>Variable</strong> = the parameter being measured eg height of patient. This is similar to a column in a standard spreadsheet.</p>
+<p>There are many statistical tests to choose from so I use the following diagram to help me choose:</p>
+<p><br><br><br><br></p>
+<div class="figure">
+<img src="figures/StatsTest.png" />
+
+</div>
+<p><br><br><br><br></p>
+<p>In the above figure, populations that are matched are along the y axis and unmatched along the x axis. Subscript letters are non-parametric tests and superscript are parametric as follows:</p>
+<p><strong>wrs= Wilcoxon rank sums</strong></p>
+<p><strong>wmp=Wilcoxon matched pairs</strong></p>
+<p><strong>f=Friedman test</strong></p>
+<p><strong>A (if matched)=Repeated measures one way ANOVA</strong></p>
+<p><strong>A (if unmatched)=One way ANOVA</strong></p>
+<p><strong>k=Kruskall-Wallis</strong></p>
+<p><em>Note the two sample unmatched t test could also be a Welch corrected unpaired t test if the variances are not equal.</em></p>
+<p><em>Note the above diagram is when one variable is being compared between populations</em></p>
+<p>For example if you want to compare the mean of two unmatched populations around one variable you would use a unpaired t-test if the sampling was parametric or a Mann-Whitney U if it was non parametric.</p>
+<p>R accomodates all of the stats tests there are so as a basic run through of them lets create our input dataframe</p>
+<p>The tests are as follows:</p>
+<p><br><br><br><br><br><br></p>
+<div id="parametric-tests" class="section level2">
+<h2>Parametric tests:</h2>
+<p>The following relate the the large letters along the y-axis in the diagram</p>
+<div id="matched-data" class="section level3">
+<h3>Matched data:</h3>
+<p><strong>1 sample:</strong></p>
+<pre class="r"><code># one sample t-test
+y1 = c(18.2, 20.1, 17.6, 16.8, 18.8, 19.7, 19.1)
+t.test(y1,mu=3) # Ho: mu=3</code></pre>
+<p><strong>2 sample:</strong></p>
+<pre class="r"><code>#Create the data frame
+y1 = c(18.2, 20.1, 17.6, 16.8, 18.8, 19.7, 19.1)
+y2 = c(17.4, 18.7, 19.1, 16.4, 15.9, 18.4, 17.7)
+y = c(y1, y2)
+n = rep(7, 2)
+group = rep(1:2, n)
+data = data.frame(y = y, group = factor(group))
+# paired t-test
+t.test(y1,y2,paired=TRUE) # where y1 &amp; y2 are numeric</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  y1 and y2
+## t = 1.9001, df = 6, p-value = 0.1062
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2754342  2.1897199
+## sample estimates:
+## mean of the differences 
+##               0.9571429</code></pre>
+<p><strong>Multiple samples:</strong></p>
+<pre class="r"><code>#ANOVA for matched samples
+y1 = c(18.2, 20.1, 17.6, 16.8, 18.8, 19.7, 19.1)
+y2 = c(17.4, 18.7, 19.1, 16.4, 15.9, 18.4, 17.7)
+y3 = c(15.2, 18.8, 17.7, 16.5, 15.9, 17.1, 16.7)
+y = c(y1, y2, y3)
+n = rep(7, 3)
+group = rep(1:3, n)
+data = data.frame(y = y, group = factor(group))
+fit = lm(y ~ group, data)
+anova(fit)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## group      2 11.007  5.5033  3.9683 0.03735 *
+## Residuals 18 24.963  1.3868                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>#Get the confidence intervals:
+confint(fit)</code></pre>
+<pre><code>##                 2.5 %     97.5 %
+## (Intercept) 17.679156 19.5494153
+## group2      -2.279616  0.3653301
+## group3      -3.093902 -0.4489556</code></pre>
+<pre class="r"><code>#Plot it out in ggplot
+
+new = data.frame(Fitted = fitted(fit),
+  Residuals = resid(fit), Treatment = data$group)
+#and then produce the plot:
+library(ggplot2)
+ggplot(new, aes(Fitted, Residuals, colour = Treatment)) + geom_point(size=18)</code></pre>
+<p><img src="DataAnalysisStatsDiffMeans_files/figure-html/Data_Stats_Parametric_MatchedMultipleSmaple-1.png" width="672" /></p>
+</div>
+<div id="unmatched-data" class="section level3">
+<h3>Unmatched data:</h3>
+<p><strong>2 sample:</strong></p>
+<pre class="r"><code># independent 2-group t-test
+t.test(y1,y2) # where y1 and y2 are numeric</code></pre>
+<p><strong>Multiple samples:</strong></p>
+<p>This is the anova as illustrated above</p>
+<p><br><br><br><br><br><br></p>
+</div>
+</div>
+<div id="non-parametric-tests" class="section level2">
+<h2>Non-parametric tests:</h2>
+<div id="matched-data-1" class="section level3">
+<h3>Matched data:</h3>
+<p><strong>1 sample:</strong></p>
+<pre class="r"><code>wilcox.test(y1,y2,paired=TRUE)</code></pre>
+<p><strong>2 sample:</strong></p>
+<pre class="r"><code>wilcox.test(y1,y2,paired=TRUE)</code></pre>
+<p><strong>Multiple samples:</strong></p>
+<pre class="r"><code>#Kruskall Wallis
+kruskal.test(y~A) # where y1 is numeric and A is a factor</code></pre>
+</div>
+<div id="unmatched-data-1" class="section level3">
+<h3>Unmatched data:</h3>
+<p><strong>1 sample:</strong></p>
+<pre class="r"><code>wilcox.test(immer$Y1, immer$Y2) </code></pre>
+<p><strong>2 sample:</strong> <br><br></p>
+<pre class="r"><code># dependent 2-group Wilcoxon Signed Rank Test 
+wilcox.test(y1,y2,paired=TRUE) # where y1 and y2 are numeric</code></pre>
+<p><strong>Multiple samples:</strong> <br><br></p>
+<pre class="r"><code>friedman.test(y~A|B)
+# where y are the data values, A is a grouping factor
+# and B is a blocking factor</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

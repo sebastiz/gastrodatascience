@@ -11,7 +11,7 @@
 
 
 
-<title>Eventings- Data viz of patient flow with Sankey diagrams or Circos plots</title>
+<title>Patient flow with Sankey diagrams or Circos plots</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -309,268 +309,608 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Eventings- Data viz of patient flow with Sankey diagrams or Circos plots</h1>
+<h1 class="title toc-ignore">Patient flow with Sankey diagrams or Circos plots</h1>
 
 </div>
 
 
-<div id="the-problem" class="section level4">
-<h4>The problem:</h4>
+<div id="the-problem" class="section level2">
+<h2>The problem:</h2>
 <p>How do I visualise the flow of patients through a service? For example how do I see what order of therapies patients have received when they undergo Barrett’s endotherapy for early malignancies or dysplasia?</p>
-</div>
-<div id="the-background" class="section level4">
-<h4>The background:</h4>
+<div id="the-background" class="section level3">
+<h3>The background:</h3>
 <p>It is important to understand the sequence of events for any patients. In the above example, an ideal sequence should be that a patient undergoes endoscopic mucosal resection (EMR) prior to radiofrequency ablation and that no further EMR’s are required. If this is not the sequence they we need to know why and determine if it is for example a problem with lesion recognition for a particular endoscopist.</p>
 <p>Sankey plots are ideal for this. One of the most famous uses of a Sankey plot is a rather sad but effective visualisation of Napoleonic troop movements in his disasterous 1812 campaign to conquer Russia. There are of course numerous other examples.</p>
 <p>The power of the plot comes from the fact that the flow of time of events is usually the X axis, categories that (in my case) patients move into is the y axis and the volume of movement is represented by the weight of the line.</p>
 <p>This makes it perfect to understand patient flow through a defined sequence of events and effectively summarises the concept of patient ‘flow’. An example of its use is given here:</p>
 </div>
-<div id="the-example" class="section level4">
-<h4>The example:</h4>
+<div id="the-example" class="section level3">
+<h3>The example:</h3>
 <p>The problem: How do I determine the order of therapies for patients who have undergone endotherapy for Barrett’s related early malignancies or dysplasia?</p>
-</div>
 <div id="input-data" class="section level4">
 <h4>Input data</h4>
-<pre><code>```r
-#Generate some sample data:
+<pre class="r"><code>    #Generate some sample data:
 
 proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;), 100, replace = TRUE)
 #Sample dates
 dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
 #Generate 20 hospital numbers in no particular order:
 HospNum_Id&lt;-sample(c(&quot;P433224&quot;,&quot;P633443&quot;,&quot;K522332&quot;,&quot;G244224&quot;,&quot;S553322&quot;,&quot;D0739033&quot;,&quot;U873352&quot;,&quot;P223333&quot;,&quot;Y763634&quot;,&quot;I927282&quot;,&quot;P223311&quot;,&quot;P029834&quot;,&quot;U22415&quot;,&quot;U234252&quot;,&quot;S141141&quot;,&quot;O349253&quot;,&quot;T622722&quot;,&quot;J322909&quot;,&quot;F630230&quot;,&quot;T432452&quot;), 100, replace = TRUE)
-df&lt;-data.frame(proc,dat,HospNum_Id)
-```</code></pre>
+df&lt;-data.frame(proc,dat,HospNum_Id)</code></pre>
 </div>
-<div id="data-preparation" class="section level4">
-<h4>Data Preparation</h4>
+</div>
+</div>
+<div id="data-preparation-for-sankey-plot" class="section level2">
+<h2>Data Preparation for Sankey plot</h2>
 <p>Now we prepare the data and convert it into a spredsheet format using data.table which can order the sequence of events per patient</p>
-<pre class="r"><code>    library(data.table)
-    library(dplyr)
-    library(googleVis)
-    Sankey&lt;-dcast(setDT(df)[, if(any(proc==&quot;EMR&quot;|proc==&quot;RFA&quot;)) .SD, HospNum_Id], HospNum_Id~rowid(HospNum_Id), value.var =&quot;proc&quot;)</code></pre>
-<p>We need to rename columns and get rid of the first column which was only originally used to get the events patient specific. It won’t be useful in the next steps so lets ditch it. So the data is in the current form:</p>
+<pre class="r"><code>    Sankey&lt;-dcast(setDT(df)[, if(any(proc==&quot;EMR&quot;|proc==&quot;RFA&quot;)) .SD, HospNum_Id], HospNum_Id~rowid(HospNum_Id), value.var =&quot;proc&quot;)
+Sankey&lt;-data.frame(Sankey)</code></pre>
+<p>We need to rename columns and get rid of the first column which was only originally used to get the events patient specific. It won’t be useful in the next steps so lets ditch it.</p>
+<pre class="r"><code>PtFlow&lt;-Sankey%&gt;%select(2:9)
+PtFlow&lt;-data.frame(PtFlow,stringsAsFactors=F)
+names(PtFlow)&lt;-c(&quot;ord1&quot;,&quot;ord2&quot;,&quot;ord3&quot;,&quot;ord4&quot;,&quot;ord5&quot;,&quot;ord6&quot;,&quot;ord7&quot;,&quot;ord8&quot;)
+
+orders &lt;- PtFlow %&gt;%
+  select(ord1, ord2, ord3, ord4, ord5,ord6,ord7,ord8)
+orders.plot &lt;- data.frame(from= character(0), to= character(0), n = numeric(0))</code></pre>
 <p>So the data is in the current form</p>
+<pre class="r"><code>     knitr::kable(orders)</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th align="left">ord1</th>
-<th align="left">ord2</th>
-<th align="left">ord3</th>
-<th align="left">ord4</th>
-<th align="left">ord5</th>
-<th align="left">ord6</th>
-<th align="left">ord7</th>
-<th align="left">ord8</th>
-<th align="left">ord9</th>
+<tr>
+<th style="text-align:left;">
+ord1
+</th>
+<th style="text-align:left;">
+ord2
+</th>
+<th style="text-align:left;">
+ord3
+</th>
+<th style="text-align:left;">
+ord4
+</th>
+<th style="text-align:left;">
+ord5
+</th>
+<th style="text-align:left;">
+ord6
+</th>
+<th style="text-align:left;">
+ord7
+</th>
+<th style="text-align:left;">
+ord8
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
 </tr>
-<tr class="odd">
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RFA</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">RFA</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">RFA</td>
-<td align="left">EMR</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">Biopsies</td>
-<td align="left">RFA</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">EMR</td>
-<td align="left">Biopsies</td>
-<td align="left">EMR</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+Biopsies
+</td>
 </tr>
 </tbody>
 </table>
 <p>So that creates the basic ‘spreadsheet’ for the creation of the Sankey on a per patient basis.</p>
 <p>Now we have to summarise the number of ‘movements’ from one state to another for each patient and then for all the patients. The loop below basically looks at each row and then groups by the combination of subsequent events ie how many events were EMR-&gt;EMR, how many were Biopsies-&gt;EMR etc with each permutation of EMR, Biopsies and RFA. This is stored in ord.cache and then added cumulatively to orders.plot.</p>
-</div>
-<div id="summarise-the-data" class="section level4">
-<h4>Summarise the Data</h4>
+<div id="summarise-the-data" class="section level3">
+<h3>Summarise the Data</h3>
 <pre class="r"><code>for (i in 2:ncol(orders)) {
   ord.cache &lt;- orders %&gt;%
     group_by(orders[ , i-1], orders[ , i]) %&gt;%
@@ -584,52 +924,93 @@ df&lt;-data.frame(proc,dat,HospNum_Id)
   orders.plot &lt;- rbind(orders.plot, ord.cache) 
 }</code></pre>
 </div>
-<div id="plot-the-data" class="section level4">
-<h4>Plot the data:</h4>
+<div id="plot-the-data" class="section level3">
+<h3>Plot the data:</h3>
 <pre class="r"><code>orders.plot&lt;-data.frame(orders.plot)
 orders.plot&lt;-orders.plot[grepl(&quot;[A-Z]&quot;,orders.plot$from)&amp;grepl(&quot;[A-Z]&quot;,orders.plot$to), ]
 orders.plot&lt;-orders.plot[!grepl(&quot;NA&quot;,orders.plot$from)&amp;!grepl(&quot;NA&quot;,orders.plot$to), ]</code></pre>
 <p>Now it gets plotted with the googleVis package:</p>
-<pre class="r"><code># plot(gvisSankey(orders.plot, from=&#39;from&#39;, to=&#39;to&#39;, weight=&#39;n&#39;,
-#                 options=list(height=900, width=1800)))
-#![optional caption text](figures/Data_viz_Sankey.png)</code></pre>
+<pre class="r"><code>plot(gvisSankey(orders.plot, from=&#39;from&#39;, to=&#39;to&#39;, weight=&#39;n&#39;,
+                options=list(height=900, width=1800)))</code></pre>
 </div>
-<div id="the-result" class="section level4">
-<h4>The result:</h4>
+<div id="the-sankey-plot" class="section level3">
+<h3>The Sankey plot:</h3>
 <p>The resulting Sankey is as follows (yours may be different as the data is randomly generated):</p>
+<p><img src="figures/Data_viz_Sankey.png" /> <br><br><br><br><br><br></p>
 </div>
-<div id="circos-plots" class="section level1">
-<h1>Circos Plots</h1>
+</div>
+<div id="data-preparation-for-circos-plots" class="section level2">
+<h2>Data preparation for Circos Plots</h2>
 <p>Another way to visualise flow is to circularise the data. This is different to a Sankey plot as a) it’s circular and b) the summarisation is a higher level so that rather than telling you how many patients underwent an eventA-&gt;eventB at a particular time point 1, it will tell you how many occurred over all the time points:</p>
 <p>The data generation is as above</p>
 <p>The data has to be cleaned slightly differently as follows:</p>
-<pre class="r"><code>    #Create data
-# name=c(3,10,10,3,6,7,8,3,6,1,2,2,6,10,2,3,3,10,4,5,9,10)
-# feature=paste(&quot;feature &quot;, c(1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5) , sep=&quot;&quot;)
-# dat &lt;- data.frame(name,feature)
-# dat &lt;- with(dat, table(name, feature))
-#     
-#     proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;), 100, replace = TRUE)
-# #Sample dates
-# dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
-# #Generate 20 hospital numbers in no particular order:
-# HospNum_Id&lt;-sample(c(&quot;P433224&quot;,&quot;P633443&quot;,&quot;K522332&quot;,&quot;G244224&quot;,&quot;S553322&quot;,&quot;D0739033&quot;,&quot;U873352&quot;,&quot;P223333&quot;,&quot;Y763634&quot;,&quot;I927282&quot;,&quot;P223311&quot;,&quot;P029834&quot;,&quot;U22415&quot;,&quot;U234252&quot;,&quot;S141141&quot;,&quot;O349253&quot;,&quot;T622722&quot;,&quot;J322909&quot;,&quot;F630230&quot;,&quot;T432452&quot;), 100, replace = TRUE)
-# df&lt;-data.frame(proc,dat,HospNum_Id,stringsAsFactors=F)
-#     Sankey&lt;-dcast(setDT(df)[, if(any(proc==&quot;EMR&quot;|proc==&quot;RFA&quot;)) .SD, HospNum_Id], HospNum_Id~rowid(HospNum_Id), value.var =&quot;proc&quot;)
-# PtFlow&lt;-Sankey%&gt;%select(2:10)
-# PtFlow&lt;-data.frame(PtFlow,stringsAsFactors=F)
-# names(PtFlow)&lt;-c(&quot;ord1&quot;,&quot;ord2&quot;,&quot;ord3&quot;,&quot;ord4&quot;,&quot;ord5&quot;,&quot;ord6&quot;,&quot;ord7&quot;,&quot;ord8&quot;,&quot;ord9&quot;)
-# 
-# orders &lt;- PtFlow %&gt;%
-#   select(ord1, ord2, ord3, ord4, ord5,ord6,ord7,ord8,ord9)
-# orders.plot &lt;- data.frame(from= character(0), to= character(0), n = numeric(0))
-#     
-# Charge the circlize library
-#library(circlize)
-# this won&#39;t plot at the moment
-# Make the circular plot- I won&#39;t generate this in the code as the figure is below
-#rr&lt;-chordDiagram(as.data.frame(dat), transparency = 0.5)
-#![optional caption text](figures/EventSequence_circlizePlot.png)</code></pre>
+<pre class="r"><code>############################################################## Data preparation ###############################################################################
+proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;,&quot;Nothing&quot;), 100, replace = TRUE)
+#Sample dates
+dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
+#Generate 20 hospital numbers in no particular order:
+Id&lt;-sample(c(&quot;P43&quot;,&quot;P63&quot;,&quot;K52&quot;,&quot;G24&quot;,&quot;S55&quot;,&quot;D07&quot;,&quot;U87&quot;,&quot;P22&quot;,&quot;Y76&quot;,&quot;I92&quot;,&quot;P22&quot;,&quot;P02&quot;,&quot;U22415&quot;,&quot;U23&quot;,&quot;S14&quot;,&quot;O34&quot;,&quot;T62&quot;,&quot;J32&quot;,&quot;F63&quot;,&quot;T43&quot;), 100, replace = TRUE)
+df&lt;-data.frame(proc,dat,Id)</code></pre>
+<p><br></p>
+<p>Now we can summarise the data as we wish as follows:</p>
+<p><br></p>
+<pre class="r"><code>library(dplyr)
+library(reshape2)
+
+mydf&lt;-df %&gt;% 
+  arrange(dat) %&gt;% 
+  group_by(Id) %&gt;%
+  mutate(origin = lag(proc, 1), destination = proc) %&gt;%
+  select(origin, destination) %&gt;% 
+  group_by(origin, destination) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  ungroup()
+
+
+mydf&lt;-data.frame(dcast(mydf, origin ~ destination))
+#mydf$origin&lt;-as.character(mydf$origin)
+
+#Get rid of NA&#39;s
+mydf&lt;-mydf[complete.cases(mydf),]
+
+V1&lt;-c(&quot;2&quot;,&quot;7&quot;,&quot;3&quot;,&quot;10&quot;)
+V2&lt;-c(&quot;210,150,12&quot;,&quot;110,255,233&quot;,&quot;125,175,0&quot;,&quot;255,219,0&quot;)
+
+mydf&lt;-cbind(V1,V2,mydf)</code></pre>
+<p><br></p>
+<p>This creates the dataframe structure with the colour scheme embedded for each grouping. Note how the grouping was achieved with dplyr, where origin and destination columns were created by combining the current and the previous column values and then these columns were selected out, grouped and then summarised.</p>
+<p>Now we have to create a matrix</p>
+<p><br></p>
+<pre class="r"><code>df_format &lt;- mydf %&gt;% select(1:3) %&gt;% rename(order = V1, rgb = V2, region = origin) %&gt;% mutate(region = gsub(&quot;_&quot;, &quot; &quot;, region))
+  #flow matrix. Need to add V1 and V2 to the matrix here
+
+  matmydf &lt;- as.matrix(mydf[,-(1:3)])
+  dimnames(matmydf) &lt;- list(orig = df_format$region, dest = df_format$region)
+  library(&quot;tidyr&quot;)
+  df_format &lt;- df_format %&gt;% arrange(order) %&gt;% separate(rgb, c(&quot;r&quot;,&quot;g&quot;,&quot;b&quot;)) %&gt;% mutate(col = rgb(r, g, b, max=255), max = rowSums(matmydf)+colSums(matmydf))</code></pre>
+<p><br></p>
+</div>
+<div id="plot-the-circos-plot" class="section level2">
+<h2>Plot the Circos plot</h2>
+<p>Having created that we are ready to plot a beautiful summary visualisation of the patient flow:</p>
+<p><br></p>
+<pre class="r"><code>  library(&quot;circlize&quot;)
+  circos.clear()
+  par(mar = rep(0, 4), cex=0.9)
+  circos.par(start.degree = 90, gap.degree = 4)
+  par(cex = 0.8, mar = c(0, 0, 0, 0))
+  chordDiagram(x = matmydf, directional = 1, order = df_format$region, 
+               grid.col = df_format$col, annotationTrack = &quot;grid&quot;, 
+               transparency = 0.25,  annotationTrackHeight = c(0.1, 0.1),
+               diffHeight  = -0.04)
+  
+  
+  circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
+    xlim = get.cell.meta.data(&quot;xlim&quot;)
+    sector.index = get.cell.meta.data(&quot;sector.index&quot;)
+    circos.text(mean(xlim), 3.5, sector.index, facing = &quot;bending&quot;)
+    circos.axis(&quot;top&quot;, major.at = seq(0, max(xlim),by=5), minor.ticks=1,labels.cex=0.8, labels.away.percentage = 0.2, labels.niceFacing = FALSE )}, bg.border = NA)</code></pre>
+<p><img src="DataAnalysisEventingsSankey_files/figure-html/Data_Sankey_CircosPlot-1.png" width="672" /></p>
 </div>
 
 

@@ -495,25 +495,53 @@ myPath$NumbOfBx&lt;-str_extract_all(myPath$MacDet, &quot;([A-Za-z]*|[0-9]) piece
 <pre class="r"><code>knitr::kable(myPath)</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th align="left">ClinDet</th>
-<th align="left">MacDet</th>
-<th align="left">HistolDet</th>
-<th align="left">DiagDet</th>
-<th align="right">BxSize</th>
-<th align="right">NumbOfBx</th>
-<th align="right">NumbOfBxs</th>
+<tr>
+<th style="text-align:left;">
+ClinDet
+</th>
+<th style="text-align:left;">
+MacDet
+</th>
+<th style="text-align:left;">
+HistolDet
+</th>
+<th style="text-align:left;">
+DiagDet
+</th>
+<th style="text-align:right;">
+BxSize
+</th>
+<th style="text-align:right;">
+NumbOfBx
+</th>
+<th style="text-align:right;">
+NumbOfBxs
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">CLINICAL DETAILSOesophageal stricture.MACROSCOPICAL DESCRIPTION</td>
-<td align="left">MACROSCOPICAL DESCRIPTIONNature of specimen as stated on request form = Lower oesophagus x5.Nature of specimen not stated on pot.3 pieces of tissue, the largest measuring 1 x 2 x 2 mm and the smallest 1x 1 x 1 mm, received on a pointed cellulose strip. HISTOLOGY</td>
-<td align="left">HISTOLOGYThe appearances are suggestive of Barretts oesophagus.Neither dysplasia nor malignancy is seen. DIAGNOSIS</td>
-<td align="left">DIAGNOSISOesophagus, biopsies_ - Ulceration and chronic active inflammation.- Squamo-columnar mucosa with intestinal metaplasia.- Suggestive of Barretts oesophagus.- No evidence of dysplasia or malignancy.</td>
-<td align="right">4</td>
-<td align="right">3</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+CLINICAL DETAILSOesophageal stricture.MACROSCOPICAL DESCRIPTION
+</td>
+<td style="text-align:left;">
+MACROSCOPICAL DESCRIPTIONNature of specimen as stated on request form = Lower oesophagus x5.Nature of specimen not stated on pot.3 pieces of tissue, the largest measuring 1 x 2 x 2 mm and the smallest 1x 1 x 1 mm, received on a pointed cellulose strip. HISTOLOGY
+</td>
+<td style="text-align:left;">
+HISTOLOGYThe appearances are suggestive of Barretts oesophagus.Neither dysplasia nor malignancy is seen. DIAGNOSIS
+</td>
+<td style="text-align:left;">
+DIAGNOSISOesophagus, biopsies_ - Ulceration and chronic active inflammation.- Squamo-columnar mucosa with intestinal metaplasia.- Suggestive of Barretts oesophagus.- No evidence of dysplasia or malignancy.
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
 </tbody>
 </table>
@@ -586,207 +614,477 @@ library(SnowballC)
 kable(m[1:10,1:10])</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th></th>
-<th align="right">1</th>
-<th align="right">2</th>
-<th align="right">3</th>
-<th align="right">4</th>
-<th align="right">5</th>
-<th align="right">6</th>
-<th align="right">7</th>
-<th align="right">8</th>
-<th align="right">9</th>
-<th align="right">10</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+2
+</th>
+<th style="text-align:right;">
+3
+</th>
+<th style="text-align:right;">
+4
+</th>
+<th style="text-align:right;">
+5
+</th>
+<th style="text-align:right;">
+6
+</th>
+<th style="text-align:right;">
+7
+</th>
+<th style="text-align:right;">
+8
+</th>
+<th style="text-align:right;">
+9
+</th>
+<th style="text-align:right;">
+10
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>admix</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+activ
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td>appear</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+admix
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td>atypia</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+appear
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td>barrett</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+barrett
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td>basal</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+candida
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td>candida</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+chronic
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td>cell</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+columnar
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td>columnar</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+consist
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td>consist</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+diagnosi
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td>dysplasia</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td><br><br></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<tr>
+<td style="text-align:left;">
+dysplast
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
+<p><br><br></p>
 <p>We can also see the summary of all the terms</p>
 <p><br><br></p>
 <pre class="r"><code>kable(head(d))</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th></th>
-<th align="left">word</th>
-<th align="right">freq</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+word
+</th>
+<th style="text-align:right;">
+freq
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>dysplasia</td>
-<td align="left">dysplasia</td>
-<td align="right">24431</td>
+<tr>
+<td style="text-align:left;">
+dysplasia
+</td>
+<td style="text-align:left;">
+dysplasia
+</td>
+<td style="text-align:right;">
+25370
+</td>
 </tr>
-<tr class="even">
-<td>appear</td>
-<td align="left">appear</td>
-<td align="right">14087</td>
+<tr>
+<td style="text-align:left;">
+consist
+</td>
+<td style="text-align:left;">
+consist
+</td>
+<td style="text-align:right;">
+14344
+</td>
 </tr>
-<tr class="odd">
-<td>consist</td>
-<td align="left">consist</td>
-<td align="right">13956</td>
+<tr>
+<td style="text-align:left;">
+appear
+</td>
+<td style="text-align:left;">
+appear
+</td>
+<td style="text-align:right;">
+14340
+</td>
 </tr>
-<tr class="even">
-<td>there</td>
-<td align="left">there</td>
-<td align="right">13563</td>
+<tr>
+<td style="text-align:left;">
+there
+</td>
+<td style="text-align:left;">
+there
+</td>
+<td style="text-align:right;">
+13949
+</td>
 </tr>
-<tr class="odd">
-<td>malign</td>
-<td align="left">malign</td>
-<td align="right">10845</td>
+<tr>
+<td style="text-align:left;">
+present
+</td>
+<td style="text-align:left;">
+present
+</td>
+<td style="text-align:right;">
+11317
+</td>
 </tr>
-<tr class="even">
-<td>candida</td>
-<td align="left">candida</td>
-<td align="right">10656</td>
+<tr>
+<td style="text-align:left;">
+malign
+</td>
+<td style="text-align:left;">
+malign
+</td>
+<td style="text-align:right;">
+11007
+</td>
 </tr>
 </tbody>
 </table>

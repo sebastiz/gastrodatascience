@@ -1,0 +1,81 @@
+---
+title: "Time Series Analysis"
+output: html_document
+---
+```{r global_options, include=FALSE}
+library(kableExtra)
+library(knitr)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+Time series objects deserve a special mention as they can be useful for numerical data and allow the ability to forecast which can be useful for example when determining what the throughput in an outpatient clinic is likely to be so we can plan ahead.
+
+##Create a time series- numerical data
+
+Dataframes can be formatted as time series objects as follows
+
+```{r DataAnalysis_TimeSeries_CreateTimeSeries}
+
+
+
+#Sample dates
+dat<-sample(seq(as.Date('2013/01/01'), as.Date('2017/05/01'), by="day"), 100)
+
+rndm1<-sample(seq(0,40),100,replace=T)
+rndm2<-sample(seq(0,40),100,replace=T)
+rndm3<-sample(seq(0,40),100,replace=T)
+df<-data.frame(dat,rndm1,rndm2,rndm3)
+
+
+library(xts)
+Myxts<-xts(df, order.by=df$dat)
+kable(head(Myxts,25))
+```
+##Create a time series- mixed categorical and numerical data
+
+but what if we have categorical data as well. In this case we have to use another package as follows
+
+```{r DataAnalysis_TimeSeries_CreateTimeSeriesMixedNumAndCat}
+
+library(tidyquant)
+library(ggplot2)
+library(dplyr)
+
+dat<-sample(seq(as.Date('2013/01/01'), as.Date('2017/05/01'), by="day"), 100)
+proc<-sample(c("EMR","RFA","Biopsies"), 100, replace = TRUE)
+rndm1<-sample(seq(0,40),100,replace=T)
+df<-data.frame(dat,rndm1,rndm2,rndm3,proc)
+
+#Get the table in order so the groups are correct:
+df<-df%>%group_by(proc)
+
+mean_tidyverse_downloads_w <- df %>%
+    tq_transmute(
+        select     = rndm1,
+        mutate_fun = apply.weekly, 
+        FUN        = mean,
+        na.rm      = TRUE,
+        col_rename = "mean_count"
+    )
+```
+
+
+##Plot the time series
+```{r DataAnalysis_TimeSeries_Plot}
+    ggplot(mean_tidyverse_downloads_w,aes(x = dat, y = mean_count, color = proc)) +
+    geom_point() +
+    geom_smooth(method = "loess") + 
+    labs(title = "Number of procedures per week", x = "", 
+         y = "Number of procedures per week") +
+    facet_wrap(~ proc, ncol = 3, scale = "free_y") +
+    expand_limits(y = 0) + 
+    scale_color_tq() +
+    theme_tq() +
+    theme(legend.position="none")
+
+```
+
+##Predictions
+
+Of course one of the best things about Time series analysis is the ability to forecast. We can use the aptly named forecast package to do this and an example can be seen [here](http://gastrodatascience.com/Cornerstone_Surveillance.html) More detail about forecasting can be found here: <http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/index.html> including examples in R. 
+

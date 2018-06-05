@@ -440,7 +440,6 @@ names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMe
 <h3>An example of pre-processing using NLP- simple tokenisation</h3>
 <p>As we can see from the summary diagram, there are a few steps before we start processing the data. This is called pre-processing and is basically a form of data cleaning. An example of one part of the pre-processing, called tokenisation is shown below using the tidytext package:</p>
 <pre class="r"><code>library(tidytext)
-library(ggplot2)
 mytidy&lt;-head(EndoHistoMerge,100)%&gt;%
 unnest_tokens(word, Diagnoses) %&gt;%
 anti_join(stop_words)%&gt;%
@@ -456,8 +455,7 @@ mytidy</code></pre>
 <p><img src="Figs/tidytext-1.png" width="1152" /></p>
 <p><br><br> This takes the EndoHistoMerge dataset, splits out the words (a process called tokenisation and which can also be done for sentences, n-grams and paragraphs) so that one word is on one row and also removes stop_words such as “and”, “the” etc. The format of the dataframe is now in tidy format around the words from the pathology report. This is great as ggplot loves tidy formatted data so we can pipe straight into a graph.</p>
 <p>An alternative way to pre-process text is to use the tm package as follows:</p>
-<pre class="r"><code>library(tm)
-mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
+<pre class="r"><code>mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
 jeopCorpus &lt;- Corpus(VectorSource(mywords))
   #jeopCorpus &lt;- tm_map(jeopCorpus, PlainTextDocument)
   jeopCorpus &lt;- tm_map(jeopCorpus, content_transformer(removeWords), stopwords(&quot;english&quot;))
@@ -480,15 +478,11 @@ jeopCorpus &lt;- Corpus(VectorSource(mywords))
 <h3>Using NLP to determine commonly used phrases - n-gram tokenisation</h3>
 <p>One particularly interesting use of NLP is to determine the commonly used phrases in a report. I find this useful to study how doctors might express their findings but particularly how negative findings (ie the lack of a diagnosis) are expressed. This is particularly important as we may want to exclude ‘negative’ findings so that they don’t confuse word searches and cause over-estimates in our analysis:</p>
 <p>We again start with the EndoMerge dataset, but this time we are going to tokenize according to n-grams. Note how we don’t exclude stop words here because we are interested in sentences that have no and neither etc. The top 10 are shown here. So now we can sift through them and in our algorithm for negative detection we can see what the most common negatives are: <br><br></p>
-<pre class="r"><code>library(tidytext)
-library(tidyr)
-
-
-ngramEndoHistoMerge&lt;-EndoHistoMerge%&gt;%
+<pre class="r"><code>ngramEndoHistoMerge&lt;-EndoHistoMerge%&gt;%
   unnest_tokens(trigram, Diagnoses, token = &quot;ngrams&quot;, n = 3) %&gt;%
   separate(trigram, c(&quot;word1&quot;, &quot;word2&quot;, &quot;word3&quot;), sep = &quot; &quot;) %&gt;%
   count(word1, word2, word3, sort = TRUE)
- #kable(head(ngramEndoHistoMerge,10))</code></pre>
+# kable(head(ngramEndoHistoMerge,10))</code></pre>
 <p><br><br></p>
 <p>So now of course we can graph it because that’s what we love to do:</p>
 <pre class="r"><code>triigrams_united &lt;- ngramEndoHistoMerge %&gt;%
@@ -531,7 +525,7 @@ rect.hclust(groups, k=15)}</code></pre>
 <p><img src="Figs/cluster-1.png" width="1152" /></p>
 <p><br><br></p>
 <p>So now we can see how specific terms are related to each other. ANother way of clustering that is very popular is k-means clustering We can do this using the cluster package. A simple example of what the algorithm is all about can be found <a href="https://eight2late.wordpress.com/2015/07/22/a-gentle-introduction-to-cluster-analysis-using-r/">here:</a></p>
-<pre class="r"><code>kfit &lt;- kmeans(d,1)
+<pre class="r"><code>kfit &lt;- kmeans(d, 5, nstart=100)
 #plot – need library cluster
 library(cluster)
 clusplot(m, kfit$cluster, color=T, shade=T, labels=2, lines=0)</code></pre>
@@ -545,7 +539,7 @@ clusplot(m, kfit$cluster, color=T, shade=T, labels=2, lines=0)</code></pre>
 <p>We can use it to solve the following issue: How can I decide who wrote the following reports, or How can I decide what the combined method of reporting is for a certain illness and what is the variation in reporting?</p>
 <p>We will use the <a href="https://cran.r-project.org/web/packages/topicmodels/index.html">topicmodels</a> package to run the LDA() function. This takes a document term matrix as its input.</p>
 <p><br></p>
-<pre class="r"><code>library(topicmodels)
+<pre class="r"><code>#library(topicmodels)- should be included although server can&#39;t install
 #Create the document term matrix
 mywords&lt;-head(EndoHistoMerge$Diagnoses,100)
 jeopCorpus &lt;- Corpus(VectorSource(mywords))

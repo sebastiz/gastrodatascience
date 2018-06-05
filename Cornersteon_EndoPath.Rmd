@@ -1,0 +1,116 @@
+---
+title: "Diagnostic yields"
+output: html_document
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE, message=FALSE)
+library(kableExtra)
+library(knitr)
+library(dplyr)
+```
+
+##Principles of Diagnostic Yields
+
+Now that we have examined how to get examples of Endoscopic performance by analysis of documentation, we can perform the more interesting task of determining endoscopic performance by determining the pathology taken at endoscopy. This means we have to merge two datasets and then extract pathology based on the endoscopy results.
+
+We will determine the dysplasia detection rate in our sample of Barrett's endoscopies and we will do this per endoscopist so we can get an overview of who is the best at detecting dysplasia in Barrett's oesopahgus. Note this is very similar to the concept of an adenoma detection rate in colonoscopy.
+
+We start by defining our datasets. We have done this before as part of the Surveillance page so I'm not going to repeat it here. We can just start using it.
+
+This is what the merged dataset looks like (truncated for ease of viewing):
+
+```{r}
+EndoHistoMerge<-source('EndoPathMerged_ExternalCode.R')
+EndoHistoMerge<-data.frame(EndoHistoMerge)
+#Neaten up the names
+names(EndoHistoMerge)<-gsub("value.","",names(EndoHistoMerge),fixed=T)
+kable(head(EndoHistoMerge,5))
+```
+<br>
+
+#Breakdown of analytical method for yield
+
+So the task now involves extracting the presence of dysplasia in those patients where Barrett's was detected at endoscopy and then grouping them by endoscopist
+
+So to spell out where each element of this comes from:
+
+ **1. Detect rows that mention Barrett's in the endoscopy report.**
+ 
+ **2. Also detect rows that mention dysplasia in the pathology report.**
+ 
+ **3. Group by endoscopist.**
+ 
+ **4. Then get the total number of reports that mention Barrett's in the endoscopy report whether dyplasia is metioned or not, and group by endoscopist.**
+ 
+ **5. Calculate proportion by endoscopist then visualise it.**
+ 
+ <br><br>
+ 
+###**1 & 2. Detect rows that mention term of interest in the endoscopy report.**
+ 
+ This is done using [grepl.](http://gastrodatascience.com/Text_Clean.html) We will do a combined grepl so we can get the subset we are interested in and that mention dysplasia in the pathology report.
+ 
+```{r Cornerstone_EndoPath_grepl}
+DysplasticBarretts<-EndoHistoMerge[grepl("[Bb]arrett",EndoHistoMerge$EndoReports)&grepl("[Dd]ysplasi",EndoHistoMerge$HistoReport),]
+```
+
+So you will note that there are several reports where it is mentioned that there is no dysplasia so we have to get rid of these. This is tricky but for the purposes of this site we will use the brute force technique 
+```{r Cornerstone_EndoPath_Nogrepl}
+DysplasticBarretts<-DysplasticBarretts[!grepl("[Nn]either dysplasia",DysplasticBarretts$Diagnoses)&!grepl("[Nn]o [Dd]ysplasia",DysplasticBarretts$Diagnoses),]
+```
+
+<br><br>
+
+###**3. Group by endoscopist**
+ 
+There are two ways of doing this. The first way is to use dplyr as follows:
+
+```{r Cornerstone_EndoPath_greoupWith_dplyr}
+EndoscopistDDRBarretts<-DysplasticBarretts%>%group_by(Endoscopist)%>%summarise(n=n())
+
+kable(EndoscopistDDRBarretts)
+```
+ 
+Alternatively we can just use the table function which has a neater input but gives a messier output:
+ 
+```{r Cornerstone_EndoPath_tableGroup}
+DDRtable<-table(EndoscopistDDRBarretts)
+kable(DDRtable)
+```
+
+<br><br>
+
+###**4. Get the total number of specific endoscopies by endoscopist:**
+So now we know who is picking up dysplasia we can express this as a proportion of all the Barrett's endoscopy they have done as follows:
+
+```{r Cornerstone_EndoPath_GroupByEndoscopist}
+AllBarretts<-EndoHistoMerge[grepl("[Bb]arrett",EndoHistoMerge$EndoReports),]
+Endoscopist_All_Barretts<-AllBarretts%>%group_by(Endoscopist)%>%summarise(n=n())
+```
+
+<br><br>
+
+###**5. DDR by endoscopist:**
+
+Now we just calulate the proportions to get the DDR. We have to bind Endoscopist_All_Barretts and EndoscopistDDRBarretts to calculate this. We merge by endoscopist
+
+```{r Cornerstone_EndoPath_DDR}
+#For a bit of variety we are going to do the merge using dplyr join functions instead of base R merge functions:
+DDRTable<-full_join(Endoscopist_All_Barretts, EndoscopistDDRBarretts, by = "Endoscopist")
+```
+
+And finally the proportions:
+```{r Cornerstone_EndoPath_DDR_Proportions}
+DDRTable$Prop<-(DDRTable$n.y/DDRTable$n.x)*100
+DDRTable<-data.frame(DDRTable)
+#Lets get rid of NA values by replacing with "0"
+DDRTable$Prop[is.na(DDRTable$Prop)] <- 0
+
+#Lets plot it out
+barplot(DDRTable$Prop,names.arg=DDRTable$Endoscopist, ylab = "% dysplasia",
+        cex.lab = 1.5,cex.axis=1.0,cex.main = 1.0,cex.names=1.0,main = "Barrett's Endoscopic Dysplasia detection proportion",las=2)
+
+```
+
+....Looks like some people need more training...

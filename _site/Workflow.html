@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Layers</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Layers</h1>
+
+</div>
+
+
+<div id="overview-of-r-workflow" class="section level2">
+<h2>Overview of R workflow</h2>
+<p>We should all work smarter rather than harder. I never want to duplicate anything apart from fun and holidays. Reusability is the key to a happy life. So on that note I think a brief overview of how to work efficiently in R is in order.</p>
+<p>The diagram below summarises how to organise your R scripts. In general anything that looks like it is going to be used between scripts should be created as a function and categorised amongst similar functions. I have a file called CleanUp.R that performs all of the data cleaning functions and another called Analytics that is separated into Surveillance functions, Quality functions and Yield and scheduling functions. I use all my functions a lot in many R scripts.</p>
+<p>The R script itself should be one piece of work and should be categorised according to the subject it addresses. Eg an R script I wrote recently looking at the sensitivity of barium swallows for dysmotility sits in my physiology folder in a subfolder called dysmotility_barium.</p>
+<p>This R script is templated according to the principle of data wrangling. Each script has an import section, cleaning, merging, accordionisation and grouping section. It then ends with an analysis section in which plots are generated (usually as ggplots) and saved as objects. At the very end of the R script I keep the code documentation.</p>
+<p>On the basis that the business logic of coding in any language should be separated from the presentation logic, I also keep markdown files separate (but in the same folder). Each markdown sources the parent R script so that if the analysis changes in the R script, whichever outputs I have created with that script will also change. I use the objects created in the parent R script and reference them in the rmarkdown without creating new objects as much as possible. This also reduced the amount of code in the markdown files.</p>
+<p>I normally input the R script into the Presentation layer (shiny or flexdashboard etc) by sourcing the script via the “source()” function and then I can use all the objects in the original R script eg ggplots etc.</p>
+<div class="figure">
+<img src="figures/Workflow.png" />
+
+</div>
+<p><a href="http://rmarkdown.rstudio.com/authoring_shiny.html">shiny</a></p>
+</div>
+<div id="flexdashboard" class="section level2">
+<h2>Flexdashboard</h2>
+<p>The flexdashboard is a really nice presentation layer than can be used with or without interactivity (ie Shiny). It is a good way to share summarised data for example. Rather than walk you through all the features which you can find <a href="http://rmarkdown.rstudio.com/flexdashboard/">here</a>, I will simply present you with my template which you can cut and paste into your flexdashboard document (remember you need to install the package first and then run as a new Rmarkdown document)</p>
+<pre class="r"><code>---
+title: &quot;Upper GI Dashboard&quot;
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+Barrett&#39;s
+===================================== 
+  
+  
+ Row 
+-------------------------------------
+   
+### Patients awaiting follow-up
+
+R CODE HERE
+
+### Patients lost to follow-up
+
+R CODE HERE
+ 
+
+Row {.tabset}
+-------------------------------------
+   
+### Surveillance Charts
+
+R CODE HERE
+
+### Endoscopic Performance Charts
+    
+R CODE HERE
+
+
+### Diagnostic Yield Charts
+
+R CODE HERE
+
+### Patient Flow Charts
+
+R CODE HERE
+
+
+
+
+   
+Eosinophilic Oesophagitis
+=====================================     
+
+Column {.tabset}
+-------------------------------------
+   
+### Surveillance Charts
+
+R CODE HERE
+ 
+### Endoscopic Performance Charts
+    
+R CODE HERE
+
+
+### Diagnostic Yield Charts
+
+R CODE HERE
+
+### Patient Flow Charts
+
+R CODE HERE
+
+Oesophageal Physiology Huddle
+=====================================     
+
+Column {.tabset}
+-------------------------------------
+   
+### Patient Outcomes summarised
+
+R CODE HERE
+ 
+### Free slots in next month
+
+R CODE HERE
+
+
+### Summarised throughput
+
+R CODE HERE</code></pre>
+</div>
+<div id="presentations" class="section level2">
+<h2>Presentations:</h2>
+<p>It is also possible to produce presentations from your code. This is straightforward using <a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides</a> as is shown below:</p>
+<pre class="r"><code>My new presentation template
+========================================================
+author: 
+date: 
+autosize: true
+
+Introduction
+========================================================
+
+For more details on authoring R presentations please visit &lt;https://support.rstudio.com/hc/en-us/articles/200486468&gt;.
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Aims
+========================================================
+
+R CODE HERE
+
+Methodology
+========================================================
+
+R CODE HERE
+
+Results
+========================================================
+
+R CODE HERE
+
+Conclusion
+========================================================
+
+blaballba</code></pre>
+<p>Shiny:</p>
+<p>Shiny apps are a little more involved. To create one you need to create the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Create an app (either as a single document in which case it is called app.R or as a two file app consisting of ui.R and server.R within a folder called app)</p></li>
+<li><p>If going for the two file route use as follows:</p></li>
+</ol>
+</div>
+<div id="ui.r" class="section level1">
+<h1>ui.R</h1>
+<pre class="r"><code>library(shiny)
+library(shinydashboard)
+
+# Define UI for application that draws a histogram
+dashboardPage(skin=&quot;red&quot;,
+  
+  dashboardHeader(title=&quot;St Thomas&#39; Physiology Data Console&quot;),
+  
+
+  # Sidebar with a slider input for the number of bins
+  dashboardSidebar(width=&#39;25%&#39;,
+                   tags$head(
+    tags$link(rel=&quot;stylesheet&quot;,type=&quot;text/css&quot;,href=&quot;boostrap.css&quot;)
+  ),
+    sidebarPanel(id=&quot;sidebar&quot;,width=&#39;125%&#39;,
+      sliderInput(&quot;DatesMerge&quot;,
+                  &quot;Dates:&quot;,
+                  min = as.Date(&quot;2006-01-01&quot;,&quot;%Y-%m-%d&quot;),
+                  max = as.Date(&quot;2016-01-01&quot;,&quot;%Y-%m-%d&quot;),
+                  value=as.Date(&quot;2006-01-01&quot;))    
+    )),
+    
+    
+    
+    # Show a plot of the generated distribution
+
+      dashboardBody(
+        tags$head(
+          tags$link(rel=&quot;stylesheet&quot;,type=&quot;text/css&quot;,href=&quot;boostrap.css&quot;)
+          ),
+     
+        
+        tabsetPanel(
+          tabPanel(&quot;HRM&quot;, 
+                   br(),
+                   br(),
+                   tabsetPanel(  
+                    
+                     tabPanel(&quot;All HRMs&quot;,plotOutput(&quot;distPlotHRM&quot;)),
+                     tabPanel(&quot;Achalasia Type 1&quot;,plotOutput(&quot;Achal1&quot;)),
+                   )
+                  ),
+          tabPanel(&quot;Impedance&quot;,plotOutput(&quot;distPlotImp&quot;))
+          
+        )
+    )
+  )</code></pre>
+<div id="server.r" class="section level3">
+<h3>server.R</h3>
+<pre class="r"><code>library(shiny)
+
+source(&quot;S:\\Gastroenterology\\Seb\\R\\Scripts\\Management_Physiology\\PhysiolServiceUsage.R&quot;)
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+
+  output$distPlotLactul &lt;- renderPlot({
+    #Create the data  
+    TotsLactul&lt;-TotsLactul[TotsLactul$DatesMerge&gt;input$DatesMerge,]
+    
+    # draw the histogram with the specified number of bins   
+   ggplot(TotsLactul)+
+     geom_bar(aes(DatesMerge,fill=year))+
+     labs(title=paste(&quot;Number of Patients undergoing Lactulose Breath Tests&quot;))
+  })
+  
+
+})</code></pre>
+</div>
+<div id="run.r" class="section level3">
+<h3>run.R</h3>
+<pre class="r"><code>require(shiny)
+folder_address = &#39;S:\\Gastroenterology\\Seb\\R\\Scripts\\Management_Physiology\\app&#39;
+runApp(folder_address, launch.browser=TRUE)</code></pre>
+</div>
+<div id="other" class="section level2">
+<h2>Other</h2>
+<p>Other instructions for other ways to present your data can be found here:</p>
+<p><a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">rmarkdown wesbites</a></p>
+<p><a href="http://rmarkdown.rstudio.com/html_document_format.html">rmarkdown html</a></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
