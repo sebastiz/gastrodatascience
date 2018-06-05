@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Time Series Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Time Series Analysis</h1>
+
+</div>
+
+
+<p>Time series objects deserve a special mention as they can be useful for numerical data and allow the ability to forecast which can be useful for example when determining what the throughput in an outpatient clinic is likely to be so we can plan ahead.</p>
+<div id="create-a-time-series--numerical-data" class="section level2">
+<h2>Create a time series- numerical data</h2>
+<p>Dataframes can be formatted as time series objects as follows</p>
+<pre class="r"><code>#Sample dates
+dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
+
+rndm1&lt;-sample(seq(0,40),100,replace=T)
+rndm2&lt;-sample(seq(0,40),100,replace=T)
+rndm3&lt;-sample(seq(0,40),100,replace=T)
+df&lt;-data.frame(dat,rndm1,rndm2,rndm3)
+
+
+library(xts)
+Myxts&lt;-xts(df, order.by=df$dat)
+kable(head(Myxts,25))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+dat
+</th>
+<th style="text-align:left;">
+rndm1
+</th>
+<th style="text-align:left;">
+rndm2
+</th>
+<th style="text-align:left;">
+rndm3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2013-01-27
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-02-02
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-06
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-07
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-10
+</td>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-14
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-16
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-24
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-03-29
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-04-13
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-04-25
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-06-09
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-06-13
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-06-28
+</td>
+<td style="text-align:left;">
+34
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-08-19
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-09-19
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-10-02
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-10-06
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-10-13
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-10-24
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-11-17
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-11-27
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-12-08
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-12-20
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:left;">
+34
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2013-12-22
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="create-a-time-series--mixed-categorical-and-numerical-data" class="section level2">
+<h2>Create a time series- mixed categorical and numerical data</h2>
+<p>but what if we have categorical data as well. In this case we have to use another package as follows</p>
+<pre class="r"><code>library(tidyquant)
+library(ggplot2)
+library(dplyr)
+
+dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
+proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;), 100, replace = TRUE)
+rndm1&lt;-sample(seq(0,40),100,replace=T)
+df&lt;-data.frame(dat,rndm1,rndm2,rndm3,proc)
+
+#Get the table in order so the groups are correct:
+df&lt;-df%&gt;%group_by(proc)
+
+mean_tidyverse_downloads_w &lt;- df %&gt;%
+    tq_transmute(
+        select     = rndm1,
+        mutate_fun = apply.weekly, 
+        FUN        = mean,
+        na.rm      = TRUE,
+        col_rename = &quot;mean_count&quot;
+    )</code></pre>
+</div>
+<div id="plot-the-time-series" class="section level2">
+<h2>Plot the time series</h2>
+<pre class="r"><code>    ggplot(mean_tidyverse_downloads_w,aes(x = dat, y = mean_count, color = proc)) +
+    geom_point() +
+    geom_smooth(method = &quot;loess&quot;) + 
+    labs(title = &quot;Number of procedures per week&quot;, x = &quot;&quot;, 
+         y = &quot;Number of procedures per week&quot;) +
+    facet_wrap(~ proc, ncol = 3, scale = &quot;free_y&quot;) +
+    expand_limits(y = 0) + 
+    scale_color_tq() +
+    theme_tq() +
+    theme(legend.position=&quot;none&quot;)</code></pre>
+<p><img src="DataAnalysisTimeSeries_files/figure-html/DataAnalysis_TimeSeries_Plot-1.png" width="672" /></p>
+</div>
+<div id="predictions" class="section level2">
+<h2>Predictions</h2>
+<p>Of course one of the best things about Time series analysis is the ability to forecast. We can use the aptly named forecast package to do this and an example can be seen <a href="http://gastrodatascience.com/Cornerstone_Surveillance.html">here</a> More detail about forecasting can be found here: <a href="http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/index.html" class="uri">http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/index.html</a> including examples in R.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Formatting Dates</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Formatting Dates</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="principles-of-date-formatting" class="section level2">
+<h2>Principles of date formatting</h2>
+<p><br></p>
+<p>Dates are fundamental. Dates come in many formats. One of my biggest bug bears are dates. As dull as it sounds, formatting dates correctly is a fundamental part of data cleaning in healthcare. This is especially true if your data objects are event-driven (which is to say you collect events that happen at time-points such as the time a patient enters an endoscopy room or the day the endoscopy was done etc.). In addition, the correct and standardised formatting of dates will allow you to merge data from separate data sources and still understand a unified sequence of events. Eventing, as I call it, is fundamental to understanding processes and its inefficiences.</p>
+<p>Given it is so important, perhaps the correct formatting of dates is not so boring after all. <br></p>
+<div id="date-formats" class="section level3">
+<h3>Date formats:</h3>
+<p>Dates come in may forms, but in R the main formats are as follows:</p>
+<p><strong>1.POSIXct or POSIXlt - stores dates and times and can manipulate timezones.</strong></p>
+<p><strong>2.Date - date without times.</strong></p>
+<p><strong>3.Character.</strong></p>
+<p><strong>4.Numeric (the usual way it is stored when imported from Excel and refers to the number of days or seconds from an origin date).</strong></p>
+<p><strong>5.On top of the above, dates even within the same format can be of different combinations such as the day or the month being first, or an abbreviated year etc.</strong></p>
+<p>Most of the time when importing, the dates will be in character format, but not always.</p>
+<p><br><br><br></p>
+</div>
+</div>
+<div id="conversion-of-dates" class="section level2">
+<h2>Conversion of dates</h2>
+<p>The finest level of granularity I usually require is day. This means that the as.Date function, part of base R, is usually sufficient Occasionally I need hours which requires a slightly different approach. Below are some examples:</p>
+<p><strong>Text to Date</strong></p>
+<pre class="r"><code>dates &lt;- c(&quot;05/22/80&quot;, &quot;07/06/01&quot;)
+#Remember to specify the format of the date in the text otherwise it defaults to yyyy-mm-dd
+betterDates &lt;- as.Date(dates, format = &quot;%B/%d/%Y&quot;)
+betterDates</code></pre>
+<pre><code>## [1] NA NA</code></pre>
+<pre class="r"><code>#Or with the date time format
+df &lt;- data.frame(Date = c(&quot;10/9/2009 0:00:00&quot;, &quot;10/15/2009 0:00:00&quot;))
+newDate&lt;-as.Date(df$Date, &quot;%m/%d/%Y %H:%M:%S&quot;)
+
+newDate</code></pre>
+<pre><code>## [1] &quot;2009-10-09&quot; &quot;2009-10-15&quot;</code></pre>
+<p><strong>Numeric to Date (eg from Excel)</strong></p>
+<p>This normally requires remembering to specify an origin as the number is usually the number of days from that origin:</p>
+<pre class="r"><code>dates &lt;- c(30899, 38567)
+NewDates &lt;- as.Date(dates, origin = &quot;1899-12-30&quot;)</code></pre>
+<p><strong>POSIXct to Date</strong></p>
+<pre class="r"><code>mydate&lt;-c(&quot;2013-01-01 07:00&quot;)
+theDatesinPOSIXct&lt;-as.Date(as.POSIXct(mydate))
+NewDates&lt;-as.Date(theDatesinPOSIXct)</code></pre>
+<p><strong>Date to character</strong></p>
+<pre class="r"><code># convert dates to character data
+#chrDate &lt;- as.character(someDate)</code></pre>
+<p><br><br><br></p>
+</div>
+<div id="extracting-parts-of-a-date" class="section level2">
+<h2>Extracting parts of a date</h2>
+<p>Often dates come as the date with time in hours, mins and seconds. Other times you just want the month of a date, or the year. This is where the ‘lubridate’ package can be so useful as follows. Note, lubridate doesnt take text but can take anything else such as: POSIXct, POSIXlt, Date, Period, chron, yearmon, yearqtr, zoo, zooreg, timeDate, xts, its, ti, jul, timeSeries, and fts objects</p>
+<pre class="r"><code>library(lubridate)
+some_date &lt;- c(&quot;01/02/1979&quot;, &quot;03/04/1980&quot;)
+month(as.POSIXlt(some_date, format=&quot;%d/%m/%Y&quot;))</code></pre>
+<pre><code>## [1] 2 4</code></pre>
+<pre class="r"><code>#The same thing can be done with: day, month , year, hour, minute, second and many others. See https://rpubs.com/davoodastaraky/lubridate</code></pre>
+<p><strong>What to do with mixed dates</strong> If you are using many data sources, the dates can be very painful to standardise. In reality most will not have H:M:S associated with the date so I would standardise all the dates to %d_%m_%Y. Note I don’t use “/” as the forward slash can be treated oddly in text extraction and particularly regular expressions.</p>
+<p>A particularly interesting package is ‘anytime’. This claims to be able to take any date and convert it into a date format. This returns a POSIXct object (or a date object if anyDate is used instead of anytime). This can be seen here: <a href="https://cran.r-project.org/web/packages/anytime/anytime.pdf" class="uri">https://cran.r-project.org/web/packages/anytime/anytime.pdf</a></p>
+<p><br><br><br><br><br></p>
+</div>
+<div id="time-series-objects" class="section level2">
+<h2>Time Series objects</h2>
+<p>Time series analysis is worth exploring particularly if you have very numerical data. This type of analysis is often used for the assessment of financial data. The time series object is xts and essentially organises your data with the date as the label of each row.</p>
+<p>The limiting factor I have found is the ability to group the time series according to a non numerical variable For example if I want to split my data up according to type of endoscopic procedure performed I cannot use intrinsic time series objects to do this. It is however possible as seen on the page: Grouping by dates:</p>
+<p>so to create a timSeries object you should use the package ‘xts’ as follows</p>
+<pre class="r"><code>library(kableExtra)
+
+#input data
+proc&lt;-sample(c(&quot;EMR&quot;,&quot;RFA&quot;,&quot;Biopsies&quot;), 100, replace = TRUE)
+#Sample dates
+dat&lt;-sample(seq(as.Date(&#39;2013/01/01&#39;), as.Date(&#39;2017/05/01&#39;), by=&quot;day&quot;), 100)
+#Generate 20 hospital numbers in no particular order:
+HospNum_Id&lt;-sample(c(&quot;P433224&quot;,&quot;P633443&quot;,&quot;K522332&quot;,&quot;G244224&quot;,&quot;S553322&quot;,&quot;D0739033&quot;,&quot;U873352&quot;,&quot;P223333&quot;,&quot;Y763634&quot;,&quot;I927282&quot;,&quot;P223311&quot;,&quot;P029834&quot;,&quot;U22415&quot;,&quot;U234252&quot;,&quot;S141141&quot;,&quot;O349253&quot;,&quot;T622722&quot;,&quot;J322909&quot;,&quot;F630230&quot;,&quot;T432452&quot;), 100, replace = TRUE)
+rndm&lt;-sample(seq(0,40),100,replace=T)
+df&lt;-data.frame(proc,dat,HospNum_Id,rndm)
+df$proc&lt;-as.character(df$proc)
+
+
+library(xts)
+Myxts&lt;-xts(df, order.by=df$dat)
+kable(head(Myxts,25))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+proc
+</th>
+<th style="text-align:left;">
+dat
+</th>
+<th style="text-align:left;">
+HospNum_Id
+</th>
+<th style="text-align:left;">
+rndm
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-01-01
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2013-01-19
+</td>
+<td style="text-align:left;">
+J322909
+</td>
+<td style="text-align:left;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-01-26
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-04-09
+</td>
+<td style="text-align:left;">
+P223333
+</td>
+<td style="text-align:left;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-05-26
+</td>
+<td style="text-align:left;">
+T432452
+</td>
+<td style="text-align:left;">
+36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-05-31
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2013-06-29
+</td>
+<td style="text-align:left;">
+U22415
+</td>
+<td style="text-align:left;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-07-30
+</td>
+<td style="text-align:left;">
+S141141
+</td>
+<td style="text-align:left;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-08-11
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-08-17
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-08-26
+</td>
+<td style="text-align:left;">
+D0739033
+</td>
+<td style="text-align:left;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-08-31
+</td>
+<td style="text-align:left;">
+U22415
+</td>
+<td style="text-align:left;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2013-09-04
+</td>
+<td style="text-align:left;">
+S553322
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2013-09-29
+</td>
+<td style="text-align:left;">
+U873352
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-10-03
+</td>
+<td style="text-align:left;">
+S141141
+</td>
+<td style="text-align:left;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2013-10-11
+</td>
+<td style="text-align:left;">
+Y763634
+</td>
+<td style="text-align:left;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-11-26
+</td>
+<td style="text-align:left;">
+T622722
+</td>
+<td style="text-align:left;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-12-05
+</td>
+<td style="text-align:left;">
+K522332
+</td>
+<td style="text-align:left;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EMR
+</td>
+<td style="text-align:left;">
+2013-12-13
+</td>
+<td style="text-align:left;">
+P633443
+</td>
+<td style="text-align:left;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2013-12-23
+</td>
+<td style="text-align:left;">
+F630230
+</td>
+<td style="text-align:left;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-01-18
+</td>
+<td style="text-align:left;">
+S141141
+</td>
+<td style="text-align:left;">
+35
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-01-27
+</td>
+<td style="text-align:left;">
+I927282
+</td>
+<td style="text-align:left;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RFA
+</td>
+<td style="text-align:left;">
+2014-02-10
+</td>
+<td style="text-align:left;">
+U22415
+</td>
+<td style="text-align:left;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-03-16
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Biopsies
+</td>
+<td style="text-align:left;">
+2014-04-08
+</td>
+<td style="text-align:left;">
+S553322
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+</tbody>
+</table>
+<p>So you will notice that the dataframe is now called a xts object (get this by typing str(Myxts) into the console) and that the rows are organised with date being used as the index. More on how to analyse this in the <a href="http://gastrodatascience.com/DataAnalysisTimeSeries.html">Data Analysis section</a></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

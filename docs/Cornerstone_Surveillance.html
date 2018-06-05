@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Surveillance</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Surveillance</h1>
+
+</div>
+
+
+<div id="principles-of-surveillance-data-analysis" class="section level2">
+<h2>Principles of Surveillance data analysis</h2>
+<p>Now we have an understanding of the basic data structure we need (see home page) and we know how to wrangle our data as some basic methodologies, we can start to build our cornerstone projects.</p>
+<p>The first one to consider is surveillance. Surveillance programmes are ubiquitous in medicine and an essential part of preventive medicine.</p>
+<p>The problem of surveillance from a data science point of view is that the timing of a subsequent investigation can be dependent on a previous investigation result. Sometimes the surveillance timing depends on other factors such as family history or date since the original diagnosis.</p>
+<p>Regardless of the dependencies of surveillance timings, essentially surveillance relies on knowing the timing of a test and the test result along with other factors mentioned above</p>
+<p>So essentially the problem is</p>
+<p>** (Date of test)+(Test Result)+(Other external data)**</p>
+<p>This then starts as a data merging problem. We can look at a fairly simple surveillance programme, namely Barrett’s surveillance. This is simple because the rules for the next endoscopy depend on the histopathological results of the previous endoscopy (the presence or absence of intestinal metaplasia) as well as the length of the Barrett’s segment, which should be recorded in the endoscopy report.</p>
+<p>The second issue we must understand is that the date of the test combined unique patient ID is a combined index and that our data structure needs to be grouped by patientID and then arranged according to date before further processing is done</p>
+<p>So we need to merge the endoscopy and pathology reports for each patient and then we need to extract information from text. We learnt about learning <a href="http://gastrodatascience.com/Data_merge.html">here</a> <br><br><br><br><br><br> <img src="figures/SurveillancePrep1.png" /> <br><br><br><br><br><br></p>
+<p>The figure above demonstrates the general approach once the data has been merged. The patient episodes are organised by patientID and then secondarily arranged by date <br><br><br><br><br><br> <img src="figures/SurveillancePrep2.png" /> <br><br><br><br><br><br></p>
+<p>Once the data has been properly arranged we can then make an attempt at deciding when the patient should return for a subsequent investigation. This is the basis of the figure above where the Rule column is derived from other columns such as the endoscopy report and detection of dysplasia among other factors. It is only a small step from there to deciding who has missed surveillance, who is due, the number of patients going through the programme, forecasting capacity and a huge number of other tasks.</p>
+<p>We have of course already looked at these problems so we will use our code template to build up the project results. Firstly we build the histopathology data set (this is also a good education in the sample(), rep() and replicate() functions for random sampling as well as string interpolation in case you are interested). Some of the reports may not make much sense for pathologists but that is to be expected as we are randomly generating reports. <br><br><br></p>
+<p>Firstly we will do some input data creation- we will get this from the external data script:</p>
+<pre class="r"><code>#To get the prepared endoscopy reports we are going to use the pre-prepared dataset here:
+EndoHistoMerge&lt;-source(&#39;EndoPathMerged_ExternalCode.R&#39;)
+EndoHistoMerge&lt;-as.data.frame(EndoHistoMerge)
+names(EndoHistoMerge)&lt;-gsub(&quot;value.&quot;,&quot;&quot;,names(EndoHistoMerge),fixed=T)</code></pre>
+<p><br></p>
+</div>
+<div id="data-analysis-levels" class="section level2">
+<h2>Data analysis levels:</h2>
+<p>The analysis of surveillance data is basically segregated into three main areas as follows:</p>
+<p><strong>Patient level data</strong></p>
+<p>Who needs to be followed up and when according to previous studies</p>
+<p><strong>Basic aggregated level</strong></p>
+<p>How many patients have had a certain diagnosis during surveillance? eg dysplasia detection rate. How many people have had a diagnosis in a certain order during surveillance? eg IM then no IM. How many people have been followed up monthly / yearly ?</p>
+<p><strong>Modelling level</strong></p>
+<p>How many people will need to be followed up?</p>
+<p>We are mainly going to talk about the patient level and modelling data level as the basic aggregated level really requires the information on cross referencing endoscopy and pathology and is covered in the pages <a href="http://gastrodatascience.com/Cornersteon_EndoPath.html">here</a> To ilustrate the types of analyses let us use the Barrett’s oesophagus we have created as an example:</p>
+<p>We are interested in understanding when patients should be returning for a further endoscopy based on the results from the previous endoscopy. The rules (simplified) are that:</p>
+<ol style="list-style-type: decimal">
+<li>If you have a short segment of Barrett’s (M&lt;3), and there is no intestinal metaplasia in the histopathology report then you should be returning in a maximum of five years.</li>
+<li>If you have a short segment of Barrett’s (M&lt;3), and intestinal metaplasia is present in the histopathology report then you should be returning in a maximum of three years.</li>
+<li>If you have a long segment of Barrett’s (M&gt;3)then you should be returning in a maximum of two years regardless of what the histopathology report says</li>
+</ol>
+<div id="patient-level-data" class="section level3">
+<h3>Patient level data</h3>
+<p>Firstly we want to find out which patients have not had their endoscopies yet so need to be recalled.</p>
+<p>We do this as follows:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Extract in to a seperate column all those with intestinal metaplasia</li>
+<li>Define the rules depending on as per above and extract these rules based on each persons latest report</li>
+<li>Arrange the procedure dates in time order.</li>
+<li>Determine the length of time since the last endoscopy and see whether this is acceptable within the rule set</li>
+</ol>
+<p><br></p>
+<p>Firstly we need to perform a conditional extraction as we learnt <a href="http://gastrodatascience.com/WranglingDataFromDataMutate.html#using_multiple_ifelse()">here</a></p>
+<div class="figure">
+<img src="figures/Surveillance_FollowUp.png" alt="  Data preparation to determine those who need follow up  " />
+<p class="caption"><br><br>Data preparation to determine those who need follow up<br><br></p>
+</div>
+<p><br><br></p>
+<pre class="r"><code>#Lets extract the intestinal metaplasia first
+#Note I have kept this simple so if a report in real life mentions that there is no intestinal metaplasia, we won&#39;t be able to differentiate. #More to come on this tricky problem of excluding negative diagnoses.
+EndoHistoMerge$IM&lt;-ifelse(grepl(&quot;[Ii]ntestinal [Mm]etaplasia&quot;,EndoHistoMerge$Diagnoses,perl=TRUE),&quot;IM&quot;,&quot;No IM&quot;)</code></pre>
+<p><br> As we are interested in only the last endoscopy that a patient had we need to group by dates and extract just the last endoscopy within a group as follows:</p>
+<pre class="r"><code>LastEndoscopy&lt;-EndoHistoMerge %&gt;% group_by(EndoHospNumId)%&gt;%arrange(Date.x)%&gt;%filter(row_number()==n())</code></pre>
+<p><br></p>
+<p>As a side note, if you want to find the first endoscopy that a patient had you simply need to change the row number to 1 as follows:</p>
+<pre class="r"><code>LastEndoscopy&lt;-EndoHistoMerge %&gt;% group_by(EndoHospNumId)%&gt;%arrange(Date.x)%&gt;%filter(row_number()==1)</code></pre>
+<p><br></p>
+<p>Now we have to determine the rule set that the patient belongs to based on that last endoscopy:</p>
+<pre class="r"><code>LastEndoscopy$Rule&lt;-ifelse(LastEndoscopy$IM==&quot;No_IM&quot; &amp;LastEndoscopy$BarrM&lt;3,&quot;Rule1&quot;,
+                    ifelse(LastEndoscopy$IM==&quot;IM&quot; &amp;LastEndoscopy$BarrM&lt;3,&quot;Rule2&quot;,
+                    ifelse(LastEndoscopy$BarrM&gt;=3,&quot;Rule3&quot;,&quot;NoRules&quot;)))</code></pre>
+<p><br></p>
+<p>Now we just have to figure out the time difference between the last endoscopy and the current one which we learnt how to do <a href="http://gastrodatascience.com/GroupByDates.html#get_difference_between_two_dates_in_consecutive_rows">here</a></p>
+<pre class="r"><code>LastEndoscopy&lt;-LastEndoscopy %&gt;% arrange(EndoHospNumId, Date.x) %&gt;% group_by(EndoHospNumId) %&gt;%
+  mutate(diffDate = difftime(as.Date(Sys.Date()),Date.x,units = &quot;weeks&quot;))</code></pre>
+<p><br></p>
+<p>Finally we need to subset those patients who have been waiting too long so we can book them in for an endoscopy:</p>
+<pre class="r"><code>LastEndoscopy$Follow_Up&lt;-ifelse(LastEndoscopy$diffDate&gt;260 &amp;LastEndoscopy$Rule==&quot;Rule1&quot;,&quot;Rebook&quot;,
+                        ifelse(LastEndoscopy$diffDate&gt;156 &amp;LastEndoscopy$Rule==&quot;Rule2&quot;,&quot;Rebook&quot;,
+                        ifelse(LastEndoscopy$diffDate&gt;104&amp;LastEndoscopy$Rule==&quot;Rule3&quot;,&quot;Rebook&quot;,&quot;Within Date&quot;)))</code></pre>
+<p>So now we know who to rebook. Clearly the methodology used above also allows for a vast number of other surveillance related issues to be examined.</p>
+</div>
+<div id="modelling-level--the-how-many-question" class="section level3">
+<h3>Modelling level- the ‘How many’ question</h3>
+<p>One of the first things we are interested in is a basic ‘how many’ question. Eg how many people are undergoing Barrett’s surveillance. This is straightforward to do but the trick is usually to make sure we are looking at individual patients given the question, so we will need to filter a little. We can do all the data preparation in dplyr. We have done this <a href="http://gastrodatascience.com/GroupByDates.html#get_difference_between_two_dates_in_consecutive_rows">before</a></p>
+<pre class="r"><code>#Barrett&lt;-EndoHistoMerge %&gt;% filter(str_detect(Indication, &#39;Barrett&#39;))
+#As unique patients
+MyBarrettsPatients&lt;-EndoHistoMerge %&gt;% 
+  filter(str_detect(Indication, &#39;Surv&#39;))%&gt;% 
+  group_by(EndoHospNumId) %&gt;%
+  arrange(Date.x) %&gt;%
+  filter(row_number()==1)%&gt;% 
+  group_by(year=year(Date.x)) %&gt;% 
+  summarise(Number=n())
+
+kable(MyBarrettsPatients)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+Number
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+</tbody>
+</table>
+<p>Actually that is what we would have expected as the data is randomly generated and always picks up 2013 as the starting date for these patients (there are only 20 hospital numbers here). But thats fine, lets look at how many endoscopies are done, rather than how many patients. This means we just leave out the filter for row number</p>
+<pre class="r"><code>#Barrett&lt;-EndoHistoMerge %&gt;% filter(str_detect(Indication, &#39;Barrett&#39;))
+#As unique patients
+MyBarrettsEndoscopies&lt;-EndoHistoMerge %&gt;% 
+  filter(str_detect(Indication, &#39;Surv&#39;))%&gt;% 
+  arrange(Date.x) %&gt;%
+  group_by(year=year(Date.x)) %&gt;% 
+  summarise(Number=n())
+
+kable(MyBarrettsEndoscopies)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+Number
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+163
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+270
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:right;">
+191
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:right;">
+256
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2017
+</td>
+<td style="text-align:right;">
+80
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="forecasting-demand" class="section level3">
+<h3>Forecasting demand</h3>
+<p>Now we know how mush endoscopy is being done on our specialised Barrett’s endoscopy lists, how much do we think we are going to need to do for example in the next 10 years? This is where the forecasting packing comes into use and where we can convert our data into a Time Series analysis (see <a href="http://gastrodatascience.com/DataAnalysisTimeSeries.html">Time Series Analysis</a></p>
+<p>Firstly we are going to convert our list of endoscopies into a weekly summary of data with the wonderful lubridate package and dplyr</p>
+<pre class="r"><code>WeeklyBarretts&lt;-EndoHistoMerge %&gt;% 
+  filter(str_detect(Indication, &#39;Surv&#39;))%&gt;% 
+  arrange(Date.x) %&gt;%
+  group_by(month=month(Date.x),year=year(Date.x)) %&gt;% 
+  summarise(Number=n())
+
+names(WeeklyBarretts)&lt;-c(&quot;month&quot;,&quot;year&quot;,&quot;freq&quot;)
+
+#Formatting the dates (have to add in 01 as the day to make it a proper date) here I use the dmy function from lubridate to get the day month year
+WeeklyBarretts$MonthYear&lt;-paste(&quot;01_&quot;,WeeklyBarretts$month,&quot;_&quot;,WeeklyBarretts$year,sep=&quot;&quot;)
+WeeklyBarretts$MonthYear&lt;-dmy(WeeklyBarretts$MonthYear)
+
+
+#Then just plot it:
+ggplot(data = WeeklyBarretts,aes(x = MonthYear, y = freq)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(method = &quot;loess&quot;) + 
+  scale_x_date(labels = function(x) format(x, &quot;%d-%b&quot;)) +
+  theme_bw()</code></pre>
+<p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_CapacityWeekly-1.png" width="672" /></p>
+<p><br></p>
+<p>So that gives us some info graphically about our Barrett’s surveillance programme, so now we have to look into the future:</p>
+</div>
+<div id="forecasting-using-arima" class="section level3">
+<h3>Forecasting using ARIMA</h3>
+<pre class="r"><code>library(xts)
+WeeklyBarretts$freq&lt;-as.numeric(WeeklyBarretts$freq)
+WeeklyBarretts&lt;-data.frame(WeeklyBarretts)
+
+#Just select the column you want a time series for and also how you want to index by date (done by the order.by=)
+Myxts&lt;-xts(WeeklyBarretts$freq, order.by=WeeklyBarretts$MonthYear,frequency=12,start=c(2013,1))</code></pre>
+<p>Now we have a time series object, we are going to model it. This is done by ARIMA modelling. This is a huge subject but in summary it tries to assess a moveing average by regressing to its own prior points. It is a standard part of forecasting. There are many nuances to ARIMA modelling but the forecast package is able to choose the best model for us with <strong>auto-arima</strong></p>
+<pre class="r"><code>library(forecast)
+
+autoplot(forecast(auto.arima(Myxts)))</code></pre>
+<p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot-1.png" width="672" /></p>
+<pre class="r"><code>forecast(auto.arima(Myxts))</code></pre>
+<pre><code>##    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+## 53       18.46154 7.447556 29.47552 1.617106 35.30597
+## 54       18.46154 7.447556 29.47552 1.617106 35.30597
+## 55       18.46154 7.447556 29.47552 1.617106 35.30597
+## 56       18.46154 7.447556 29.47552 1.617106 35.30597
+## 57       18.46154 7.447556 29.47552 1.617106 35.30597
+## 58       18.46154 7.447556 29.47552 1.617106 35.30597
+## 59       18.46154 7.447556 29.47552 1.617106 35.30597
+## 60       18.46154 7.447556 29.47552 1.617106 35.30597
+## 61       18.46154 7.447556 29.47552 1.617106 35.30597
+## 62       18.46154 7.447556 29.47552 1.617106 35.30597</code></pre>
+<p><br></p>
+<p>And if we want to see what’s going to happen over the next 24 months…</p>
+<p><br></p>
+<pre class="r"><code>Barrforecast&lt;-HoltWinters(Myxts, beta=FALSE, gamma=FALSE)
+autoplot(forecast(Barrforecast, h=24))</code></pre>
+<p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot_Years-1.png" width="672" /> <br></p>
+<p>How to interpret this?</p>
+<p>The plot shows that in the next few months we can expect a fairly flat level of demand for Barrett’s surveillance. Great. 80% prediction interval is the dark blue shaded area, and the 95% prediction interval as a light blue shaded area</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

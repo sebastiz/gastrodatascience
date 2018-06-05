@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Making Data from Data with dplyr::Mutate</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Gastroenterology Data Science</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Data Acquisition</li>
+    <li>
+      <a href="Data_Import.html">Data Importing</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Cleaning</li>
+    <li>
+      <a href="FormatDates.html">Formatting Dates</a>
+    </li>
+    <li>
+      <a href="Text_Clean.html">Text find and replace with gsub and stringr</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Merging</li>
+    <li>
+      <a href="Data_merge.html">Endoscopic-Pathological examples</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Accordionisation</li>
+    <li>
+      <a href="WranglingDataFromDataMutate.html">Creating data from data</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Grouping</li>
+    <li>
+      <a href="GroupByDates.html">Grouping by dates</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Wrangling_Tidy.html">Data Tidying </a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li class="dropdown-header">Statistics</li>
+    <li>
+      <a href="StatisticsExploratoryDataAnalysis.html">Exploratory Data Analysis</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Numeric Statistics</li>
+    <li>
+      <a href="StatisticsCorrelations.html">Looking for associations- correlations</a>
+    </li>
+    <li>
+      <a href="DataAnalysisStatsDiffMeans.html">Looking for differences</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Regression-uni and multivariate</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Categorical Statistics</li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Text Mining</li>
+    <li>
+      <a href="Data_Analysis_Text_NLP.html">Natural Language Programming</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Data Visualisations</li>
+    <li>
+      <a href="StatisticsBasicDescriptivePlots.html">Some basic univariate plots</a>
+    </li>
+    <li>
+      <a href="DataVisualisationsggplot.html">ggPlots and ggedit</a>
+    </li>
+    <li>
+      <a href="DataAnalysisEventingsSankey.html">Patient flow</a>
+    </li>
+    <li>
+      <a href="DataAnalysisTimeSeries.html">Time series analysis</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cornerstone Questions
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="CornerstonesIntro.html">Introduction to Cornerstone Questions</a>
+    </li>
+    <li>
+      <a href="PrepreparedEndoHistData.html">The preprepared Dataset</a>
+    </li>
+    <li>
+      <a href="Cornerstone_Surveillance.html">Surveillance</a>
+    </li>
+    <li>
+      <a href="Cornerstone_EndoscopicPerformance.html">Endoscopic Performance</a>
+    </li>
+    <li>
+      <a href="Cornersteon_EndoPath.html">Diagnostic and Therapeutic Performance</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Management</li>
+    <li>
+      <a href="Appointments.html">Appointments</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Meta</li>
+    <li>
+      <a href="Meta_Workflow.html">Code workflow</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Making Data from Data with dplyr::Mutate</h1>
+
+</div>
+
+
+<p>There are many occasions when a column of data needs to be created from an already existing column for ease of data manipulation. For example, perhaps you have a body of text as a pathology report and you want to extract all the reports where the diagnosis is dysplasia. You could just subset the data using grepl so that you only get the reports that mention this word…but what if the data needs to be cleaned prior to subsetting like excluding reports where the diagnosis is normal but the phrase ‘No evidence of dysplasia’ is present. Or perhaps there are other manipulations needed prior to subsetting.</p>
+<p>This is where data accordionisation is useful. This simply means the creation of data from (usually) a column into another column in the same dataframe.</p>
+<p>The neatest way to do this is with the mutate function from the ‘dplyr’ package which is devoted to this. There are also other ways which I will demonstrate at the end.</p>
+<p><br><br></p>
+<p><strong>The input data here will be an endoscopy data set:</strong></p>
+<pre class="r"><code>Age&lt;-sample(1:100, 130, replace=TRUE)
+Dx&lt;-sample(c(&quot;NDBE&quot;,&quot;LGD&quot;,&quot;HGD&quot;,&quot;IMC&quot;), 130, replace = TRUE)
+TimeOfEndoscopy&lt;-sample(1:60, 130, replace=TRUE)
+
+
+EMRdf&lt;-data.frame(Age,Dx,TimeOfEndoscopy,stringsAsFactors=F)</code></pre>
+<p>Perhaps you need to calculate the number of hours spent doing each endoscopy rather than the number of minutes</p>
+<pre class="r"><code>EMRdftbb&lt;-EMRdf%&gt;%mutate(TimeOfEndoscopy/60)
+#Just show the top 20 results
+kable(head(EMRdftbb,20))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+Age
+</th>
+<th style="text-align:left;">
+Dx
+</th>
+<th style="text-align:right;">
+TimeOfEndoscopy
+</th>
+<th style="text-align:right;">
+TimeOfEndoscopy/60
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.5833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.2666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0166667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.5666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+0.4500000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+0.8166667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+0.5500000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0.6333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.1333333
+</td>
+</tr>
+</tbody>
+</table>
+<p>That is useful but what if you want to classify the amount of time spent doing each endoscopy as follows: &lt;0.4 hours is too little time and &gt;0.4 hours is too long.</p>
+<p><br><br></p>
+<div id="using-ifelse-with-mutate-for-conditional-accordionisation" class="section level2">
+<h2>Using ifelse() with mutate for conditional accordionisation</h2>
+<p>For this we would use ifelse(). However this can be combined with mutate() so that the result gets put in another column as follows</p>
+<pre class="r"><code>EMRdf2&lt;-EMRdf%&gt;%mutate(TimeInHours=TimeOfEndoscopy/60)%&gt;%mutate(TimeClassification = ifelse(TimeInHours&gt;0.4, &quot;Too Long&quot;, &quot;Too Short&quot;))
+#Just show the top 20 results
+kable(head(EMRdf2,20))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+Age
+</th>
+<th style="text-align:left;">
+Dx
+</th>
+<th style="text-align:right;">
+TimeOfEndoscopy
+</th>
+<th style="text-align:right;">
+TimeInHours
+</th>
+<th style="text-align:left;">
+TimeClassification
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.5833333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.2666667
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2000000
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0166667
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.5666667
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+0.4500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+0.8166667
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+0.5500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0.6333333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.1333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note how we can chain the mutate() function together.</p>
+<p><br><br></p>
+</div>
+<div id="using-multiple-ifelse" class="section level2">
+<h2>Using multiple ifelse()</h2>
+<p>What if we want to get more complex and put several classifiers in? We just use more ifelse’s:</p>
+<pre class="r"><code>EMRdf2&lt;-EMRdf%&gt;%mutate(TimeInHours=TimeOfEndoscopy/60)%&gt;%mutate(TimeClassification = ifelse(TimeInHours&gt;0.8, &quot;Too Long&quot;, ifelse(TimeInHours&lt;0.5,&quot;Too Short&quot;,ifelse(TimeInHours&gt;=0.5&amp;TimeInHours&lt;=0.8,&quot;Just Right&quot;,&quot;N&quot;))))
+#Just show the top 20 results
+kable(head(EMRdf2,20))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+Age
+</th>
+<th style="text-align:left;">
+Dx
+</th>
+<th style="text-align:right;">
+TimeOfEndoscopy
+</th>
+<th style="text-align:right;">
+TimeInHours
+</th>
+<th style="text-align:left;">
+TimeClassification
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+0.5833333
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0.2666667
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+0.2000000
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+HGD
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0166667
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+0.5666667
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.7833333
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:left;">
+IMC
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+0.4500000
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+0.8166667
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+0.5500000
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:left;">
+LGD
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+0.9500000
+</td>
+<td style="text-align:left;">
+Too Long
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0.6333333
+</td>
+<td style="text-align:left;">
+Just Right
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+NDBE
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.1333333
+</td>
+<td style="text-align:left;">
+Too Short
+</td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+</div>
+<div id="using-multiple-ifelse-with-grepl-or-string_extract" class="section level2">
+<h2>Using multiple ifelse() with grepl() or string_extract</h2>
+<p>Of course we need to extract information from text as well as numeric data. We can do this using grepl or string_extract from the library(stringr). We have used this before <a href="http://gastrodatascience.com/Text_Clean.html">here</a> so you may want to refresh yourself.</p>
+<p>Let’s say we want to extract all the samples that had IMC. We don’t want to subset the data, just extract IMC into a column that says IMC and the rest say ’Non-IMC</p>
+<p>Using the dataset above:</p>
+<pre class="r"><code>library(stringr)
+EMRdf$MyIMC_Column&lt;-str_extract(EMRdf$Dx,&quot;IMC&quot;)
+
+#to fill the NA&#39;s we would do:
+EMRdf$MyIMC_Column&lt;-ifelse(grepl(&quot;IMC&quot;,EMRdf$Dx),&quot;IMC&quot;,&quot;NoIMC&quot;)
+#Another way to do this (really should be for more complex examples when you want to extract the entire contents of the cell that has the match)
+
+EMRdf$MyIMC_Column&lt;-ifelse(grepl(&quot;IMC&quot;,EMRdf$Dx),str_extract(EMRdf$Dx,&quot;IMC&quot;),&quot;NoIMC&quot;)</code></pre>
+<p>So data can be usefully created from data for further analysis</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
