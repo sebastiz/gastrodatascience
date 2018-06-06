@@ -22,6 +22,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -299,7 +300,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Data Analysis
+    Data Sets
      
     <span class="caret"></span>
   </a>
@@ -308,6 +309,45 @@ $(document).ready(function () {
       <a href="LinkageResources.html">Data Linkage Resources</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Related Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://github.com/sebastiz/FakeEndoReports">Synthetic endoscopy and pathology reports</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/Physipopv2.0.3">Mining of upper GI physiology datasets</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/PhysiMineR">Physiology analysis</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/AdminMineR">Administration data mining</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://twitter.com/GastroDS">
+    <span class="fa fa fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/sebastiz/EndoMineR">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://www.gastroenterologybook.com/">
+    <span class="far fa far fa-book"></span>
+     
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -352,11 +392,11 @@ cor.test(x, y, method=c(&quot;pearson&quot;, &quot;kendall&quot;, &quot;spearman
 ##  Kendall&#39;s rank correlation tau
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## z = -0.071941, p-value = 0.9426
+## z = -0.72873, p-value = 0.4662
 ## alternative hypothesis: true tau is not equal to 0
 ## sample estimates:
 ##         tau 
-## -0.00511729</code></pre>
+## -0.05188793</code></pre>
 <p>For Spearman’s rank correlation, the samples have to be ranked first. cor.test does this for you:</p>
 <pre class="r"><code>mySpearman&lt;-cor.test(x=EndoCr$Midazolam, y=EndoCr$Fentanyl, method = &#39;spearman&#39;)
 mySpearman</code></pre>
@@ -364,14 +404,14 @@ mySpearman</code></pre>
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## S = 168530, p-value = 0.9114
+## S = 178240, p-value = 0.4917
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##         rho 
-## -0.01127475</code></pre>
+##       rho 
+## -0.069553</code></pre>
 <p>To access the results from cor.test use the variables as you would a data frame. Therefore to get the p-value do:</p>
 <pre class="r"><code>mySpearman$p.value</code></pre>
-<pre><code>## [1] 0.9113519</code></pre>
+<pre><code>## [1] 0.4916928</code></pre>
 <p><br><br><br><br><br></p>
 </div>
 <div id="visualisation-of-correlations" class="section level2">
@@ -394,16 +434,16 @@ use=&quot;pairwise&quot;,
 method=&quot;pearson&quot;)
 
 cc</code></pre>
-<pre><code>##                            Midazolam     Fentanyl         Age
-## Midazolam                1.000000000  0.008001102 -0.01712526
-## Fentanyl                 0.008001102  1.000000000 -0.02382847
-## Age                     -0.017125258 -0.023828468  1.00000000
-## TimeSpentDoingEndoscopy  0.101649298  0.083045872 -0.02749119
+<pre><code>##                           Midazolam     Fentanyl         Age
+## Midazolam                1.00000000 -0.064494820  0.06590318
+## Fentanyl                -0.06449482  1.000000000 -0.13957029
+## Age                      0.06590318 -0.139570289  1.00000000
+## TimeSpentDoingEndoscopy  0.06842252 -0.004387877 -0.05588527
 ##                         TimeSpentDoingEndoscopy
-## Midazolam                            0.10164930
-## Fentanyl                             0.08304587
-## Age                                 -0.02749119
-## TimeSpentDoingEndoscopy              1.00000000</code></pre>
+## Midazolam                           0.068422521
+## Fentanyl                           -0.004387877
+## Age                                -0.055885274
+## TimeSpentDoingEndoscopy             1.000000000</code></pre>
 <p>And from this create a dendogram (albeit a not very complicated one)</p>
 <pre class="r"><code>hc &lt;- hclust(dist(cc), method=&quot;average&quot;)
 dn&lt;-as.dendrogram(hc)

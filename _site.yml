@@ -82,9 +82,31 @@ navbar:
     menu:
     - text: Data Linkage Resources
       href: LinkageResources.html
+  - text: Related Projects 
+    menu:
+    - text: Synthetic endoscopy and pathology reports
+      href: https://github.com/sebastiz/FakeEndoReports
+    - text: Mining of upper GI physiology datasets
+      href: https://github.com/sebastiz/Physipopv2.0.3
+    - text: Physiology analysis
+      href: https://github.com/sebastiz/PhysiMineR     
+    - text: Administration data mining
+      href: https://github.com/sebastiz/AdminMineR       
+
+  - icon: fa fa-twitter
+    href: https://twitter.com/GastroDS
+  - icon: fa-github fa-lg
+    href: https://github.com/sebastiz/EndoMineR
+  - icon: far fa-book
+    href: http://www.gastroenterologybook.com/
+      
+      
 output_dir: docs
 output:
   html_document:
     lib_dir: site_libs
     self_contained: no
+    right:
+    - icon: fa-question fa-lg
+      href: https://example.com
 

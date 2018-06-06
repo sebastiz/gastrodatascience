@@ -15,3 +15,26 @@ Gastroenterology has a huge number of datasets at trust level as well as nationa
 
 2. Patient confidentiality- resulting in anonymisation of individual datasets such that the linkage of datasets, if it relies on merging by hospital number for example, may nto be possible.
 
+
+The gastroenterological datasets avaiable will be listed here and as we discover more they will be categorised further and instructions on their usage and how to access them will be made available
+
+###**Clinical Data sets**
+HES
+###**General disease datasets**
+
+**Inflammatory bowel disease:**
+National
+Regional
+Local
+
+**Lower GI cancers:**
+
+**Upper GI cancers:**
+
+**Hepatolobiliary cancers:**
+
+**Barrett's oesophagus** 
+
+
+
+

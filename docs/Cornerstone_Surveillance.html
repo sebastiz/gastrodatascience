@@ -22,6 +22,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -299,7 +300,7 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Data Analysis
+    Data Sets
      
     <span class="caret"></span>
   </a>
@@ -308,6 +309,45 @@ $(document).ready(function () {
       <a href="LinkageResources.html">Data Linkage Resources</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Related Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://github.com/sebastiz/FakeEndoReports">Synthetic endoscopy and pathology reports</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/Physipopv2.0.3">Mining of upper GI physiology datasets</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/PhysiMineR">Physiology analysis</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/AdminMineR">Administration data mining</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://twitter.com/GastroDS">
+    <span class="fa fa fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/sebastiz/EndoMineR">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://www.gastroenterologybook.com/">
+    <span class="far fa far fa-book"></span>
+     
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -435,15 +475,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2014
-</td>
-<td style="text-align:right;">
-1
+20
 </td>
 </tr>
 </tbody>
@@ -475,7 +507,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-189
+237
 </td>
 </tr>
 <tr>
@@ -483,7 +515,7 @@ Number
 2014
 </td>
 <td style="text-align:right;">
-233
+206
 </td>
 </tr>
 <tr>
@@ -491,7 +523,7 @@ Number
 2015
 </td>
 <td style="text-align:right;">
-235
+236
 </td>
 </tr>
 <tr>
@@ -499,7 +531,7 @@ Number
 2016
 </td>
 <td style="text-align:right;">
-239
+199
 </td>
 </tr>
 <tr>
@@ -507,7 +539,7 @@ Number
 2017
 </td>
 <td style="text-align:right;">
-77
+67
 </td>
 </tr>
 </tbody>
@@ -555,17 +587,17 @@ Myxts&lt;-xts(WeeklyBarretts$freq, order.by=WeeklyBarretts$MonthYear,frequency=1
 autoplot(forecast(auto.arima(Myxts)))</code></pre>
 <p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot-1.png" width="672" /></p>
 <pre class="r"><code>forecast(auto.arima(Myxts))</code></pre>
-<pre><code>##    Point Forecast     Lo 80    Hi 80    Lo 95    Hi 95
-## 53       21.64278 12.919837 30.36572 8.302189 34.98337
-## 54       19.42302 10.457998 28.38805 5.712199 33.13385
-## 55       18.89645  9.917990 27.87490 5.165082 32.62781
-## 56       18.77153  9.792317 27.75074 5.039010 32.50405
-## 57       18.74190  9.762642 27.72115 5.009312 32.47448
-## 58       18.73487  9.755609 27.71412 5.002278 32.46745
-## 59       18.73320  9.753942 27.71245 5.000610 32.46579
-## 60       18.73280  9.753546 27.71206 5.000215 32.46539
-## 61       18.73271  9.753452 27.71196 5.000121 32.46530
-## 62       18.73269  9.753430 27.71194 5.000099 32.46527</code></pre>
+<pre><code>##    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+## 53       18.45157 8.925888 27.97725 3.883297 33.01984
+## 54       17.92779 7.800960 28.05463 2.440137 33.41545
+## 55       18.11679 7.914290 28.31929 2.513413 33.72017
+## 56       18.04859 7.836284 28.26090 2.430214 33.66697
+## 57       18.07320 7.859615 28.28679 2.452869 33.69353
+## 58       18.06432 7.850569 28.27807 2.443735 33.68491
+## 59       18.06753 7.853752 28.28130 2.446906 33.68814
+## 60       18.06637 7.852593 28.28015 2.445746 33.68699
+## 61       18.06679 7.853009 28.28056 2.446162 33.68741
+## 62       18.06664 7.852859 28.28041 2.446012 33.68726</code></pre>
 <p><br></p>
 <p>And if we want to see what’s going to happen over the next 24 months…</p>
 <p><br></p>

@@ -25,6 +25,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -397,7 +398,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Data Analysis
+    Data Sets
      
     <span class="caret"></span>
   </a>
@@ -406,6 +407,45 @@ div.tocify {
       <a href="LinkageResources.html">Data Linkage Resources</a>
     </li>
   </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Related Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://github.com/sebastiz/FakeEndoReports">Synthetic endoscopy and pathology reports</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/Physipopv2.0.3">Mining of upper GI physiology datasets</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/PhysiMineR">Physiology analysis</a>
+    </li>
+    <li>
+      <a href="https://github.com/sebastiz/AdminMineR">Administration data mining</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://twitter.com/GastroDS">
+    <span class="fa fa fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/sebastiz/EndoMineR">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://www.gastroenterologybook.com/">
+    <span class="far fa far fa-book"></span>
+     
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -664,112 +704,22 @@ kable(m[1:10,1:10])</code></pre>
 <tbody>
 <tr>
 <td style="text-align:left;">
-admix
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 appear
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
+2
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-1
+2
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-atypianumer
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-basal
+2
 </td>
 <td style="text-align:right;">
 1
@@ -778,28 +728,13 @@ basal
 1
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
+1
 </td>
 </tr>
 <tr>
@@ -807,19 +742,10 @@ basal
 candida
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 1
@@ -831,71 +757,10 @@ candida
 1
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-carcinoma
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-cell
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 <td style="text-align:right;">
 0
@@ -915,36 +780,36 @@ dysplasia
 2
 </td>
 <td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
-dysplast
+granuloma
 </td>
 <td style="text-align:right;">
 1
@@ -953,13 +818,13 @@ dysplast
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
@@ -979,7 +844,194 @@ dysplast
 </tr>
 <tr>
 <td style="text-align:left;">
-epitheli
+inclus
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+malign
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+malignancyneith
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oesophag
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seenno
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seenth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 1
@@ -995,18 +1047,6 @@ epitheli
 </td>
 <td style="text-align:right;">
 0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
 </td>
 <td style="text-align:right;">
 1
@@ -1040,29 +1080,7 @@ dysplasia
 dysplasia
 </td>
 <td style="text-align:right;">
-24926
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-consist
-</td>
-<td style="text-align:left;">
-consist
-</td>
-<td style="text-align:right;">
-14038
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-appear
-</td>
-<td style="text-align:left;">
-appear
-</td>
-<td style="text-align:right;">
-14030
+25287
 </td>
 </tr>
 <tr>
@@ -1073,18 +1091,29 @@ there
 there
 </td>
 <td style="text-align:right;">
-13732
+13814
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-present
+consist
 </td>
 <td style="text-align:left;">
-present
+consist
 </td>
 <td style="text-align:right;">
-10920
+13806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+appear
+</td>
+<td style="text-align:left;">
+appear
+</td>
+<td style="text-align:right;">
+13756
 </td>
 </tr>
 <tr>
@@ -1095,7 +1124,18 @@ malign
 malign
 </td>
 <td style="text-align:right;">
-10842
+11013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+present
+</td>
+<td style="text-align:left;">
+present
+</td>
+<td style="text-align:right;">
+10968
 </td>
 </tr>
 </tbody>
