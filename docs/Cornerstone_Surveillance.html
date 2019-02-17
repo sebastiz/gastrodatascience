@@ -22,7 +22,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -90,6 +92,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -475,7 +480,15 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-20
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:right;">
+1
 </td>
 </tr>
 </tbody>
@@ -507,7 +520,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-237
+179
 </td>
 </tr>
 <tr>
@@ -515,7 +528,7 @@ Number
 2014
 </td>
 <td style="text-align:right;">
-206
+190
 </td>
 </tr>
 <tr>
@@ -523,7 +536,7 @@ Number
 2015
 </td>
 <td style="text-align:right;">
-236
+158
 </td>
 </tr>
 <tr>
@@ -531,7 +544,7 @@ Number
 2016
 </td>
 <td style="text-align:right;">
-199
+265
 </td>
 </tr>
 <tr>
@@ -539,7 +552,7 @@ Number
 2017
 </td>
 <td style="text-align:right;">
-67
+80
 </td>
 </tr>
 </tbody>
@@ -588,16 +601,16 @@ autoplot(forecast(auto.arima(Myxts)))</code></pre>
 <p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot-1.png" width="672" /></p>
 <pre class="r"><code>forecast(auto.arima(Myxts))</code></pre>
 <pre><code>##    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-## 53       18.45157 8.925888 27.97725 3.883297 33.01984
-## 54       17.92779 7.800960 28.05463 2.440137 33.41545
-## 55       18.11679 7.914290 28.31929 2.513413 33.72017
-## 56       18.04859 7.836284 28.26090 2.430214 33.66697
-## 57       18.07320 7.859615 28.28679 2.452869 33.69353
-## 58       18.06432 7.850569 28.27807 2.443735 33.68491
-## 59       18.06753 7.853752 28.28130 2.446906 33.68814
-## 60       18.06637 7.852593 28.28015 2.445746 33.68699
-## 61       18.06679 7.853009 28.28056 2.446162 33.68741
-## 62       18.06664 7.852859 28.28041 2.446012 33.68726</code></pre>
+## 53       20.36911 12.00799 28.73024 7.581872 33.15636
+## 54       20.36911 11.91570 28.82253 7.440727 33.29750
+## 55       20.36911 11.82440 28.91383 7.301106 33.43712
+## 56       20.36911 11.73407 29.00415 7.162961 33.57527
+## 57       20.36911 11.64468 29.09355 7.026246 33.71198
+## 58       20.36911 11.55620 29.18203 6.890918 33.84731
+## 59       20.36911 11.46859 29.26964 6.756936 33.98129
+## 60       20.36911 11.38184 29.35639 6.624259 34.11397
+## 61       20.36911 11.29591 29.44232 6.492851 34.24538
+## 62       20.36911 11.21080 29.52743 6.362675 34.37555</code></pre>
 <p><br></p>
 <p>And if we want to see what’s going to happen over the next 24 months…</p>
 <p><br></p>

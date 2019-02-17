@@ -22,7 +22,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -90,6 +92,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -411,7 +416,7 @@ ScoreDocumented&lt;-nrow(EndoHistoMerge[!is.na(EndoHistoMerge$BarrM),])
 #So the proportion where the score is documented is:
   DocumentationScoreProp&lt;-(ScoreDocumented/BarrettsDocumented)*100
 DocumentationScoreProp</code></pre>
-<pre><code>## [1] 64.3894</code></pre>
+<pre><code>## [1] 64.77534</code></pre>
 <pre class="r"><code>#Lets do the same with the number with a hiatus hernia:
 HHDocumented&lt;-nrow(EndoHistoMerge[grepl(&quot;[Hh]iatus&quot;,EndoHistoMerge$Diagnosis),])
 DocumentationHHProp&lt;-(HHDocumented/BarrettsDocumented)*100</code></pre>
@@ -489,7 +494,7 @@ Prop
 [Hh]iatus
 </td>
 <td style="text-align:right;">
-54.34138
+54.77848
 </td>
 </tr>
 <tr>
@@ -497,7 +502,7 @@ Prop
 [Uu]lcer
 </td>
 <td style="text-align:right;">
-39.34674
+40.44937
 </td>
 </tr>
 <tr>
@@ -513,7 +518,7 @@ Prop
 [Ss]trictu
 </td>
 <td style="text-align:right;">
-55.94930
+55.15190
 </td>
 </tr>
 <tr>
@@ -521,7 +526,7 @@ Prop
 [Cc]andid
 </td>
 <td style="text-align:right;">
-54.93411
+54.72785
 </td>
 </tr>
 </tbody>

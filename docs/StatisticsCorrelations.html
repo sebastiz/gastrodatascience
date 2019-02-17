@@ -22,7 +22,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -90,6 +92,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -392,11 +397,11 @@ cor.test(x, y, method=c(&quot;pearson&quot;, &quot;kendall&quot;, &quot;spearman
 ##  Kendall&#39;s rank correlation tau
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## z = -0.72873, p-value = 0.4662
+## z = -0.96874, p-value = 0.3327
 ## alternative hypothesis: true tau is not equal to 0
 ## sample estimates:
 ##         tau 
-## -0.05188793</code></pre>
+## -0.06913445</code></pre>
 <p>For Spearman’s rank correlation, the samples have to be ranked first. cor.test does this for you:</p>
 <pre class="r"><code>mySpearman&lt;-cor.test(x=EndoCr$Midazolam, y=EndoCr$Fentanyl, method = &#39;spearman&#39;)
 mySpearman</code></pre>
@@ -404,14 +409,14 @@ mySpearman</code></pre>
 ##  Spearman&#39;s rank correlation rho
 ## 
 ## data:  EndoCr$Midazolam and EndoCr$Fentanyl
-## S = 178240, p-value = 0.4917
+## S = 181610, p-value = 0.3746
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
-##       rho 
-## -0.069553</code></pre>
+##         rho 
+## -0.08974321</code></pre>
 <p>To access the results from cor.test use the variables as you would a data frame. Therefore to get the p-value do:</p>
 <pre class="r"><code>mySpearman$p.value</code></pre>
-<pre><code>## [1] 0.4916928</code></pre>
+<pre><code>## [1] 0.3745716</code></pre>
 <p><br><br><br><br><br></p>
 </div>
 <div id="visualisation-of-correlations" class="section level2">
@@ -434,15 +439,15 @@ use=&quot;pairwise&quot;,
 method=&quot;pearson&quot;)
 
 cc</code></pre>
-<pre><code>##                           Midazolam     Fentanyl         Age
-## Midazolam                1.00000000 -0.064494820  0.06590318
-## Fentanyl                -0.06449482  1.000000000 -0.13957029
-## Age                      0.06590318 -0.139570289  1.00000000
-## TimeSpentDoingEndoscopy  0.06842252 -0.004387877 -0.05588527
+<pre><code>##                            Midazolam    Fentanyl         Age
+## Midazolam                1.000000000 -0.02597008 -0.07352279
+## Fentanyl                -0.025970078  1.00000000 -0.06837471
+## Age                     -0.073522785 -0.06837471  1.00000000
+## TimeSpentDoingEndoscopy  0.005530323 -0.15912885  0.03108608
 ##                         TimeSpentDoingEndoscopy
-## Midazolam                           0.068422521
-## Fentanyl                           -0.004387877
-## Age                                -0.055885274
+## Midazolam                           0.005530323
+## Fentanyl                           -0.159128850
+## Age                                 0.031086081
 ## TimeSpentDoingEndoscopy             1.000000000</code></pre>
 <p>And from this create a dendogram (albeit a not very complicated one)</p>
 <pre class="r"><code>hc &lt;- hclust(dist(cc), method=&quot;average&quot;)

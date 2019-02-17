@@ -14,7 +14,16 @@ library(ggplot2)
 I dont want this to be a primer on everything to do with ggplots. This page is more of a repository for code for plots I often use with ggplot as well as a quick look at ggedit which is designed to make your life easier.
 
 ggplot is based on a grammar of graphics and essentially is built of layers which start with the data. ggplot works best with tidy data whereby data is organised according to observations.
-There are many ggplots and some good repositories to look at [are here ](http://www.statmethods.net/advgraphs/ggplot2.html) (http://sape.inf.usi.ch/quick-reference/ggplot2) and [50 top visualisations] (http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) and [All R graphs] (https://www.r-graph-gallery.com/)
+There are many ggplots and some good repositories to look at are here: [Advanced graphs ](http://www.statmethods.net/advgraphs/ggplot2.html) 
+<br>
+(http://sape.inf.usi.ch/quick-reference/ggplot2) 
+<br>
+[50 top visualisations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+<br>
+[All R graphs](https://www.r-graph-gallery.com/)
+<br>
+[How to choose the right graph](https://infogram.com/page/choose-the-right-chart-data-visualization)
+
 
 <br>
 
