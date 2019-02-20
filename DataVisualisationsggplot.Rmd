@@ -23,6 +23,10 @@ There are many ggplots and some good repositories to look at are here: [Advanced
 [All R graphs](https://www.r-graph-gallery.com/)
 <br>
 [How to choose the right graph](https://infogram.com/page/choose-the-right-chart-data-visualization)
+<br>
+Other great references for graphs include the ggthemes [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/) 
+<br>
+and the [BBC cookbook](https://bbc.github.io/rcookbook/)
 
 
 <br>
