@@ -480,15 +480,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-19
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2015
-</td>
-<td style="text-align:right;">
-1
+20
 </td>
 </tr>
 </tbody>
@@ -520,7 +512,7 @@ Number
 2013
 </td>
 <td style="text-align:right;">
-179
+190
 </td>
 </tr>
 <tr>
@@ -528,7 +520,7 @@ Number
 2014
 </td>
 <td style="text-align:right;">
-190
+210
 </td>
 </tr>
 <tr>
@@ -536,7 +528,7 @@ Number
 2015
 </td>
 <td style="text-align:right;">
-158
+234
 </td>
 </tr>
 <tr>
@@ -544,7 +536,7 @@ Number
 2016
 </td>
 <td style="text-align:right;">
-265
+215
 </td>
 </tr>
 <tr>
@@ -552,7 +544,7 @@ Number
 2017
 </td>
 <td style="text-align:right;">
-80
+82
 </td>
 </tr>
 </tbody>
@@ -600,17 +592,17 @@ Myxts&lt;-xts(WeeklyBarretts$freq, order.by=WeeklyBarretts$MonthYear,frequency=1
 autoplot(forecast(auto.arima(Myxts)))</code></pre>
 <p><img src="Cornerstone_Surveillance_files/figure-html/Surveillance_ForecastingPlot-1.png" width="672" /></p>
 <pre class="r"><code>forecast(auto.arima(Myxts))</code></pre>
-<pre><code>##    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-## 53       20.36911 12.00799 28.73024 7.581872 33.15636
-## 54       20.36911 11.91570 28.82253 7.440727 33.29750
-## 55       20.36911 11.82440 28.91383 7.301106 33.43712
-## 56       20.36911 11.73407 29.00415 7.162961 33.57527
-## 57       20.36911 11.64468 29.09355 7.026246 33.71198
-## 58       20.36911 11.55620 29.18203 6.890918 33.84731
-## 59       20.36911 11.46859 29.26964 6.756936 33.98129
-## 60       20.36911 11.38184 29.35639 6.624259 34.11397
-## 61       20.36911 11.29591 29.44232 6.492851 34.24538
-## 62       20.36911 11.21080 29.52743 6.362675 34.37555</code></pre>
+<pre><code>##    Point Forecast    Lo 80   Hi 80    Lo 95    Hi 95
+## 54       17.56604 7.820574 27.3115 2.661638 32.47044
+## 55       17.56604 7.820574 27.3115 2.661638 32.47044
+## 56       17.56604 7.820574 27.3115 2.661638 32.47044
+## 57       17.56604 7.820574 27.3115 2.661638 32.47044
+## 58       17.56604 7.820574 27.3115 2.661638 32.47044
+## 59       17.56604 7.820574 27.3115 2.661638 32.47044
+## 60       17.56604 7.820574 27.3115 2.661638 32.47044
+## 61       17.56604 7.820574 27.3115 2.661638 32.47044
+## 62       17.56604 7.820574 27.3115 2.661638 32.47044
+## 63       17.56604 7.820574 27.3115 2.661638 32.47044</code></pre>
 <p><br></p>
 <p>And if we want to see what’s going to happen over the next 24 months…</p>
 <p><br></p>
