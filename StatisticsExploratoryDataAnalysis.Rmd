@@ -10,6 +10,21 @@ THe first thing to do when looking at a preparewd dataset is to explore it a lit
 
 Lets make a fabricated dataset of some endoscopic mucosal resection for Barrett's related dysplasia and cancers. Lets look at some random aspects of the endoscopic procedure we have extracted and prepared. Here is the input data.
 
+It is worth noting that quite apart from the tools for visualising datasets, there are also tools to give summary statistics. The packages in R can be found here:
+
+[summarytools](https://rdrr.io/cran/summarytools/man/summarytools-package.html)
+[DataExplorer](https://blog.revolutionanalytics.com/2018/02/dataexplorer.html)
+[visdat](https://github.com/ropensci/visdat)
+[funModeling](https://github.com/pablo14/funModeling)
+[arsenal](https://cran.r-project.org/web/packages/arsenal/index.html)
+[dataMaid](https://cran.r-project.org/web/packages/dataMaid/index.html)
+[RtutoR](https://cran.r-project.org/web/packages/RtutoR/index.html)
+[dlookr](https://cran.r-project.org/web/packages/dlookr/index.html)
+[exploreR](https://cran.r-project.org/web/packages/exploreR/index.html)
+[xray](https://cran.r-project.org/web/packages/xray/index.html)
+[SmartEDA](https://cran.r-project.org/web/packages/SmartEDA/index.html)
+[autoEDA](https://github.com/XanderHorn/autoEDA)
+
 
 ```{r ExploratoryAnalysis_GGally_Input}
 library(dplyr)

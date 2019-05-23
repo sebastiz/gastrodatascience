@@ -22,9 +22,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -72,9 +71,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -99,6 +96,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -113,7 +113,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -133,6 +132,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -154,19 +190,85 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -441,49 +543,208 @@ visible
 <tbody>
 <tr>
 <td style="text-align:left;">
-P433224
+U22415
 </td>
 <td style="text-align:left;">
-Date of Procedure 2015-09-21 Endoscopist: Dr Bilbo Baggins Midazolam: 3mg Fentanyl: 12.5mcg Indication: Haematemesis or Melaena/Blood PR Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
+Date of Procedure 2013-12-01 Endoscopist: Dr Bugs Bunny Midazolam: 4mg Fentanyl: 75mcg Indication: Dysphagia/Odynophagia Diagnosis: Esophageal candidiasis .Oesophagitis. .Hiatus Hernia. .Food bolus obstructing the oesophagus..Extensive neoplastic looking esophageal lesion. .Post chemo-radiotherapy stricture .Possible achalasia. Barrett’s oesophagus length: C0M6
 </td>
 <td style="text-align:left;">
-2015-09-21
+2013-12-01
 </td>
 <td style="text-align:left;">
-Bilbo Baggins
+Bugs Bunny
 </td>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
-12.5
+75
 </td>
 <td style="text-align:left;">
-Haematemesis or Melaena/Blood PR
+Dysphagia/Odynophagia
 </td>
 <td style="text-align:left;">
-Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
+Diagnosis: Esophageal candidiasis .Oesophagitis. .Hiatus Hernia. .Food bolus obstructing the oesophagus..Extensive neoplastic looking esophageal lesion. .Post chemo-radiotherapy stricture .Possible achalasia. Barrett’s oesophagus length: C0M6
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-5
+6
 </td>
 <td style="text-align:left;">
-P433224
+U22415
 </td>
 <td style="text-align:left;">
-Date received: 2015-09-23 Macrosopic description: 7 specimens collected the largest measuring 5 x 3 x 3 mm and the smallest 5 x 5 x 3 mm Diagnoses The appearances are those of Candida oesophagitis..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..There is some ulceration.
+Date received: 2013-11-29 Macrosopic description: 8 specimens collected the largest measuring 5 x 5 x 4 mm and the smallest 4 x 5 x 3 mm Diagnoses PAS staining shows occasional spores, consistent with candida..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..The appearances are those of Candida oesophagitis..Neither dysplasia nor malignancy is seen..No Helicobacter are seen..Numerous Candida spores and hyphae are present admixed with ulcer slough.
 </td>
 <td style="text-align:left;">
-2015-09-23
+2013-11-29
 </td>
 <td style="text-align:left;">
-7 specimens collected the largest measuring 5 x 3 x 3 mm and the smallest 5 x 5 x 3 mm
+8 specimens collected the largest measuring 5 x 5 x 4 mm and the smallest 4 x 5 x 3 mm
 </td>
 <td style="text-align:left;">
-The appearances are those of Candida oesophagitis..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..There is some ulceration.
+PAS staining shows occasional spores, consistent with candida..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..The appearances are those of Candida oesophagitis..Neither dysplasia nor malignancy is seen..No Helicobacter are seen..Numerous Candida spores and hyphae are present admixed with ulcer slough.
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U22415
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-12-01 Endoscopist: Dr Bugs Bunny Midazolam: 4mg Fentanyl: 75mcg Indication: Dysphagia/Odynophagia Diagnosis: Esophageal candidiasis .Oesophagitis. .Hiatus Hernia. .Food bolus obstructing the oesophagus..Extensive neoplastic looking esophageal lesion. .Post chemo-radiotherapy stricture .Possible achalasia. Barrett’s oesophagus length: C0M6
+</td>
+<td style="text-align:left;">
+2013-12-01
+</td>
+<td style="text-align:left;">
+Bugs Bunny
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Dysphagia/Odynophagia
+</td>
+<td style="text-align:left;">
+Diagnosis: Esophageal candidiasis .Oesophagitis. .Hiatus Hernia. .Food bolus obstructing the oesophagus..Extensive neoplastic looking esophageal lesion. .Post chemo-radiotherapy stricture .Possible achalasia. Barrett’s oesophagus length: C0M6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+U22415
+</td>
+<td style="text-align:left;">
+Date received: 2013-12-02 Macrosopic description: 4 specimens collected the largest measuring 1 x 3 x 5 mm and the smallest 5 x 3 x 1 mm Diagnoses There is no intercellular oedema in the surface epithelium..Intestinal metaplasia is present..Neither dysplasia nor malignancy is seen.
+</td>
+<td style="text-align:left;">
+2013-12-02
+</td>
+<td style="text-align:left;">
+4 specimens collected the largest measuring 1 x 3 x 5 mm and the smallest 5 x 3 x 1 mm
+</td>
+<td style="text-align:left;">
+There is no intercellular oedema in the surface epithelium..Intestinal metaplasia is present..Neither dysplasia nor malignancy is seen.
+</td>
+<td style="text-align:left;">
+1 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-09-19 Endoscopist: Dr Sal Addin Midazolam: 2mg Fentanyl: 125mcg Indication: chronic abdo pain and constipaton Diagnosis: Hiatus Hernia. .Esophageal candidiasis .Ulcer- Oesophageal.
+</td>
+<td style="text-align:left;">
+2013-09-19
+</td>
+<td style="text-align:left;">
+Sal Addin
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+chronic abdo pain and constipaton
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. .Esophageal candidiasis .Ulcer- Oesophageal.
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+Date received: 2013-09-17 Macrosopic description: 2 specimens collected the largest measuring 1 x 1 x 5 mm and the smallest 5 x 4 x 4 mm Diagnoses Neither dysplasia nor malignancy is seen..This is a dysplastic sample. There is no dysplasia and no invasive carcinoma..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..Basal hyperplasia is prominent.There is no significant increase in intraepithelial eosinophils.
+</td>
+<td style="text-align:left;">
+2013-09-17
+</td>
+<td style="text-align:left;">
+2 specimens collected the largest measuring 1 x 1 x 5 mm and the smallest 5 x 4 x 4 mm
+</td>
+<td style="text-align:left;">
+Neither dysplasia nor malignancy is seen..This is a dysplastic sample. There is no dysplasia and no invasive carcinoma..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..Basal hyperplasia is prominent.There is no significant increase in intraepithelial eosinophils.
+</td>
+<td style="text-align:left;">
+2 days
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+Date of Procedure 2013-09-19 Endoscopist: Dr Sal Addin Midazolam: 2mg Fentanyl: 125mcg Indication: chronic abdo pain and constipaton Diagnosis: Hiatus Hernia. .Esophageal candidiasis .Ulcer- Oesophageal.
+</td>
+<td style="text-align:left;">
+2013-09-19
+</td>
+<td style="text-align:left;">
+Sal Addin
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:left;">
+chronic abdo pain and constipaton
+</td>
+<td style="text-align:left;">
+Diagnosis: Hiatus Hernia. .Esophageal candidiasis .Ulcer- Oesophageal.
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+O349253
+</td>
+<td style="text-align:left;">
+Date received: 2013-09-17 Macrosopic description: 5 specimens collected the largest measuring 1 x 2 x 3 mm and the smallest 4 x 1 x 2 mm Diagnoses The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..Basal hyperplasia is prominent.No Helicobacter are seen..There is no dysplasia or malignancy..Neither dysplasia nor malignancy is seen..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..There is some ulceration..This is a dysplastic sample
+</td>
+<td style="text-align:left;">
+2013-09-17
+</td>
+<td style="text-align:left;">
+5 specimens collected the largest measuring 1 x 2 x 3 mm and the smallest 4 x 1 x 2 mm
+</td>
+<td style="text-align:left;">
+The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..Basal hyperplasia is prominent.No Helicobacter are seen..There is no dysplasia or malignancy..Neither dysplasia nor malignancy is seen..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..There is some ulceration..This is a dysplastic sample
 </td>
 <td style="text-align:left;">
 2 days
@@ -497,28 +758,28 @@ FALSE
 P433224
 </td>
 <td style="text-align:left;">
-Date of Procedure 2015-09-21 Endoscopist: Dr Bilbo Baggins Midazolam: 3mg Fentanyl: 12.5mcg Indication: Haematemesis or Melaena/Blood PR Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
+Date of Procedure 2014-08-12 Endoscopist: Dr Elmo Fudd Midazolam: 1mg Fentanyl: 150mcg Indication: Reflux-like Symptoms/Atypical Chest Pain Diagnosis: Gastritis.Post chemo-radiotherapy stricture Barrett’s oesophagus length: C1M5
 </td>
 <td style="text-align:left;">
-2015-09-21
+2014-08-12
 </td>
 <td style="text-align:left;">
-Bilbo Baggins
+Elmo Fudd
 </td>
 <td style="text-align:right;">
-3
+1
 </td>
 <td style="text-align:right;">
-12.5
+150
 </td>
 <td style="text-align:left;">
-Haematemesis or Melaena/Blood PR
+Reflux-like Symptoms/Atypical Chest Pain
 </td>
 <td style="text-align:left;">
-Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
+Diagnosis: Gastritis.Post chemo-radiotherapy stricture Barrett’s oesophagus length: C1M5
 </td>
 <td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
 5
@@ -527,178 +788,19 @@ Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesoph
 P433224
 </td>
 <td style="text-align:left;">
-Date received: 2015-09-23 Macrosopic description: 2 specimens collected the largest measuring 4 x 2 x 4 mm and the smallest 2 x 4 x 5 mm Diagnoses There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Numerous Candida spores and hyphae are present admixed with ulcer slough.. No herpetic viral inclusions are seen..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation.
+Date received: 2014-08-10 Macrosopic description: 3 specimens collected the largest measuring 3 x 1 x 2 mm and the smallest 4 x 4 x 4 mm Diagnoses There is no dysplasia or malignancy..There is no significant increase in intraepithelial eosinophils..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Intestinal metaplasia is present..There is some ulceration.. PAS staining shows occasional spores, consistent with candida..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..The appearances are those of Candida oesophagitis..No granulomas or viral inclusions are seen.
 </td>
 <td style="text-align:left;">
-2015-09-23
+2014-08-10
 </td>
 <td style="text-align:left;">
-2 specimens collected the largest measuring 4 x 2 x 4 mm and the smallest 2 x 4 x 5 mm
+3 specimens collected the largest measuring 3 x 1 x 2 mm and the smallest 4 x 4 x 4 mm
 </td>
 <td style="text-align:left;">
-There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Numerous Candida spores and hyphae are present admixed with ulcer slough.. No herpetic viral inclusions are seen..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation.
+There is no dysplasia or malignancy..There is no significant increase in intraepithelial eosinophils..The biopsies of oesophageal squamous mucosa show surface erosion and active chronic inflammation..Intestinal metaplasia is present..There is some ulceration.. PAS staining shows occasional spores, consistent with candida..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..The appearances are those of Candida oesophagitis..No granulomas or viral inclusions are seen.
 </td>
 <td style="text-align:left;">
 2 days
-</td>
-<td style="text-align:left;">
-FALSE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-P433224
-</td>
-<td style="text-align:left;">
-Date of Procedure 2015-09-21 Endoscopist: Dr Bilbo Baggins Midazolam: 3mg Fentanyl: 12.5mcg Indication: Haematemesis or Melaena/Blood PR Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
-</td>
-<td style="text-align:left;">
-2015-09-21
-</td>
-<td style="text-align:left;">
-Bilbo Baggins
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-12.5
-</td>
-<td style="text-align:left;">
-Haematemesis or Melaena/Blood PR
-</td>
-<td style="text-align:left;">
-Diagnosis: Food bolus obstructing the oesophagus..Esophageal candidiasis .Oesophagitis. .Barretts oesophagus. .Possible achalasia. Barrett’s oesophagus length: C0M5
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-P433224
-</td>
-<td style="text-align:left;">
-Date received: 2015-09-20 Macrosopic description: 3 specimens collected the largest measuring 3 x 5 x 4 mm and the smallest 2 x 1 x 5 mm Diagnoses There is low grade dysplasia.The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..High grade dysplasia is present throughout this sample.Intestinal metaplasia is present..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation.. No herpetic viral inclusions are seen..No Helicobacter are seen.
-</td>
-<td style="text-align:left;">
-2015-09-20
-</td>
-<td style="text-align:left;">
-3 specimens collected the largest measuring 3 x 5 x 4 mm and the smallest 2 x 1 x 5 mm
-</td>
-<td style="text-align:left;">
-There is low grade dysplasia.The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..High grade dysplasia is present throughout this sample.Intestinal metaplasia is present..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation.. No herpetic viral inclusions are seen..No Helicobacter are seen.
-</td>
-<td style="text-align:left;">
-1 days
-</td>
-<td style="text-align:left;">
-FALSE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U873352
-</td>
-<td style="text-align:left;">
-Date of Procedure 2017-01-10 Endoscopist: Dr Florence Nightingale Midazolam: 2mg Fentanyl: 12.5mcg Indication: Oesophagus- Dysplasia Diagnosis: Gastritis.Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Esophageal candidiasis .Post chemo-radiotherapy stricture .Hiatus Hernia. .Barretts oesophagus. .Ulcer- Oesophageal. .Oesophagitis. .Possible achalasia. Barrett’s oesophagus length: C3M7
-</td>
-<td style="text-align:left;">
-2017-01-10
-</td>
-<td style="text-align:left;">
-Florence Nightingale
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-12.5
-</td>
-<td style="text-align:left;">
-Oesophagus- Dysplasia
-</td>
-<td style="text-align:left;">
-Diagnosis: Gastritis.Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Esophageal candidiasis .Post chemo-radiotherapy stricture .Hiatus Hernia. .Barretts oesophagus. .Ulcer- Oesophageal. .Oesophagitis. .Possible achalasia. Barrett’s oesophagus length: C3M7
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-U873352
-</td>
-<td style="text-align:left;">
-Date received: 2017-01-10 Macrosopic description: 1 specimens collected the largest measuring 5 x 2 x 3 mm and the smallest 3 x 1 x 1 mm Diagnoses There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..No granulomas or viral inclusions are seen..There is some ulceration.
-</td>
-<td style="text-align:left;">
-2017-01-10
-</td>
-<td style="text-align:left;">
-1 specimens collected the largest measuring 5 x 2 x 3 mm and the smallest 3 x 1 x 1 mm
-</td>
-<td style="text-align:left;">
-There is low grade dysplasia.There is no significant increase in intraepithelial eosinophils..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..The appearances are consistent with, but not specific for Barrett’s (columnar lined) oesophagus..No granulomas or viral inclusions are seen..There is some ulceration.
-</td>
-<td style="text-align:left;">
-0 days
-</td>
-<td style="text-align:left;">
-FALSE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-U873352
-</td>
-<td style="text-align:left;">
-Date of Procedure 2017-01-10 Endoscopist: Dr Florence Nightingale Midazolam: 2mg Fentanyl: 12.5mcg Indication: Oesophagus- Dysplasia Diagnosis: Gastritis.Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Esophageal candidiasis .Post chemo-radiotherapy stricture .Hiatus Hernia. .Barretts oesophagus. .Ulcer- Oesophageal. .Oesophagitis. .Possible achalasia. Barrett’s oesophagus length: C3M7
-</td>
-<td style="text-align:left;">
-2017-01-10
-</td>
-<td style="text-align:left;">
-Florence Nightingale
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-12.5
-</td>
-<td style="text-align:left;">
-Oesophagus- Dysplasia
-</td>
-<td style="text-align:left;">
-Diagnosis: Gastritis.Extensive neoplastic looking esophageal lesion. .Food bolus obstructing the oesophagus..Esophageal candidiasis .Post chemo-radiotherapy stricture .Hiatus Hernia. .Barretts oesophagus. .Ulcer- Oesophageal. .Oesophagitis. .Possible achalasia. Barrett’s oesophagus length: C3M7
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-U873352
-</td>
-<td style="text-align:left;">
-Date received: 2017-01-09 Macrosopic description: 1 specimens collected the largest measuring 1 x 2 x 1 mm and the smallest 3 x 1 x 4 mm Diagnoses The appearances are those of Candida oesophagitis.. No herpetic viral inclusions are seen..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..There is no dysplasia or malignancy.
-</td>
-<td style="text-align:left;">
-2017-01-09
-</td>
-<td style="text-align:left;">
-1 specimens collected the largest measuring 1 x 2 x 1 mm and the smallest 3 x 1 x 4 mm
-</td>
-<td style="text-align:left;">
-The appearances are those of Candida oesophagitis.. No herpetic viral inclusions are seen..The appearances are consistent with the endoscopic diagnosis of Barrett’s oesophagus with active chronic inflammation..There is no dysplasia or malignancy.
-</td>
-<td style="text-align:left;">
-1 days
 </td>
 <td style="text-align:left;">
 FALSE
@@ -749,7 +851,7 @@ n
 Bilbo Baggins
 </td>
 <td style="text-align:right;">
-105
+95
 </td>
 </tr>
 <tr>
@@ -757,7 +859,7 @@ Bilbo Baggins
 Bugs Bunny
 </td>
 <td style="text-align:right;">
-108
+111
 </td>
 </tr>
 <tr>
@@ -765,7 +867,7 @@ Bugs Bunny
 Charles Dickens
 </td>
 <td style="text-align:right;">
-88
+82
 </td>
 </tr>
 <tr>
@@ -773,7 +875,7 @@ Charles Dickens
 Chubby Checker
 </td>
 <td style="text-align:right;">
-99
+97
 </td>
 </tr>
 <tr>
@@ -781,7 +883,7 @@ Chubby Checker
 Davy Jones
 </td>
 <td style="text-align:right;">
-96
+98
 </td>
 </tr>
 <tr>
@@ -789,7 +891,7 @@ Davy Jones
 Elmo Fudd
 </td>
 <td style="text-align:right;">
-124
+112
 </td>
 </tr>
 <tr>
@@ -797,7 +899,7 @@ Elmo Fudd
 Elvis Presley
 </td>
 <td style="text-align:right;">
-100
+94
 </td>
 </tr>
 <tr>
@@ -805,7 +907,7 @@ Elvis Presley
 Florence Nightingale
 </td>
 <td style="text-align:right;">
-93
+109
 </td>
 </tr>
 <tr>
@@ -813,7 +915,7 @@ Florence Nightingale
 Frank Sinatra
 </td>
 <td style="text-align:right;">
-94
+90
 </td>
 </tr>
 <tr>
@@ -821,7 +923,7 @@ Frank Sinatra
 Jimminey Cricket
 </td>
 <td style="text-align:right;">
-103
+114
 </td>
 </tr>
 <tr>
@@ -829,7 +931,7 @@ Jimminey Cricket
 Jonny Begood
 </td>
 <td style="text-align:right;">
-100
+75
 </td>
 </tr>
 <tr>
@@ -837,7 +939,7 @@ Jonny Begood
 Joseph Conrad
 </td>
 <td style="text-align:right;">
-88
+95
 </td>
 </tr>
 <tr>
@@ -845,7 +947,7 @@ Joseph Conrad
 King Richard III
 </td>
 <td style="text-align:right;">
-110
+87
 </td>
 </tr>
 <tr>
@@ -853,7 +955,7 @@ King Richard III
 Rara Rasputin
 </td>
 <td style="text-align:right;">
-107
+95
 </td>
 </tr>
 <tr>
@@ -861,7 +963,7 @@ Rara Rasputin
 Sal Addin
 </td>
 <td style="text-align:right;">
-99
+119
 </td>
 </tr>
 </tbody>
@@ -875,40 +977,43 @@ kable(DDRtable)</code></pre>
 <th style="text-align:left;">
 </th>
 <th style="text-align:right;">
-88
+75
 </th>
 <th style="text-align:right;">
-93
+82
+</th>
+<th style="text-align:right;">
+87
+</th>
+<th style="text-align:right;">
+90
 </th>
 <th style="text-align:right;">
 94
 </th>
 <th style="text-align:right;">
-96
+95
 </th>
 <th style="text-align:right;">
-99
+97
 </th>
 <th style="text-align:right;">
-100
+98
 </th>
 <th style="text-align:right;">
-103
+109
 </th>
 <th style="text-align:right;">
-105
+111
 </th>
 <th style="text-align:right;">
-107
+112
 </th>
 <th style="text-align:right;">
-108
+114
 </th>
 <th style="text-align:right;">
-110
-</th>
-<th style="text-align:right;">
-124
+119
 </th>
 </tr>
 </thead>
@@ -933,13 +1038,16 @@ Bilbo Baggins
 0
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 0
@@ -994,10 +1102,16 @@ Bugs Bunny
 <td style="text-align:right;">
 0
 </td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Charles Dickens
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 1
@@ -1053,10 +1167,13 @@ Chubby Checker
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 0
@@ -1091,16 +1208,19 @@ Davy Jones
 0
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 <td style="text-align:right;">
 0
@@ -1153,10 +1273,13 @@ Elmo Fudd
 0
 </td>
 <td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 </tr>
 <tr>
@@ -1176,10 +1299,13 @@ Elvis Presley
 0
 </td>
 <td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
@@ -1208,25 +1334,28 @@ Florence Nightingale
 0
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 <td style="text-align:right;">
 0
@@ -1244,6 +1373,9 @@ Florence Nightingale
 <tr>
 <td style="text-align:left;">
 Frank Sinatra
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 0
@@ -1305,19 +1437,22 @@ Jimminey Cricket
 0
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 <td style="text-align:right;">
 0
@@ -1328,22 +1463,25 @@ Jimminey Cricket
 Jonny Begood
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 0
@@ -1369,19 +1507,22 @@ Jonny Begood
 Joseph Conrad
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 <td style="text-align:right;">
 0
@@ -1416,31 +1557,34 @@ King Richard III
 0
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 0
@@ -1466,16 +1610,19 @@ Rara Rasputin
 0
 </td>
 <td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 0
@@ -1504,28 +1651,31 @@ Sal Addin
 0
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
 1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
 </td>
 </tr>
 </tbody>
